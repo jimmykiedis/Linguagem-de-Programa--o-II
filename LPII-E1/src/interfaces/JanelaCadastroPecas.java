@@ -129,15 +129,19 @@ public class JanelaCadastroPecas extends javax.swing.JFrame {
             return null;
         }
         
-        return new Pecas(
-            codigo,
-            nome,
-            categoria,
-            preco,
-            tipo,
-            cor,
-            mao_de_obra
-        );
+        try {
+            return new Pecas(
+                codigo,
+                nome,
+                Pecas.CategoriaPeca.fromTexto(categoria),
+                preco,
+                Pecas.TipoPeca.fromTexto(tipo),
+                cor,
+                mao_de_obra
+            );
+        } catch (IllegalArgumentException excecao) {
+            return null;
+        }
     }
     
     private Pecas getVisaoAlterada(String nome) {
@@ -447,13 +451,13 @@ public class JanelaCadastroPecas extends javax.swing.JFrame {
             );
 
             nomeTextField.setText(pecas.getNome());
-            categoriaTextField.setText(pecas.getCategoria());
+            categoriaTextField.setText(pecas.getCategoria().toString());
 
             precoTextField.setText(
                     String.valueOf(pecas.getPreco())
             );
 
-            tipoTextField.setText(pecas.getTipo());
+            tipoTextField.setText(pecas.getTipo().toString());
             corTextField.setText(pecas.getCor());
 
             maoDeObraTextField.setText(

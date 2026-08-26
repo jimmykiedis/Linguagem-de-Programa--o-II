@@ -2,20 +2,22 @@
 CREATE TABLE seguradoras (
     nome VARCHAR(50) PRIMARY KEY,
     cidade VARCHAR(50),
-    cobertura_percentual INT
+    cobertura_percentual INT,
+    possui_atendimento_24h BOOLEAN,
+    forma_pagamento_preferencial VARCHAR(20)
 );
 
-INSERT INTO seguradoras (nome, cidade, cobertura_percentual) VALUES
-('Porto Seguro', 'Dourados', 90),
-('Bradesco Seguros', 'Campo Grande', 80),
-('SulAmérica', 'Ponta Porã', 90),
-('Mapfre', 'Dourados', 85),
-('Allianz', 'Campo Grande', 75),
-('Tokio Marine', 'Ponta Porã', 90),
-('Azos Seguros', 'São Paulo', 99),
-('Liberty Seguros', 'Dourados', 85),
-('Sompo Seguros', 'Maracajú', 75),
-('HDI Seguros', 'Naviraí', 82);
+INSERT INTO seguradoras (nome, cidade, cobertura_percentual, possui_atendimento_24h, forma_pagamento_preferencial) VALUES
+('Porto Seguro', 'Dourados', 90, TRUE, 'boleto'),
+('Bradesco Seguros', 'Campo Grande', 80, TRUE, 'debito_automatico'),
+('SulAmérica', 'Ponta Porã', 90, FALSE, 'pix'),
+('Mapfre', 'Dourados', 85, TRUE, 'cartao'),
+('Allianz', 'Campo Grande', 75, FALSE, 'boleto'),
+('Tokio Marine', 'Ponta Porã', 90, TRUE, 'pix'),
+('Azos Seguros', 'São Paulo', 99, TRUE, 'debito_automatico'),
+('Liberty Seguros', 'Dourados', 85, FALSE, 'boleto'),
+('Sompo Seguros', 'Maracajú', 75, FALSE, 'cartao'),
+('HDI Seguros', 'Naviraí', 82, TRUE, 'pix');
 
 -- Tabela: sinistros
 CREATE TABLE sinistros (
