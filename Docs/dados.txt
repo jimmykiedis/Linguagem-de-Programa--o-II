@@ -1,0 +1,93 @@
+-- Tabela: seguradoras
+CREATE TABLE seguradoras (
+    nome VARCHAR(50) PRIMARY KEY,
+    cidade VARCHAR(50),
+    cobertura_percentual INT
+);
+
+INSERT INTO seguradoras (nome, cidade, cobertura_percentual) VALUES
+('Porto Seguro', 'Dourados', 90),
+('Bradesco Seguros', 'Campo Grande', 80),
+('SulAmérica', 'Ponta Porã', 90),
+('Mapfre', 'Dourados', 85),
+('Allianz', 'Campo Grande', 75),
+('Tokio Marine', 'Ponta Porã', 90),
+('Azos Seguros', 'São Paulo', 99),
+('Liberty Seguros', 'Dourados', 85),
+('Sompo Seguros', 'Maracajú', 75),
+('HDI Seguros', 'Naviraí', 82);
+
+-- Tabela: sinistros
+CREATE TABLE sinistros (
+    numero INT PRIMARY KEY,
+    nome VARCHAR(50),
+    telefone VARCHAR(20)
+);
+
+INSERT INTO sinistros (numero, nome, telefone) VALUES
+(1, 'Leon', '67 99888-1100'),
+(6, 'Scott', '67 98988-1101'),
+(11, 'Kennedy', '67 96898-1000'),
+(19, 'Chris', '67 90898-0100'),
+(98, 'Redfield', '66 91681-1198'),
+(102, 'Jill', '67 99234-8811'),
+(145, 'Claire', '67 98112-2290'),
+(201, 'Ada', '65 99677-4400'),
+(250, 'Rebecca', '67 99123-4455'),
+(310, 'Carlos', '67 98455-7712');
+
+-- Tabela: peças (vinculada ao sinistro)
+CREATE TABLE pecas (
+    codigo INT PRIMARY KEY,
+    sinistro_numero INT,
+    nome VARCHAR(50),
+    categoria VARCHAR(20),
+    preco DECIMAL(10,2),
+    tipo VARCHAR(20),
+    dias_garantia_cor VARCHAR(20),
+    mao_obra_propria BOOLEAN,
+    FOREIGN KEY (sinistro_numero) REFERENCES sinistros(numero)
+);
+
+INSERT INTO pecas (codigo, sinistro_numero, nome, categoria, preco, tipo, dias_garantia_cor, mao_obra_propria) VALUES
+(11, 1, 'bloco', 'OEM', 245, 'motor', '90', FALSE),
+(12, 1, 'cabeçote', 'OEM', 250, 'motor', '180', FALSE),
+(21, 6, 'parachoque', 'Original', 200, 'externo', 'preto', FALSE),
+(22, 6, 'capô', 'Original', 180, 'externo', 'cinza', FALSE),
+(31, 11, 'painel', 'OEM', 180, 'interno', '180', TRUE),
+(33, 11, 'pedais', 'OEM', 220, 'interno', '180', TRUE),
+(41, 19, 'painel', 'OEM', 135, 'interno', 'cinza', TRUE),
+(44, 19, 'capô', 'OEM', 60, 'externo', 'cinza', TRUE),
+(51, 98, 'pistão', 'Genuína', 150, 'motor', '365', TRUE),
+(55, 98, 'biela', 'Genuína', 230, 'motor', '365', TRUE),
+(61, 102, 'bomba oleo', 'OEM', 150, 'motor', '180', FALSE),
+(62, 102, 'mola', 'OEM', 210, 'suspensão', '180', FALSE),
+(71, 145, 'retrovisor', 'Genuína', 210, 'externo', 'cinza', FALSE),
+(72, 145, 'porta dianteira', 'OEM', 170, 'externo', 'cinza', FALSE),
+(81, 201, 'radiador', 'Genuína', 160, 'motor', '365', TRUE),
+(82, 201, 'bieleta', 'Genuína', 140, 'suspensão', '365', TRUE),
+(91, 250, 'farol', 'Original', 140, 'externo', 'prata', FALSE),
+(92, 250, 'lanterna', 'OEM', 200, 'externo', 'preto', TRUE),
+(101, 310, 'barra estabilizadora', 'OEM', 190, 'suspensão', '180', FALSE),
+(102, 310, 'bucha estabilizadora', 'Original', 320, 'suspensão', '365', TRUE);
+
+-- Tabela: orçamentos
+CREATE TABLE orcamentos (
+    numero INT,
+    nome_seguradora VARCHAR(50),
+    data DATE,
+    FOREIGN KEY (numero) REFERENCES sinistros(numero),
+    FOREIGN KEY (nome_seguradora) REFERENCES seguradoras(nome)
+);
+
+INSERT INTO orcamentos (numero, nome_seguradora, data) VALUES
+(1, 'Porto Seguro', '2026-06-12'),
+(6, 'Bradesco Seguros', '2026-10-10'),
+(11, 'SulAmérica', '2026-08-03'),
+(19, 'Mapfre', '2026-05-02'),
+(98, 'Allianz', '2026-04-28'),
+(102, 'Tokio Marine', '2026-07-15'),
+(145, 'Azos Seguros', '2026-09-22'),
+(201, 'Liberty Seguros', '2026-11-05'),
+(250, 'Sompo Seguros', '2026-12-18'),
+(310, 'HDI Seguros', '2026-09-09');
