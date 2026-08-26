@@ -1,0 +1,18 @@
+DROP TABLE IF EXISTS Seguradoras;
+DROP TABLE IF EXISTS Pecas;
+
+CREATE TABLE Seguradoras (
+    Nome VARCHAR(50) NOT NULL PRIMARY KEY,
+    Cidade VARCHAR(50),
+    CoberturaPercentual DECIMAL(5,2) NOT NULL
+);
+
+CREATE TABLE Pecas (
+    Codigo INT NOT NULL PRIMARY KEY,
+    Nome VARCHAR(50) NOT NULL,
+    Categoria VARCHAR(50) NOT NULL,
+    Preco DECIMAL(10,2) NOT NULL,
+    Tipo VARCHAR(50) NOT NULL,
+    Cor VARCHAR(15) NOT NULL,
+    MaoDeObra BOOLEAN NOT NULL
+);
