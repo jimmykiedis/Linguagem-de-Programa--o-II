@@ -14,6 +14,7 @@ public class JanelaCadastroPecas extends javax.swing.JFrame {
         this.controlador = controlador;
         pecas_cadastradas = Pecas.getVisões();
         initComponents();
+        setSize(new java.awt.Dimension(720, 560));
         limparCampos(null);
     }
     
@@ -133,8 +134,8 @@ public class JanelaCadastroPecas extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cadastrar Peças");
-        setMinimumSize(new java.awt.Dimension(529, 350));
-        setPreferredSize(new java.awt.Dimension(567, 450));
+        setMinimumSize(new java.awt.Dimension(640, 420));
+        setPreferredSize(new java.awt.Dimension(720, 560));
 
         java.awt.GridBagLayout layout = new java.awt.GridBagLayout();
         layout.rowHeights = new int[] {8};

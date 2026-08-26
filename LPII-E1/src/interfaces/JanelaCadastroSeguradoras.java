@@ -14,6 +14,7 @@ public class JanelaCadastroSeguradoras extends javax.swing.JFrame {
         this.controlador = controlador;
         seguradoras_cadastradas = Seguradora.getVisões();
         initComponents();
+        setSize(new java.awt.Dimension(700, 460));
         limparCampos(null);
     }
 
@@ -82,6 +83,8 @@ public class JanelaCadastroSeguradoras extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cadastrar Seguradoras");
+        setMinimumSize(new java.awt.Dimension(620, 360));
+        setPreferredSize(new java.awt.Dimension(700, 460));
         getContentPane().setLayout(new java.awt.GridBagLayout());
 
         inserirSeguradora.setText("Inserir");
