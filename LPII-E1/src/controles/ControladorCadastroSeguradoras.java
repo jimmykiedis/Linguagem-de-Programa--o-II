@@ -2,11 +2,19 @@ package controles;
 
 import entidades.Seguradora;
 import interfaces.JanelaCadastroSeguradoras;
+import java.awt.Frame;
 
 public class ControladorCadastroSeguradoras {
 
     public ControladorCadastroSeguradoras() {
-        new JanelaCadastroSeguradoras(this).setVisible(true);
+        this(null);
+    }
+
+    public ControladorCadastroSeguradoras(Frame owner) {
+        JanelaCadastroSeguradoras janela = new JanelaCadastroSeguradoras(this, owner);
+        janela.setVisible(true);
+        janela.toFront();
+        janela.requestFocus();
     }
        
     public String inserirSeguradora(Seguradora seguradora) {

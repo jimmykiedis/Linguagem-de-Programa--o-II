@@ -2,11 +2,19 @@ package controles;
 
 import entidades.Pecas;
 import interfaces.JanelaCadastroPecas;
+import java.awt.Frame;
 
 public class ControladorCadastroPecas {
     
     public ControladorCadastroPecas() {
-        new JanelaCadastroPecas(this).setVisible(true);
+        this(null);
+    }
+
+    public ControladorCadastroPecas(Frame owner) {
+        JanelaCadastroPecas janela = new JanelaCadastroPecas(this, owner);
+        janela.setVisible(true);
+        janela.toFront();
+        janela.requestFocus();
     }
        
     public String inserirPecas(Pecas pecas) {

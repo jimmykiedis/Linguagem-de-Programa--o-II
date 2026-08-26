@@ -4,6 +4,7 @@ import javax.swing.JOptionPane;
 import controles.ControladorCadastroSeguradoras;
 import entidades.Seguradora;
 import javax.swing.DefaultComboBoxModel;
+import java.awt.Frame;
 
 public class JanelaCadastroSeguradoras extends javax.swing.JFrame {
 
@@ -11,11 +12,37 @@ public class JanelaCadastroSeguradoras extends javax.swing.JFrame {
     Seguradora[] seguradoras_cadastradas;
 
     public JanelaCadastroSeguradoras(ControladorCadastroSeguradoras controlador) {
+        this(controlador, null);
+    }
+
+    public JanelaCadastroSeguradoras(
+            ControladorCadastroSeguradoras controlador,
+            Frame owner
+    ) {
         this.controlador = controlador;
         seguradoras_cadastradas = Seguradora.getVisões();
         initComponents();
         setSize(new java.awt.Dimension(700, 460));
+        configurarJanelaDependente(owner);
         limparCampos(null);
+    }
+
+    private void configurarJanelaDependente(Frame owner) {
+        setAutoRequestFocus(true);
+        setAlwaysOnTop(true);
+
+        if (owner == null) {
+            setLocationByPlatform(true);
+            return;
+        }
+
+        posicionarRelativaAoOwner(owner);
+    }
+
+    private void posicionarRelativaAoOwner(Frame owner) {
+        int x = owner.getX() + (owner.getWidth() - getWidth()) / 2;
+        int y = owner.getY() + (owner.getHeight() - getHeight()) / 2;
+        setLocation(x, y);
     }
 
     private void informarErro(String mensagem) {

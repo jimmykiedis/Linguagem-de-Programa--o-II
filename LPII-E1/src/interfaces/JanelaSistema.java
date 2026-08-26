@@ -119,7 +119,7 @@ public class JanelaSistema extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void cadastrarSeguradora(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cadastrarSeguradora
-        new ControladorCadastroSeguradoras();
+        new ControladorCadastroSeguradoras(this);
     }//GEN-LAST:event_cadastrarSeguradora
 
     private void terminarSistema(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_terminarSistema
@@ -132,7 +132,7 @@ public class JanelaSistema extends javax.swing.JFrame {
     }//GEN-LAST:event_pesquisarOrçamentos
 
     private void cadastrarPeça(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cadastrarPeça
-        new ControladorCadastroPecas();
+        new ControladorCadastroPecas(this);
     }//GEN-LAST:event_cadastrarPeça
 
     private void cadastrarOrçamentos(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cadastrarOrçamentos
