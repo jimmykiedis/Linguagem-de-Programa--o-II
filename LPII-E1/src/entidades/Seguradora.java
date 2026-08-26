@@ -4,38 +4,30 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import persistência.BD;
-import java.util.ArrayList;
-import java.util.HashMap;
 
 public class Seguradora {
-    
-    private static HashMap<String, Seguradora> seguradoras = new HashMap();
-    public static HashMap<String, Seguradora> getSeguradoras() { return seguradoras; }
-    
-    private static ArrayList<Seguradora> seguradoras1 = new ArrayList();
-    public static ArrayList<Seguradora> getSeguradoras1() { return seguradoras1; }
 
     public String getNome() { return nome; }
     public String getCidade() { return cidade; }
-    public double getCoberturaPercentual() { return coberturaPercentual; }
+    public double getCoberturaPercentual() { return cobertura_percentual; }
 
     public void setCidade(String cidade) { this.cidade = cidade; }
-    public void setCoberturaPercentual(double coberturaPercentual) { this.coberturaPercentual = coberturaPercentual; }
+    public void setCoberturaPercentual(double cobertura_percentual) { this.cobertura_percentual = cobertura_percentual; }
     
     private String nome, cidade;
-    private double coberturaPercentual;
+    private double cobertura_percentual;
     
-    public Seguradora(String nome, String cidade, double coberturaPercentual) {
+    public Seguradora(String nome, String cidade, double cobertura_percentual) {
         this.nome = nome;
         this.cidade = cidade;
-        this.coberturaPercentual = coberturaPercentual;
+        this.cobertura_percentual = cobertura_percentual;
     }
     
     public String toString() {
         return nome + " [" + cidade + "]";
     }
     
-    public Seguradora getVisão() {
+    public Seguradora getVisao() {
         return new Seguradora(nome, cidade);
     }
     
@@ -44,29 +36,29 @@ public class Seguradora {
         this.cidade = cidade;
     }
     
-    public static Seguradora[] getVisões() {
+    public static Seguradora[] getVisoes() {
         String sql = "SELECT Nome, Cidade FROM Seguradoras";
         ResultSet lista_resultados = null;
-        ArrayList<Seguradora> visões = new ArrayList();
+        java.util.ArrayList<Seguradora> visoes = new java.util.ArrayList();
         
         try {
-            PreparedStatement comando = BD.conexão.prepareStatement(sql);
+            PreparedStatement comando = BD.conexao.prepareStatement(sql);
             lista_resultados = comando.executeQuery();
             
             while (lista_resultados.next()) {
                 String nome = lista_resultados.getString("Nome");
                 String cidade = lista_resultados.getString("Cidade");
-                visões.add(new Seguradora(nome, cidade));
+                visoes.add(new Seguradora(nome, cidade));
             }
             
             lista_resultados.close();
             comando.close();
             
-        } catch (SQLException exceção_sql) {
-            exceção_sql.printStackTrace();
+        } catch (SQLException excecao_sql) {
+            excecao_sql.printStackTrace();
         }
         
-        return visões.toArray(new Seguradora[visões.size()]);
+        return visoes.toArray(new Seguradora[visoes.size()]);
     }
 
     public static Seguradora buscarSeguradora(String nome) {
@@ -75,7 +67,7 @@ public class Seguradora {
         Seguradora seguradora = null;
         
         try {
-            PreparedStatement comando = BD.conexão.prepareStatement(sql);
+            PreparedStatement comando = BD.conexao.prepareStatement(sql);
             comando.setString(1, nome);
             lista_resultados = comando.executeQuery();
             
@@ -90,8 +82,8 @@ public class Seguradora {
             lista_resultados.close();
             comando.close();
             
-        } catch (SQLException exceção_sql) {
-            exceção_sql.printStackTrace();
+        } catch (SQLException excecao_sql) {
+            excecao_sql.printStackTrace();
             seguradora = null;
         }
         
@@ -102,7 +94,7 @@ public class Seguradora {
         String sql = "INSERT INTO Seguradoras (Nome, Cidade, CoberturaPercentual) VALUES (?,?,?)";
         
         try {
-            PreparedStatement comando = BD.conexão.prepareStatement(sql);
+            PreparedStatement comando = BD.conexao.prepareStatement(sql);
             
             comando.setString(1, seguradora.getNome());
             comando.setString(2, seguradora.getCidade());
@@ -113,8 +105,8 @@ public class Seguradora {
             
             return null;
             
-        } catch (SQLException exceção_sql) {
-            exceção_sql.printStackTrace();
+        } catch (SQLException excecao_sql) {
+            excecao_sql.printStackTrace();
             return "Erro na Inserção da Seguradora no BD";
         }
     }
@@ -124,7 +116,7 @@ public class Seguradora {
                 + " WHERE Nome = ?";
         
         try {
-            PreparedStatement comando = BD.conexão.prepareStatement(sql);
+            PreparedStatement comando = BD.conexao.prepareStatement(sql);
             
             comando.setString(1, seguradora.getCidade());
             comando.setDouble(2, seguradora.getCoberturaPercentual());
@@ -135,8 +127,8 @@ public class Seguradora {
             
             return null;
             
-        } catch (SQLException exceção_sql) {
-            exceção_sql.printStackTrace();
+        } catch (SQLException excecao_sql) {
+            excecao_sql.printStackTrace();
             return "Erro na Alteração da Seguradora no BD";
         }
     }
@@ -145,7 +137,7 @@ public class Seguradora {
         String sql = "DELETE FROM Seguradoras WHERE Nome = ?";
         
         try {
-            PreparedStatement comando = BD.conexão.prepareStatement(sql);
+            PreparedStatement comando = BD.conexao.prepareStatement(sql);
             
             comando.setString(1, nome);
             comando.executeUpdate();
@@ -153,8 +145,8 @@ public class Seguradora {
             
             return null;
             
-        } catch (SQLException exceção_sql) {
-            exceção_sql.printStackTrace();
+        } catch (SQLException excecao_sql) {
+            excecao_sql.printStackTrace();
             return "Erro na Remoção da Seguradora no BD";
         }
     }

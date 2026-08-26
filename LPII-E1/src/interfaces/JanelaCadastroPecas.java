@@ -20,7 +20,7 @@ public class JanelaCadastroPecas extends javax.swing.JFrame {
             Frame owner
     ) {
         this.controlador = controlador;
-        pecas_cadastradas = Pecas.getVisões();
+        pecas_cadastradas = Pecas.getVisoes();
         initComponents();
         setSize(new java.awt.Dimension(720, 560));
         configurarJanelaDependente(owner);
@@ -87,20 +87,20 @@ public class JanelaCadastroPecas extends javax.swing.JFrame {
         String cor = corTextField.getText();
         if (cor.isEmpty()) return null;
         
-        String maoDeObraStr = maoDeObraTextField.getText();
-        if (maoDeObraStr.isEmpty()) return null;
+        String mao_de_obra_str = maoDeObraTextField.getText();
+        if (mao_de_obra_str.isEmpty()) return null;
         
-        boolean maoDeObra;
+        boolean mao_de_obra;
         
-        if (maoDeObraStr.equalsIgnoreCase("S")
-                || maoDeObraStr.equalsIgnoreCase("SIM")
-                || maoDeObraStr.equalsIgnoreCase("TRUE")) {
-            maoDeObra = true;
-        } else if (maoDeObraStr.equalsIgnoreCase("N")
-                || maoDeObraStr.equalsIgnoreCase("NAO")
-                || maoDeObraStr.equalsIgnoreCase("NÃO")
-                || maoDeObraStr.equalsIgnoreCase("FALSE")) {
-            maoDeObra = false;
+        if (mao_de_obra_str.equalsIgnoreCase("S")
+                || mao_de_obra_str.equalsIgnoreCase("SIM")
+                || mao_de_obra_str.equalsIgnoreCase("TRUE")) {
+            mao_de_obra = true;
+        } else if (mao_de_obra_str.equalsIgnoreCase("N")
+                || mao_de_obra_str.equalsIgnoreCase("NAO")
+                || mao_de_obra_str.equalsIgnoreCase("NÃO")
+                || mao_de_obra_str.equalsIgnoreCase("FALSE")) {
+            mao_de_obra = false;
         } else {
             return null;
         }
@@ -112,13 +112,13 @@ public class JanelaCadastroPecas extends javax.swing.JFrame {
             preco,
             tipo,
             cor,
-            maoDeObra
+            mao_de_obra
         );
     }
     
-    private Pecas getVisãoAlterada(String nome) {
-        for (Pecas visão : pecas_cadastradas) {
-            if (visão.getNome().equals(nome)) return visão;
+    private Pecas getVisaoAlterada(String nome) {
+        for (Pecas visao : pecas_cadastradas) {
+            if (visao.getNome().equals(nome)) return visao;
         }
         return null;
     }
@@ -365,9 +365,9 @@ public class JanelaCadastroPecas extends javax.swing.JFrame {
             mensagem_erro = "Algum atributo da Peça não foi informado";
 
         if (mensagem_erro == null) {
-            Pecas visão = pecas.getVisão();
-            pecas_cadastradasComboBox.addItem(visão);
-            pecas_cadastradasComboBox.setSelectedItem(visão);
+            Pecas visao = pecas.getVisao();
+            pecas_cadastradasComboBox.addItem(visao);
+            pecas_cadastradasComboBox.setSelectedItem(visao);
         } else {
             informarErro(mensagem_erro);
         }
@@ -383,18 +383,18 @@ public class JanelaCadastroPecas extends javax.swing.JFrame {
             mensagem_erro = "Algum atributo da Peça não foi informado";
 
         if (mensagem_erro == null) {
-            Pecas visão = getVisãoAlterada(pecas.getNome());
+            Pecas visao = getVisaoAlterada(pecas.getNome());
 
-            if (visão != null) {
-                visão.setCodigo(pecas.getCodigo());
-                visão.setCategoria(pecas.getCategoria());
-                visão.setPreco(pecas.getPreco());
-                visão.setTipo(pecas.getTipo());
-                visão.setCor(pecas.getCor());
-                visão.setMaoDeObra(pecas.getMaoDeObra());
+            if (visao != null) {
+                visao.setCodigo(pecas.getCodigo());
+                visao.setCategoria(pecas.getCategoria());
+                visao.setPreco(pecas.getPreco());
+                visao.setTipo(pecas.getTipo());
+                visao.setCor(pecas.getCor());
+                visao.setMaoDeObra(pecas.getMaoDeObra());
 
                 pecas_cadastradasComboBox.updateUI();
-                pecas_cadastradasComboBox.setSelectedItem(visão);
+                pecas_cadastradasComboBox.setSelectedItem(visao);
             }
         } else {
             informarErro(mensagem_erro);
@@ -402,14 +402,14 @@ public class JanelaCadastroPecas extends javax.swing.JFrame {
     }
 
     private void consultarPecas(java.awt.event.ActionEvent evt) {
-        Pecas visão =
+        Pecas visao =
                 (Pecas) pecas_cadastradasComboBox.getSelectedItem();
 
         Pecas pecas = null;
         String mensagem_erro = null;
 
-        if (visão != null) {
-            pecas = Pecas.buscarPecas(visão.getNome());
+        if (visao != null) {
+            pecas = Pecas.buscarPecas(visao.getNome());
 
             if (pecas == null)
                 mensagem_erro = "Peça não cadastrada";
@@ -443,19 +443,19 @@ public class JanelaCadastroPecas extends javax.swing.JFrame {
     }
 
     private void removerPecas(java.awt.event.ActionEvent evt) {
-        Pecas visão =
+        Pecas visao =
                 (Pecas) pecas_cadastradasComboBox.getSelectedItem();
 
         String mensagem_erro = null;
 
-        if (visão != null)
+        if (visao != null)
             mensagem_erro =
-                    controlador.removerPecas(visão.getNome());
+                    controlador.removerPecas(visao.getNome());
         else
             mensagem_erro = "Nenhuma Peça selecionada";
 
         if (mensagem_erro == null) {
-            pecas_cadastradasComboBox.removeItem(visão);
+            pecas_cadastradasComboBox.removeItem(visao);
             limparCampos(evt);
         } else {
             informarErro(mensagem_erro);

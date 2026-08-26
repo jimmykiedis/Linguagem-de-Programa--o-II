@@ -7,19 +7,25 @@ import java.sql.SQLException;
 public class BD {
 
     static final String URL_BD = "jdbc:mysql://localhost/banco";
-    static final String USUÁRIO = "root";
+    static final String USUARIO = "root";
     static final String SENHA = "admin";
-    public static Connection conexão = null;
+    public static Connection conexao = null;
     
-    public static void criaConexão () {
+    public static void criaConexao() {
         try {
-            conexão = DriverManager.getConnection(URL_BD, USUÁRIO, SENHA);
-        } catch (SQLException exceção_sql) {exceção_sql.printStackTrace ();}
+            conexao = DriverManager.getConnection(URL_BD, USUARIO, SENHA);
+        } catch (SQLException excecao_sql) {
+            excecao_sql.printStackTrace();
+        }
     }
     
-    public static void fechaConexão () {
+    public static void fechaConexao() {
         try {
-            conexão.close();
-        } catch (SQLException exceção_sql) {exceção_sql.printStackTrace ();}
+            if (conexao != null) {
+                conexao.close();
+            }
+        } catch (SQLException excecao_sql) {
+            excecao_sql.printStackTrace();
+        }
     }
 }

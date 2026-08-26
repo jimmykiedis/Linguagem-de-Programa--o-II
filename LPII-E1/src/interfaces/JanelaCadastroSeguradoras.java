@@ -20,7 +20,7 @@ public class JanelaCadastroSeguradoras extends javax.swing.JFrame {
             Frame owner
     ) {
         this.controlador = controlador;
-        seguradoras_cadastradas = Seguradora.getVisões();
+        seguradoras_cadastradas = Seguradora.getVisoes();
         initComponents();
         setSize(new java.awt.Dimension(700, 460));
         configurarJanelaDependente(owner);
@@ -62,14 +62,14 @@ public class JanelaCadastroSeguradoras extends javax.swing.JFrame {
         String cidade = cidadeTextField.getText();
         if (cidade.isEmpty()) cidade = null;
 
-        String coberturaStr = coberturaPercentualTextField.getText();
-        if (coberturaStr.isEmpty()) return null;
+        String cobertura_str = coberturaPercentualTextField.getText();
+        if (cobertura_str.isEmpty()) return null;
 
-        double coberturaPercentual;
+        double cobertura_percentual;
 
         try {
-            coberturaPercentual =
-                    Double.parseDouble(coberturaStr.replace(",", "."));
+            cobertura_percentual =
+                    Double.parseDouble(cobertura_str.replace(",", "."));
         } catch (NumberFormatException e) {
             return null;
         }
@@ -77,13 +77,13 @@ public class JanelaCadastroSeguradoras extends javax.swing.JFrame {
         return new Seguradora(
             nome,
             cidade,
-            coberturaPercentual
+            cobertura_percentual
         );
     }
 
-    private Seguradora getVisãoAlterada(String nome) {
-        for (Seguradora visão : seguradoras_cadastradas) {
-            if (visão.getNome().equals(nome)) return visão;
+    private Seguradora getVisaoAlterada(String nome) {
+        for (Seguradora visao : seguradoras_cadastradas) {
+            if (visao.getNome().equals(nome)) return visao;
         }
         return null;
     }
@@ -280,23 +280,23 @@ public class JanelaCadastroSeguradoras extends javax.swing.JFrame {
 
         if (mensagem_erro == null) {
 
-            Seguradora visão =
-                    getVisãoAlterada(seguradora.getNome());
+            Seguradora visao =
+                    getVisaoAlterada(seguradora.getNome());
 
-            if (visão != null) {
+            if (visao != null) {
 
-                visão.setCidade(
+                visao.setCidade(
                         seguradora.getCidade()
                 );
 
-                visão.setCoberturaPercentual(
+                visao.setCoberturaPercentual(
                         seguradora.getCoberturaPercentual()
                 );
 
                 seguradoras_cadastradasComboBox.updateUI();
 
                 seguradoras_cadastradasComboBox
-                        .setSelectedItem(visão);
+                        .setSelectedItem(visao);
             }
 
         } else {
@@ -319,14 +319,14 @@ public class JanelaCadastroSeguradoras extends javax.swing.JFrame {
 
         if (mensagem_erro == null) {
 
-            Seguradora visão =
-                    seguradora.getVisão();
+            Seguradora visao =
+                    seguradora.getVisao();
 
             seguradoras_cadastradasComboBox
-                    .addItem(visão);
+                    .addItem(visao);
 
             seguradoras_cadastradasComboBox
-                    .setSelectedItem(visão);
+                    .setSelectedItem(visao);
 
         } else {
             informarErro(mensagem_erro);
@@ -334,7 +334,7 @@ public class JanelaCadastroSeguradoras extends javax.swing.JFrame {
     }//GEN-LAST:event_inserirSeguradora
 
     private void consultarSeguradora(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_consultarSeguradora
-        Seguradora visão =
+        Seguradora visao =
                 (Seguradora)
                 seguradoras_cadastradasComboBox
                         .getSelectedItem();
@@ -343,11 +343,11 @@ public class JanelaCadastroSeguradoras extends javax.swing.JFrame {
 
         String mensagem_erro = null;
 
-        if (visão != null) {
+        if (visao != null) {
 
             seguradora =
                     Seguradora.buscarSeguradora(
-                            visão.getNome()
+                            visao.getNome()
                     );
 
             if (seguradora == null)
@@ -386,17 +386,17 @@ public class JanelaCadastroSeguradoras extends javax.swing.JFrame {
     }//GEN-LAST:event_consultarSeguradora
 
     private void removerSeguradora(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removerSeguradora
-        Seguradora visão =
+        Seguradora visao =
                 (Seguradora)
                 seguradoras_cadastradasComboBox
                         .getSelectedItem();
 
         String mensagem_erro = null;
 
-        if (visão != null)
+        if (visao != null)
             mensagem_erro =
                     controlador.removerSeguradora(
-                            visão.getNome()
+                            visao.getNome()
                     );
         else
             mensagem_erro =
@@ -405,7 +405,7 @@ public class JanelaCadastroSeguradoras extends javax.swing.JFrame {
         if (mensagem_erro == null) {
 
             seguradoras_cadastradasComboBox
-                    .removeItem(visão);
+                    .removeItem(visao);
 
             limparCampos(evt);
 

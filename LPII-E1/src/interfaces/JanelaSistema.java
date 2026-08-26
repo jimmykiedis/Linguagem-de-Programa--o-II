@@ -8,7 +8,7 @@ import persistência.BD;
 public class JanelaSistema extends javax.swing.JFrame {
 
     public JanelaSistema() {
-        BD.criaConexão();
+        BD.criaConexao();
         initComponents();
     }
 
@@ -38,7 +38,7 @@ public class JanelaSistema extends javax.swing.JFrame {
         pesquisar_orçamentoMenuItem = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Orçamentos da Seguradora");
+        setTitle("Cadastro de Seguradoras e Peças");
         setAlwaysOnTop(true);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosed(java.awt.event.WindowEvent evt) {
@@ -123,7 +123,7 @@ public class JanelaSistema extends javax.swing.JFrame {
     }//GEN-LAST:event_cadastrarSeguradora
 
     private void terminarSistema(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_terminarSistema
-        BD.fechaConexão();
+        BD.fechaConexao();
         System.exit(0);
     }//GEN-LAST:event_terminarSistema
   

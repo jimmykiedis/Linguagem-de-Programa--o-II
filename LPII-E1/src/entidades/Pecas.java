@@ -4,20 +4,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import persistência.BD;
 
 public class Pecas {
-
-    private static HashMap<String, Pecas> pecas = new HashMap();
-    public static HashMap<String, Pecas> getPecas() {
-        return pecas;
-    }
-
-    private static ArrayList<Pecas> pecas1 = new ArrayList();
-    public static ArrayList<Pecas> getPecas1() {
-        return pecas1;
-    }
 
     private int codigo;
     private String nome;
@@ -25,7 +14,7 @@ public class Pecas {
     private double preco;
     private String tipo;
     private String cor;
-    private boolean maoDeObra;
+    private boolean mao_de_obra;
 
     public int getCodigo() {
         return codigo;
@@ -52,7 +41,7 @@ public class Pecas {
     }
 
     public boolean getMaoDeObra() {
-        return maoDeObra;
+        return mao_de_obra;
     }
 
     public void setCodigo(int codigo) {
@@ -79,13 +68,13 @@ public class Pecas {
         this.cor = cor;
     }
 
-    public void setMaoDeObra(boolean maoDeObra) {
-        this.maoDeObra = maoDeObra;
+    public void setMaoDeObra(boolean mao_de_obra) {
+        this.mao_de_obra = mao_de_obra;
     }
 
     public Pecas(int codigo, String nome, String categoria,
                  double preco, String tipo, String cor,
-                 boolean maoDeObra) {
+                 boolean mao_de_obra) {
 
         this.codigo = codigo;
         this.nome = nome;
@@ -93,7 +82,7 @@ public class Pecas {
         this.preco = preco;
         this.tipo = tipo;
         this.cor = cor;
-        this.maoDeObra = maoDeObra;
+        this.mao_de_obra = mao_de_obra;
     }
 
     public String toString() {
@@ -110,7 +99,7 @@ public class Pecas {
         try {
 
             PreparedStatement comando =
-                    BD.conexão.prepareStatement(sql);
+                    BD.conexao.prepareStatement(sql);
 
             lista_resultados = comando.executeQuery();
 
@@ -131,18 +120,14 @@ public class Pecas {
             lista_resultados.close();
             comando.close();
 
-        } catch (SQLException exceção_sql) {
-            exceção_sql.printStackTrace();
+        } catch (SQLException excecao_sql) {
+            excecao_sql.printStackTrace();
         }
 
         return visoes.toArray(new Pecas[visoes.size()]);
     }
 
-    public static Pecas[] getVisões() {
-        return getVisoes();
-    }
-
-    public Pecas getVisão() {
+    public Pecas getVisao() {
         return new Pecas(
                 codigo,
                 nome,
@@ -150,7 +135,7 @@ public class Pecas {
                 preco,
                 tipo,
                 cor,
-                maoDeObra
+                mao_de_obra
         );
     }
 
@@ -165,7 +150,7 @@ public class Pecas {
         try {
 
             PreparedStatement comando =
-                    BD.conexão.prepareStatement(sql);
+                    BD.conexao.prepareStatement(sql);
 
             comando.setString(1, nome);
 
@@ -187,9 +172,9 @@ public class Pecas {
             lista_resultados.close();
             comando.close();
 
-        } catch (SQLException exceção_sql) {
+        } catch (SQLException excecao_sql) {
 
-            exceção_sql.printStackTrace();
+            excecao_sql.printStackTrace();
             pecas = null;
         }
 
@@ -206,7 +191,7 @@ public class Pecas {
         try {
 
             PreparedStatement comando =
-                    BD.conexão.prepareStatement(sql);
+                    BD.conexao.prepareStatement(sql);
 
             comando.setInt(1, pecas.getCodigo());
             comando.setString(2, pecas.getNome());
@@ -221,9 +206,9 @@ public class Pecas {
 
             return null;
 
-        } catch (SQLException exceção_sql) {
+        } catch (SQLException excecao_sql) {
 
-            exceção_sql.printStackTrace();
+            excecao_sql.printStackTrace();
 
             return "Erro na Inserção da Peça no BD";
         }
@@ -244,7 +229,7 @@ public class Pecas {
         try {
 
             PreparedStatement comando =
-                    BD.conexão.prepareStatement(sql);
+                    BD.conexao.prepareStatement(sql);
 
             comando.setInt(1, pecas.getCodigo());
             comando.setString(2, pecas.getCategoria());
@@ -259,9 +244,9 @@ public class Pecas {
 
             return null;
 
-        } catch (SQLException exceção_sql) {
+        } catch (SQLException excecao_sql) {
 
-            exceção_sql.printStackTrace();
+            excecao_sql.printStackTrace();
 
             return "Erro na Alteração da Peça no BD";
         }
@@ -275,7 +260,7 @@ public class Pecas {
         try {
 
             PreparedStatement comando =
-                    BD.conexão.prepareStatement(sql);
+                    BD.conexao.prepareStatement(sql);
 
             comando.setString(1, nome);
 
@@ -284,9 +269,9 @@ public class Pecas {
 
             return null;
 
-        } catch (SQLException exceção_sql) {
+        } catch (SQLException excecao_sql) {
 
-            exceção_sql.printStackTrace();
+            excecao_sql.printStackTrace();
 
             return "Erro na Remoção da Peça no BD";
         }
