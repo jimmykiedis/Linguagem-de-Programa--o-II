@@ -91,7 +91,7 @@ public class Pecas {
 
     public static Pecas[] getVisoes() {
 
-        String sql = "SELECT Codigo, Nome FROM Pecas";
+        String sql = "SELECT Codigo, Nome, Categoria FROM Pecas";
 
         ResultSet lista_resultados = null;
         ArrayList<Pecas> visoes = new ArrayList();
@@ -111,8 +111,11 @@ public class Pecas {
                 String nome =
                         lista_resultados.getString("Nome");
 
+                String categoria =
+                        lista_resultados.getString("Categoria");
+
                 visoes.add(
-                        new Pecas(codigo, nome, null,
+                        new Pecas(codigo, nome, categoria,
                                   0, null, null, false)
                 );
             }

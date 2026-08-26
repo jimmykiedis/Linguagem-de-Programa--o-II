@@ -22,6 +22,7 @@ public class JanelaCadastroPecas extends javax.swing.JFrame {
         this.controlador = controlador;
         pecas_cadastradas = Pecas.getVisoes();
         initComponents();
+        atualizarPecasCadastradas();
         setSize(new java.awt.Dimension(720, 560));
         configurarJanelaDependente(owner);
         limparCampos(null);
@@ -43,6 +44,29 @@ public class JanelaCadastroPecas extends javax.swing.JFrame {
         int x = owner.getX() + (owner.getWidth() - getWidth()) / 2;
         int y = owner.getY() + (owner.getHeight() - getHeight()) / 2;
         setLocation(x, y);
+    }
+
+    private Pecas localizarPeca(int codigo) {
+        for (Pecas visao : pecas_cadastradas) {
+            if (visao.getCodigo() == codigo) return visao;
+        }
+        return null;
+    }
+
+    private void atualizarPecasCadastradas() {
+        atualizarPecasCadastradas(-1);
+    }
+
+    private void atualizarPecasCadastradas(int codigo_selecionado) {
+        pecas_cadastradas = Pecas.getVisoes();
+        pecas_cadastradasComboBox.setModel(
+                new DefaultComboBoxModel(pecas_cadastradas)
+        );
+
+        Pecas visao_selecionada = localizarPeca(codigo_selecionado);
+        if (visao_selecionada != null) {
+            pecas_cadastradasComboBox.setSelectedItem(visao_selecionada);
+        }
     }
     
     private void informarErro(String mensagem) {
@@ -366,8 +390,7 @@ public class JanelaCadastroPecas extends javax.swing.JFrame {
 
         if (mensagem_erro == null) {
             Pecas visao = pecas.getVisao();
-            pecas_cadastradasComboBox.addItem(visao);
-            pecas_cadastradasComboBox.setSelectedItem(visao);
+            atualizarPecasCadastradas(visao.getCodigo());
         } else {
             informarErro(mensagem_erro);
         }
@@ -394,7 +417,7 @@ public class JanelaCadastroPecas extends javax.swing.JFrame {
                 visao.setMaoDeObra(pecas.getMaoDeObra());
 
                 pecas_cadastradasComboBox.updateUI();
-                pecas_cadastradasComboBox.setSelectedItem(visao);
+                atualizarPecasCadastradas(pecas.getCodigo());
             }
         } else {
             informarErro(mensagem_erro);
@@ -455,7 +478,7 @@ public class JanelaCadastroPecas extends javax.swing.JFrame {
             mensagem_erro = "Nenhuma Peça selecionada";
 
         if (mensagem_erro == null) {
-            pecas_cadastradasComboBox.removeItem(visao);
+            atualizarPecasCadastradas();
             limparCampos(evt);
         } else {
             informarErro(mensagem_erro);

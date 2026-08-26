@@ -22,6 +22,7 @@ public class JanelaCadastroSeguradoras extends javax.swing.JFrame {
         this.controlador = controlador;
         seguradoras_cadastradas = Seguradora.getVisoes();
         initComponents();
+        atualizarSeguradorasCadastradas();
         setSize(new java.awt.Dimension(700, 460));
         configurarJanelaDependente(owner);
         limparCampos(null);
@@ -43,6 +44,30 @@ public class JanelaCadastroSeguradoras extends javax.swing.JFrame {
         int x = owner.getX() + (owner.getWidth() - getWidth()) / 2;
         int y = owner.getY() + (owner.getHeight() - getHeight()) / 2;
         setLocation(x, y);
+    }
+
+    private Seguradora localizarSeguradora(String nome) {
+        if (nome == null) return null;
+        for (Seguradora visao : seguradoras_cadastradas) {
+            if (nome.equals(visao.getNome())) return visao;
+        }
+        return null;
+    }
+
+    private void atualizarSeguradorasCadastradas() {
+        atualizarSeguradorasCadastradas(null);
+    }
+
+    private void atualizarSeguradorasCadastradas(String nome_selecionado) {
+        seguradoras_cadastradas = Seguradora.getVisoes();
+        seguradoras_cadastradasComboBox.setModel(
+                new DefaultComboBoxModel(seguradoras_cadastradas)
+        );
+
+        Seguradora visao_selecionada = localizarSeguradora(nome_selecionado);
+        if (visao_selecionada != null) {
+            seguradoras_cadastradasComboBox.setSelectedItem(visao_selecionada);
+        }
     }
 
     private void informarErro(String mensagem) {
@@ -319,14 +344,8 @@ public class JanelaCadastroSeguradoras extends javax.swing.JFrame {
 
         if (mensagem_erro == null) {
 
-            Seguradora visao =
-                    seguradora.getVisao();
-
-            seguradoras_cadastradasComboBox
-                    .addItem(visao);
-
-            seguradoras_cadastradasComboBox
-                    .setSelectedItem(visao);
+            Seguradora visao = seguradora.getVisao();
+            atualizarSeguradorasCadastradas(visao.getNome());
 
         } else {
             informarErro(mensagem_erro);
@@ -404,8 +423,7 @@ public class JanelaCadastroSeguradoras extends javax.swing.JFrame {
 
         if (mensagem_erro == null) {
 
-            seguradoras_cadastradasComboBox
-                    .removeItem(visao);
+            atualizarSeguradorasCadastradas();
 
             limparCampos(evt);
 
