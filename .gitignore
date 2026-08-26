@@ -1,0 +1,28 @@
+# macOS
+.DS_Store
+
+# Java and Maven build output
+**/target/
+**/bin/
+**/out/
+*.class
+*.jar
+
+# NetBeans
+**/nbproject/private/
+**/nbbuild/
+**/dist/
+**/nbdist/
+
+# IDE metadata
+.idea/
+*.iml
+.vscode/settings.json
+
+# Editor and office temporary files
+*~
+.~lock.*#
+*.swp
+*.swo
+*.tmp
+*.log
