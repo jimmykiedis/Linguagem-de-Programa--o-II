@@ -92,8 +92,9 @@ public class JanelaCadastroPecas extends javax.swing.JFrame {
         String nome = nomeTextField.getText();
         if (nome.isEmpty()) return null;
         
-        String categoria = categoriaTextField.getText();
-        if (categoria.isEmpty()) return null;
+        Pecas.CategoriaPeca categoria =
+                (Pecas.CategoriaPeca) categoriaComboBox.getSelectedItem();
+        if (categoria == null) return null;
         
         String precoStr = precoTextField.getText();
         if (precoStr.isEmpty()) return null;
@@ -111,29 +112,13 @@ public class JanelaCadastroPecas extends javax.swing.JFrame {
         String cor = corTextField.getText();
         if (cor.isEmpty()) return null;
         
-        String mao_de_obra_str = maoDeObraTextField.getText();
-        if (mao_de_obra_str.isEmpty()) return null;
-        
-        boolean mao_de_obra;
-        
-        if (mao_de_obra_str.equalsIgnoreCase("S")
-                || mao_de_obra_str.equalsIgnoreCase("SIM")
-                || mao_de_obra_str.equalsIgnoreCase("TRUE")) {
-            mao_de_obra = true;
-        } else if (mao_de_obra_str.equalsIgnoreCase("N")
-                || mao_de_obra_str.equalsIgnoreCase("NAO")
-                || mao_de_obra_str.equalsIgnoreCase("NÃO")
-                || mao_de_obra_str.equalsIgnoreCase("FALSE")) {
-            mao_de_obra = false;
-        } else {
-            return null;
-        }
+        boolean mao_de_obra = maoDeObraCheckBox.isSelected();
         
         try {
             return new Pecas(
                 codigo,
                 nome,
-                Pecas.CategoriaPeca.fromTexto(categoria),
+                categoria,
                 preco,
                 Pecas.TipoPeca.fromTexto(tipo),
                 cor,
@@ -170,7 +155,7 @@ public class JanelaCadastroPecas extends javax.swing.JFrame {
         nomeTextField = new javax.swing.JTextField();
 
         categoriaLabel = new javax.swing.JLabel();
-        categoriaTextField = new javax.swing.JTextField();
+        categoriaComboBox = new javax.swing.JComboBox();
 
         precoLabel = new javax.swing.JLabel();
         precoTextField = new javax.swing.JTextField();
@@ -182,7 +167,7 @@ public class JanelaCadastroPecas extends javax.swing.JFrame {
         corTextField = new javax.swing.JTextField();
 
         maoDeObraLabel = new javax.swing.JLabel();
-        maoDeObraTextField = new javax.swing.JTextField();
+        maoDeObraCheckBox = new javax.swing.JCheckBox();
 
         pecas_cadastradasComboBox = new javax.swing.JComboBox();
         pecasCadastradasLabel = new javax.swing.JLabel();
@@ -303,14 +288,15 @@ public class JanelaCadastroPecas extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(1, 5, 10, 5);
         getContentPane().add(categoriaLabel, gridBagConstraints);
 
-        categoriaTextField.setColumns(18);
-        categoriaTextField.setPreferredSize(new java.awt.Dimension(180, 20));
+        categoriaComboBox.setModel(
+            new DefaultComboBoxModel(Pecas.CategoriaPeca.values())
+        );
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 3;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.insets = new java.awt.Insets(1, 5, 10, 5);
-        getContentPane().add(categoriaTextField, gridBagConstraints);
+        getContentPane().add(categoriaComboBox, gridBagConstraints);
 
         precoLabel.setText("Preço");
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -371,14 +357,13 @@ public class JanelaCadastroPecas extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(1, 5, 10, 5);
         getContentPane().add(maoDeObraLabel, gridBagConstraints);
 
-        maoDeObraTextField.setColumns(8);
-        maoDeObraTextField.setPreferredSize(new java.awt.Dimension(80, 20));
+        maoDeObraCheckBox.setText("Sim");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 7;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.insets = new java.awt.Insets(1, 5, 10, 5);
-        getContentPane().add(maoDeObraTextField, gridBagConstraints);
+        getContentPane().add(maoDeObraCheckBox, gridBagConstraints);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -451,7 +436,7 @@ public class JanelaCadastroPecas extends javax.swing.JFrame {
             );
 
             nomeTextField.setText(pecas.getNome());
-            categoriaTextField.setText(pecas.getCategoria().toString());
+            categoriaComboBox.setSelectedItem(pecas.getCategoria());
 
             precoTextField.setText(
                     String.valueOf(pecas.getPreco())
@@ -460,9 +445,7 @@ public class JanelaCadastroPecas extends javax.swing.JFrame {
             tipoTextField.setText(pecas.getTipo().toString());
             corTextField.setText(pecas.getCor());
 
-            maoDeObraTextField.setText(
-                    pecas.getMaoDeObra() ? "S" : "N"
-            );
+            maoDeObraCheckBox.setSelected(pecas.getMaoDeObra());
 
         } else {
             informarErro(mensagem_erro);
@@ -492,11 +475,11 @@ public class JanelaCadastroPecas extends javax.swing.JFrame {
     private void limparCampos(java.awt.event.ActionEvent evt) {
         codigoTextField.setText("");
         nomeTextField.setText("");
-        categoriaTextField.setText("");
+        categoriaComboBox.setSelectedIndex(0);
         precoTextField.setText("");
         tipoTextField.setText("");
         corTextField.setText("");
-        maoDeObraTextField.setText("");
+        maoDeObraCheckBox.setSelected(false);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -508,7 +491,7 @@ public class JanelaCadastroPecas extends javax.swing.JFrame {
     private javax.swing.JLabel nomeLabel;
     private javax.swing.JTextField nomeTextField;
     private javax.swing.JLabel categoriaLabel;
-    private javax.swing.JTextField categoriaTextField;
+    private javax.swing.JComboBox categoriaComboBox;
     private javax.swing.JLabel precoLabel;
     private javax.swing.JTextField precoTextField;
     private javax.swing.JLabel tipoLabel;
@@ -516,7 +499,7 @@ public class JanelaCadastroPecas extends javax.swing.JFrame {
     private javax.swing.JLabel corLabel;
     private javax.swing.JTextField corTextField;
     private javax.swing.JLabel maoDeObraLabel;
-    private javax.swing.JTextField maoDeObraTextField;
+    private javax.swing.JCheckBox maoDeObraCheckBox;
     private javax.swing.JButton inserirPecas;
     private javax.swing.JButton limparCampos;
     private javax.swing.JLabel pecasCadastradasLabel;
