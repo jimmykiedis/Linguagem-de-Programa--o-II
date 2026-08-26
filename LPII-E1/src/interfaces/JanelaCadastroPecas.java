@@ -213,8 +213,8 @@ public class JanelaCadastroPecas extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(1, 5, 10, 5);
         getContentPane().add(codigoLabel, gridBagConstraints);
 
-        codigoTextField.setColumns(50);
-        codigoTextField.setPreferredSize(new java.awt.Dimension(456, 20));
+        codigoTextField.setColumns(8);
+        codigoTextField.setPreferredSize(new java.awt.Dimension(80, 20));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 1;
@@ -230,8 +230,8 @@ public class JanelaCadastroPecas extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(1, 5, 10, 5);
         getContentPane().add(nomeLabel, gridBagConstraints);
 
-        nomeTextField.setColumns(50);
-        nomeTextField.setPreferredSize(new java.awt.Dimension(456, 20));
+        nomeTextField.setColumns(24);
+        nomeTextField.setPreferredSize(new java.awt.Dimension(240, 20));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 2;
@@ -247,8 +247,8 @@ public class JanelaCadastroPecas extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(1, 5, 10, 5);
         getContentPane().add(categoriaLabel, gridBagConstraints);
 
-        categoriaTextField.setColumns(50);
-        categoriaTextField.setPreferredSize(new java.awt.Dimension(456, 20));
+        categoriaTextField.setColumns(18);
+        categoriaTextField.setPreferredSize(new java.awt.Dimension(180, 20));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 3;
@@ -264,8 +264,8 @@ public class JanelaCadastroPecas extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(1, 5, 10, 5);
         getContentPane().add(precoLabel, gridBagConstraints);
 
-        precoTextField.setColumns(50);
-        precoTextField.setPreferredSize(new java.awt.Dimension(456, 20));
+        precoTextField.setColumns(10);
+        precoTextField.setPreferredSize(new java.awt.Dimension(100, 20));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 4;
@@ -281,8 +281,8 @@ public class JanelaCadastroPecas extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(1, 5, 10, 5);
         getContentPane().add(tipoLabel, gridBagConstraints);
 
-        tipoTextField.setColumns(50);
-        tipoTextField.setPreferredSize(new java.awt.Dimension(456, 20));
+        tipoTextField.setColumns(14);
+        tipoTextField.setPreferredSize(new java.awt.Dimension(140, 20));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 5;
@@ -298,8 +298,8 @@ public class JanelaCadastroPecas extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(1, 5, 10, 5);
         getContentPane().add(corLabel, gridBagConstraints);
 
-        corTextField.setColumns(50);
-        corTextField.setPreferredSize(new java.awt.Dimension(456, 20));
+        corTextField.setColumns(10);
+        corTextField.setPreferredSize(new java.awt.Dimension(100, 20));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 6;
@@ -315,8 +315,8 @@ public class JanelaCadastroPecas extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(1, 5, 10, 5);
         getContentPane().add(maoDeObraLabel, gridBagConstraints);
 
-        maoDeObraTextField.setColumns(50);
-        maoDeObraTextField.setPreferredSize(new java.awt.Dimension(456, 20));
+        maoDeObraTextField.setColumns(8);
+        maoDeObraTextField.setPreferredSize(new java.awt.Dimension(80, 20));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 7;

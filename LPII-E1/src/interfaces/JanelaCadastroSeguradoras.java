@@ -81,7 +81,7 @@ public class JanelaCadastroSeguradoras extends javax.swing.JFrame {
         seguradoras_cadastradasComboBox = new javax.swing.JComboBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Cadastrar Editoras");
+        setTitle("Cadastrar Seguradoras");
         getContentPane().setLayout(new java.awt.GridBagLayout());
 
         inserirSeguradora.setText("Inserir");
@@ -140,8 +140,8 @@ public class JanelaCadastroSeguradoras extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(1, 16, 10, 10);
         getContentPane().add(nomeLabel, gridBagConstraints);
 
-        nomeTextField.setColumns(50);
-        nomeTextField.setPreferredSize(new java.awt.Dimension(456, 20));
+        nomeTextField.setColumns(24);
+        nomeTextField.setPreferredSize(new java.awt.Dimension(240, 20));
         nomeTextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 nomeTextFieldActionPerformed(evt);
@@ -150,7 +150,7 @@ public class JanelaCadastroSeguradoras extends javax.swing.JFrame {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 1;
-        gridBagConstraints.ipadx = 400;
+        gridBagConstraints.ipadx = 80;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.insets = new java.awt.Insets(1, 5, 10, 5);
         getContentPane().add(nomeTextField, gridBagConstraints);
@@ -163,8 +163,8 @@ public class JanelaCadastroSeguradoras extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(1, 16, 10, 10);
         getContentPane().add(cidadeLabel, gridBagConstraints);
 
-        cidadeTextField.setColumns(50);
-        cidadeTextField.setPreferredSize(new java.awt.Dimension(456, 20));
+        cidadeTextField.setColumns(18);
+        cidadeTextField.setPreferredSize(new java.awt.Dimension(180, 20));
         cidadeTextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cidadeTextFieldActionPerformed(evt);
@@ -173,7 +173,7 @@ public class JanelaCadastroSeguradoras extends javax.swing.JFrame {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 2;
-        gridBagConstraints.ipadx = 200;
+        gridBagConstraints.ipadx = 20;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.insets = new java.awt.Insets(1, 5, 10, 5);
         getContentPane().add(cidadeTextField, gridBagConstraints);
@@ -186,8 +186,8 @@ public class JanelaCadastroSeguradoras extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(1, 16, 10, 10);
         getContentPane().add(coberturaPercentualLabel, gridBagConstraints);
 
-        coberturaPercentualTextField.setColumns(50);
-        coberturaPercentualTextField.setPreferredSize(new java.awt.Dimension(456, 20));
+        coberturaPercentualTextField.setColumns(10);
+        coberturaPercentualTextField.setPreferredSize(new java.awt.Dimension(100, 20));
         coberturaPercentualTextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 coberturaPercentualTextFieldActionPerformed(evt);
@@ -196,7 +196,7 @@ public class JanelaCadastroSeguradoras extends javax.swing.JFrame {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 3;
-        gridBagConstraints.ipadx = 43;
+        gridBagConstraints.ipadx = 0;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.insets = new java.awt.Insets(1, 5, 10, 5);
         getContentPane().add(coberturaPercentualTextField, gridBagConstraints);
