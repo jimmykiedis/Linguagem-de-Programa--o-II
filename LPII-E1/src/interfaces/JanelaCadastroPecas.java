@@ -96,7 +96,7 @@ public class JanelaCadastroPecas extends javax.swing.JFrame {
     }
     
     @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
         java.awt.GridBagConstraints gridBagConstraints;
 
@@ -325,8 +325,7 @@ public class JanelaCadastroPecas extends javax.swing.JFrame {
         getContentPane().add(maoDeObraTextField, gridBagConstraints);
 
         pack();
-    }
-    // </editor-fold>
+    }// </editor-fold>//GEN-END:initComponents
 
     private void inserirPecas(java.awt.event.ActionEvent evt) {
         Pecas pecas = obterPecasInformada();
@@ -445,7 +444,7 @@ public class JanelaCadastroPecas extends javax.swing.JFrame {
         maoDeObraTextField.setText("");
     }
 
-    // Variables declaration
+    // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton alterarPecas;
     private javax.swing.JPanel comandosPanel;
     private javax.swing.JButton consultarPecas;
@@ -468,5 +467,5 @@ public class JanelaCadastroPecas extends javax.swing.JFrame {
     private javax.swing.JLabel pecasCadastradasLabel;
     private javax.swing.JComboBox pecas_cadastradasComboBox;
     private javax.swing.JButton removerPecas;
-    // End of variables declaration
+    // End of variables declaration//GEN-END:variables
 }
