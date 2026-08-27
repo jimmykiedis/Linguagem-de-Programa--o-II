@@ -18,20 +18,20 @@ public class ControladorCadastroPecas {
     }
        
     public String inserirPecas(Pecas pecas) {
-        Pecas peca_buscada = Pecas.buscarPecas(pecas.getNome());
+        Pecas peca_buscada = Pecas.buscarPecas(pecas.getCodigo());
         if (peca_buscada == null) return Pecas.inserirPecas(pecas);
-        else return "Nome de Peça já cadastrado";
+        else return "Código de Peça já cadastrado";
     }
     
     public String alterarPecas(Pecas pecas) {
-        Pecas peca_buscada = Pecas.buscarPecas(pecas.getNome());
+        Pecas peca_buscada = Pecas.buscarPecas(pecas.getCodigo());
         if (peca_buscada != null) return Pecas.alterarPecas(pecas);
-        else return "Nome de Peça não cadastrado";
+        else return "Código de Peça não cadastrado";
     }
     
-    public String removerPecas(String nome) {
-        Pecas peca_buscada = Pecas.buscarPecas(nome);
-        if (peca_buscada != null) return Pecas.removerPecas(nome);
-        else return "Nome de Peça não cadastrado";
+    public String removerPecas(int codigo) {
+        Pecas peca_buscada = Pecas.buscarPecas(codigo);
+        if (peca_buscada != null) return Pecas.removerPecas(codigo);
+        else return "Código de Peça não cadastrado";
     }
 }

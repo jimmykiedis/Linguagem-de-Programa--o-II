@@ -10,20 +10,20 @@ public class ControladorCadastroSinistros {
     }
 
     public String inserirSinistro(Sinistro sinistro) {
-        Sinistro sinistro_buscado = Sinistro.buscarSinistro(sinistro.getSequencial());
+        Sinistro sinistro_buscado = Sinistro.buscarSinistro(sinistro.getSegurado());
         if (sinistro_buscado == null) return Sinistro.inserirSinistro(sinistro);
-        else return "Numero de Sinistro já cadastrado";
+        else return "Segurado de Sinistro já cadastrado";
     }
 
     public String alterarSinistro(Sinistro sinistro) {
-        Sinistro sinistro1 = Sinistro.buscarSinistro(sinistro.getSequencial());
+        Sinistro sinistro1 = Sinistro.buscarSinistro(sinistro.getSegurado());
         if (sinistro1 != null) return Sinistro.alterarSinistro(sinistro);
-        else return "Numero de Sinistro não cadastrado";
+        else return "Segurado de Sinistro não cadastrado";
     }
 
-    public String removerSinistro(int sequencial) {
-        Sinistro sinistro1 = Sinistro.buscarSinistro(sequencial);
-        if (sinistro1 != null) return Sinistro.removerSinistro(sequencial);
-        else return "Numero de Sinistro não cadastrado";
+    public String removerSinistro(String segurado) {
+        Sinistro sinistro1 = Sinistro.buscarSinistro(segurado);
+        if (sinistro1 != null) return Sinistro.removerSinistro(segurado);
+        else return "Segurado de Sinistro não cadastrado";
     }
 }

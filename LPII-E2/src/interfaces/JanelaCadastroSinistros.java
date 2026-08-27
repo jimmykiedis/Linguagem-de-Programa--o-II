@@ -3,6 +3,7 @@ package interfaces;
 import controles.ControladorCadastroSinistros;
 import entidades.Sinistro;
 import java.awt.Frame;
+import java.util.Objects;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 
@@ -39,23 +40,23 @@ public class JanelaCadastroSinistros extends javax.swing.JFrame {
         setLocation(x, y);
     }
 
-    private Sinistro localizarSinistro(int numero) {
+    private Sinistro localizarSinistro(String segurado) {
         if (sinistros_cadastrados == null) return null;
         for (Sinistro visao : sinistros_cadastrados) {
-            if (visao.getNumero() == numero) return visao;
+            if (Objects.equals(visao.getSegurado(), segurado)) return visao;
         }
         return null;
     }
 
     private void atualizarSinistrosCadastrados() {
-        atualizarSinistrosCadastrados(-1);
+        atualizarSinistrosCadastrados(null);
     }
 
-    private void atualizarSinistrosCadastrados(int numero_selecionado) {
+    private void atualizarSinistrosCadastrados(String segurado_selecionado) {
         sinistros_cadastrados = Sinistro.getVisoes();
         sinistros_cadastradosComboBox.setModel(new DefaultComboBoxModel(sinistros_cadastrados));
 
-        Sinistro visao_selecionada = localizarSinistro(numero_selecionado);
+        Sinistro visao_selecionada = localizarSinistro(segurado_selecionado);
         if (visao_selecionada != null) {
             sinistros_cadastradosComboBox.setSelectedItem(visao_selecionada);
         }
@@ -66,21 +67,14 @@ public class JanelaCadastroSinistros extends javax.swing.JFrame {
     }
 
     private Sinistro obterSinistroInformado() {
-        String numero_str = numeroTextField.getText().trim();
-        if (numero_str.isEmpty()) return null;
-
-        int numero;
-        try {
-            numero = Integer.parseInt(numero_str);
-        } catch (NumberFormatException excecao) {
-            return null;
-        }
-
-        String cliente = clienteTextField.getText().trim();
-        if (cliente.isEmpty()) return null;
+        String segurado = numeroTextField.getText().trim();
+        if (segurado.isEmpty()) return null;
 
         String telefone = telefoneTextField.getText().trim();
         if (telefone.isEmpty()) return null;
+
+        String cidade = clienteTextField.getText().trim();
+        if (cidade.isEmpty()) cidade = null;
 
         Sinistro.GrauMonta grau_monta =
                 (Sinistro.GrauMonta) grauMontaComboBox.getSelectedItem();
@@ -88,12 +82,12 @@ public class JanelaCadastroSinistros extends javax.swing.JFrame {
 
         boolean perda_total = perdaTotalCheckBox.isSelected();
 
-        return new Sinistro(numero, cliente, telefone, grau_monta, perda_total);
+        return new Sinistro(segurado, telefone, cidade, grau_monta, perda_total);
     }
 
-    private Sinistro getVisaoAlterada(int numero) {
+    private Sinistro getVisaoAlterada(String segurado) {
         for (Sinistro visao : sinistros_cadastrados) {
-            if (visao.getNumero() == numero) return visao;
+            if (Objects.equals(visao.getSegurado(), segurado)) return visao;
         }
         return null;
     }
@@ -190,7 +184,7 @@ public class JanelaCadastroSinistros extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(1, 5, 10, 5);
         getContentPane().add(sinistros_cadastradosComboBox, gridBagConstraints);
 
-        numeroLabel.setText("Número");
+        numeroLabel.setText("Segurado");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
@@ -207,7 +201,7 @@ public class JanelaCadastroSinistros extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(1, 5, 10, 5);
         getContentPane().add(numeroTextField, gridBagConstraints);
 
-        clienteLabel.setText("Cliente");
+        clienteLabel.setText("Cidade");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 2;
@@ -292,13 +286,13 @@ public class JanelaCadastroSinistros extends javax.swing.JFrame {
         if (visao == null) {
             mensagem_erro = "Nenhum Sinistro selecionado";
         } else {
-            Sinistro sinistro = Sinistro.buscarSinistro(visao.getNumero());
+            Sinistro sinistro = Sinistro.buscarSinistro(visao.getSegurado());
             if (sinistro == null) {
                 mensagem_erro = "Sinistro não cadastrado";
             } else {
-                numeroTextField.setText(String.valueOf(sinistro.getNumero()));
+                numeroTextField.setText(sinistro.getSegurado());
                 numeroTextField.setEditable(false);
-                clienteTextField.setText(sinistro.getCliente());
+                clienteTextField.setText(sinistro.getCidade());
                 telefoneTextField.setText(sinistro.getTelefone());
                 grauMontaComboBox.setSelectedItem(sinistro.getGrauMonta());
                 perdaTotalCheckBox.setSelected(sinistro.getPerdaTotal());
@@ -319,10 +313,10 @@ public class JanelaCadastroSinistros extends javax.swing.JFrame {
         }
 
         if (mensagem_erro == null) {
-            atualizarSinistrosCadastrados(sinistro.getNumero());
-            numeroTextField.setText(String.valueOf(sinistro.getNumero()));
+            atualizarSinistrosCadastrados(sinistro.getSegurado());
+            numeroTextField.setText(sinistro.getSegurado());
             numeroTextField.setEditable(false);
-            sinistros_cadastradosComboBox.setSelectedItem(getVisaoAlterada(sinistro.getNumero()));
+            sinistros_cadastradosComboBox.setSelectedItem(getVisaoAlterada(sinistro.getSegurado()));
         } else {
             informarErro(mensagem_erro);
         }
@@ -339,8 +333,8 @@ public class JanelaCadastroSinistros extends javax.swing.JFrame {
         }
 
         if (mensagem_erro == null) {
-            atualizarSinistrosCadastrados(sinistro.getNumero());
-            sinistros_cadastradosComboBox.setSelectedItem(getVisaoAlterada(sinistro.getNumero()));
+            atualizarSinistrosCadastrados(sinistro.getSegurado());
+            sinistros_cadastradosComboBox.setSelectedItem(getVisaoAlterada(sinistro.getSegurado()));
         } else {
             informarErro(mensagem_erro);
         }
@@ -351,7 +345,7 @@ public class JanelaCadastroSinistros extends javax.swing.JFrame {
         String mensagem_erro = null;
 
         if (visao != null) {
-            mensagem_erro = controlador.removerSinistro(visao.getNumero());
+            mensagem_erro = controlador.removerSinistro(visao.getSegurado());
         } else {
             mensagem_erro = "Nenhum Sinistro selecionado";
         }

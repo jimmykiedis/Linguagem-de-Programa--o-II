@@ -80,58 +80,100 @@ public class JanelaCadastroPecas extends javax.swing.JFrame {
     
     private Pecas obterPecasInformada() {
         String codigoStr = codigoTextField.getText();
-        if (codigoStr.isEmpty()) return null;
+        if (codigoStr.isEmpty()) {
+            throw new IllegalArgumentException("Informe o código da peça.");
+        }
         
         int codigo;
         try {
             codigo = Integer.parseInt(codigoStr);
         } catch (NumberFormatException e) {
-            return null;
+            throw new IllegalArgumentException("Código da peça inválido.");
         }
         
         String nome = nomeTextField.getText();
-        if (nome.isEmpty()) return null;
+        if (nome.isEmpty()) {
+            throw new IllegalArgumentException("Informe o nome da peça.");
+        }
         
-        Pecas.CategoriaPeca categoria =
-                (Pecas.CategoriaPeca) categoriaComboBox.getSelectedItem();
-        if (categoria == null) return null;
+        Pecas.MarcaPeca marca =
+                (Pecas.MarcaPeca) categoriaComboBox.getSelectedItem();
+        if (marca == null) {
+            throw new IllegalArgumentException("Informe a marca da peça.");
+        }
         
         String precoStr = precoTextField.getText();
-        if (precoStr.isEmpty()) return null;
+        if (precoStr.isEmpty()) {
+            throw new IllegalArgumentException("Informe o preço da peça.");
+        }
         
         double preco;
         try {
             preco = Double.parseDouble(precoStr.replace(",", "."));
         } catch (NumberFormatException e) {
-            return null;
+            throw new IllegalArgumentException("Preço da peça inválido.");
         }
         
         String tipo = tipoTextField.getText();
-        if (tipo.isEmpty()) return null;
+        if (tipo.isEmpty()) {
+            throw new IllegalArgumentException("Informe o tipo da peça.");
+        }
+        
+        Pecas.TipoPeca tipoPeca;
+        try {
+            tipoPeca = Pecas.TipoPeca.fromTexto(tipo);
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException(e.getMessage());
+        }
+
+        Pecas.TipoRegistro tipoRegistro =
+                tipoPeca == null
+                        ? Pecas.TipoRegistro.GERAL
+                        : (tipoPeca == Pecas.TipoPeca.FAROL
+                                || tipoPeca == Pecas.TipoPeca.PARACHOQUES
+                                || tipoPeca == Pecas.TipoPeca.CAPO
+                                || tipoPeca == Pecas.TipoPeca.LANTERNAS
+                                || tipoPeca == Pecas.TipoPeca.PORTAS
+                                ? Pecas.TipoRegistro.LATARIA
+                                : Pecas.TipoRegistro.MECANICA);
         
         String cor = corTextField.getText();
-        if (cor.isEmpty()) return null;
+        String prazoGarantiaStr = prazoGarantiaTextField.getText();
+
+        if (tipoRegistro == Pecas.TipoRegistro.LATARIA && cor.isEmpty()) {
+            throw new IllegalArgumentException("Informe a cor da peça de lataria.");
+        }
+
+        Integer prazoGarantia = null;
+        if (tipoRegistro == Pecas.TipoRegistro.MECANICA) {
+            if (prazoGarantiaStr.isEmpty()) {
+                throw new IllegalArgumentException("Informe o prazo de garantia da peça mecânica.");
+            }
+
+            try {
+                prazoGarantia = Integer.parseInt(prazoGarantiaStr);
+            } catch (NumberFormatException e) {
+                throw new IllegalArgumentException("Prazo de garantia inválido.");
+            }
+        }
         
         boolean mao_de_obra = maoDeObraCheckBox.isSelected();
-        
-        try {
-            return new Pecas(
+
+        return new Pecas(
                 codigo,
                 nome,
-                categoria,
+                marca,
                 preco,
-                Pecas.TipoPeca.fromTexto(tipo),
-                cor,
+                tipoPeca,
+                cor.isEmpty() ? null : cor,
+                prazoGarantia,
                 mao_de_obra
-            );
-        } catch (IllegalArgumentException excecao) {
-            return null;
-        }
+        );
     }
     
-    private Pecas getVisaoAlterada(String nome) {
+    private Pecas getVisaoAlterada(int codigo) {
         for (Pecas visao : pecas_cadastradas) {
-            if (visao.getNome().equals(nome)) return visao;
+            if (visao.getCodigo() == codigo) return visao;
         }
         return null;
     }
@@ -165,6 +207,9 @@ public class JanelaCadastroPecas extends javax.swing.JFrame {
 
         corLabel = new javax.swing.JLabel();
         corTextField = new javax.swing.JTextField();
+
+        prazoGarantiaLabel = new javax.swing.JLabel();
+        prazoGarantiaTextField = new javax.swing.JTextField();
 
         maoDeObraLabel = new javax.swing.JLabel();
         maoDeObraCheckBox = new javax.swing.JCheckBox();
@@ -280,7 +325,7 @@ public class JanelaCadastroPecas extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(1, 5, 10, 5);
         getContentPane().add(nomeTextField, gridBagConstraints);
 
-        categoriaLabel.setText("Categoria");
+        categoriaLabel.setText("Marca");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 3;
@@ -289,7 +334,7 @@ public class JanelaCadastroPecas extends javax.swing.JFrame {
         getContentPane().add(categoriaLabel, gridBagConstraints);
 
         categoriaComboBox.setModel(
-            new DefaultComboBoxModel(Pecas.CategoriaPeca.values())
+            new DefaultComboBoxModel(Pecas.MarcaPeca.values())
         );
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
@@ -349,10 +394,27 @@ public class JanelaCadastroPecas extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(1, 5, 10, 5);
         getContentPane().add(corTextField, gridBagConstraints);
 
-        maoDeObraLabel.setText("Mão de Obra");
+        prazoGarantiaLabel.setText("Prazo de Garantia");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 7;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
+        gridBagConstraints.insets = new java.awt.Insets(1, 5, 10, 5);
+        getContentPane().add(prazoGarantiaLabel, gridBagConstraints);
+
+        prazoGarantiaTextField.setColumns(10);
+        prazoGarantiaTextField.setPreferredSize(new java.awt.Dimension(100, 20));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 7;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.insets = new java.awt.Insets(1, 5, 10, 5);
+        getContentPane().add(prazoGarantiaTextField, gridBagConstraints);
+
+        maoDeObraLabel.setText("Mão de Obra");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 8;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
         gridBagConstraints.insets = new java.awt.Insets(1, 5, 10, 5);
         getContentPane().add(maoDeObraLabel, gridBagConstraints);
@@ -360,7 +422,7 @@ public class JanelaCadastroPecas extends javax.swing.JFrame {
         maoDeObraCheckBox.setText("Sim");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 7;
+        gridBagConstraints.gridy = 8;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.insets = new java.awt.Insets(1, 5, 10, 5);
         getContentPane().add(maoDeObraCheckBox, gridBagConstraints);
@@ -369,13 +431,17 @@ public class JanelaCadastroPecas extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void inserirPecas(java.awt.event.ActionEvent evt) {
-        Pecas pecas = obterPecasInformada();
+        Pecas pecas;
         String mensagem_erro = null;
 
-        if (pecas != null)
-            mensagem_erro = controlador.inserirPecas(pecas);
-        else
-            mensagem_erro = "Algum atributo da Peça não foi informado";
+        try {
+            pecas = obterPecasInformada();
+        } catch (IllegalArgumentException excecao) {
+            informarErro(excecao.getMessage());
+            return;
+        }
+
+        mensagem_erro = controlador.inserirPecas(pecas);
 
         if (mensagem_erro == null) {
             Pecas visao = pecas.getVisao();
@@ -386,20 +452,24 @@ public class JanelaCadastroPecas extends javax.swing.JFrame {
     }
 
     private void alterarPecas(java.awt.event.ActionEvent evt) {
-        Pecas pecas = obterPecasInformada();
+        Pecas pecas;
         String mensagem_erro = null;
 
-        if (pecas != null)
-            mensagem_erro = controlador.alterarPecas(pecas);
-        else
-            mensagem_erro = "Algum atributo da Peça não foi informado";
+        try {
+            pecas = obterPecasInformada();
+        } catch (IllegalArgumentException excecao) {
+            informarErro(excecao.getMessage());
+            return;
+        }
+
+        mensagem_erro = controlador.alterarPecas(pecas);
 
         if (mensagem_erro == null) {
-            Pecas visao = getVisaoAlterada(pecas.getNome());
+            Pecas visao = getVisaoAlterada(pecas.getCodigo());
 
             if (visao != null) {
                 visao.setCodigo(pecas.getCodigo());
-                visao.setCategoria(pecas.getCategoria());
+                visao.setMarca(pecas.getMarca());
                 visao.setPreco(pecas.getPreco());
                 visao.setTipo(pecas.getTipo());
                 visao.setCor(pecas.getCor());
@@ -421,7 +491,7 @@ public class JanelaCadastroPecas extends javax.swing.JFrame {
         String mensagem_erro = null;
 
         if (visao != null) {
-            pecas = Pecas.buscarPecas(visao.getNome());
+            pecas = Pecas.buscarPecas(visao.getCodigo());
 
             if (pecas == null)
                 mensagem_erro = "Peça não cadastrada";
@@ -436,14 +506,19 @@ public class JanelaCadastroPecas extends javax.swing.JFrame {
             );
 
             nomeTextField.setText(pecas.getNome());
-            categoriaComboBox.setSelectedItem(pecas.getCategoria());
+            categoriaComboBox.setSelectedItem(pecas.getMarca());
 
             precoTextField.setText(
                     String.valueOf(pecas.getPreco())
             );
 
-            tipoTextField.setText(pecas.getTipo().toString());
-            corTextField.setText(pecas.getCor());
+            tipoTextField.setText(pecas.getTipo() != null ? pecas.getTipo().toString() : "");
+            corTextField.setText(pecas.getCor() != null ? pecas.getCor() : "");
+            prazoGarantiaTextField.setText(
+                    pecas.getDiasGarantia() != null
+                            ? String.valueOf(pecas.getDiasGarantia())
+                            : ""
+            );
 
             maoDeObraCheckBox.setSelected(pecas.getMaoDeObra());
 
@@ -459,8 +534,7 @@ public class JanelaCadastroPecas extends javax.swing.JFrame {
         String mensagem_erro = null;
 
         if (visao != null)
-            mensagem_erro =
-                    controlador.removerPecas(visao.getNome());
+            mensagem_erro = controlador.removerPecas(visao.getCodigo());
         else
             mensagem_erro = "Nenhuma Peça selecionada";
 
@@ -479,6 +553,7 @@ public class JanelaCadastroPecas extends javax.swing.JFrame {
         precoTextField.setText("");
         tipoTextField.setText("");
         corTextField.setText("");
+        prazoGarantiaTextField.setText("");
         maoDeObraCheckBox.setSelected(false);
     }
 
@@ -498,6 +573,8 @@ public class JanelaCadastroPecas extends javax.swing.JFrame {
     private javax.swing.JTextField tipoTextField;
     private javax.swing.JLabel corLabel;
     private javax.swing.JTextField corTextField;
+    private javax.swing.JLabel prazoGarantiaLabel;
+    private javax.swing.JTextField prazoGarantiaTextField;
     private javax.swing.JLabel maoDeObraLabel;
     private javax.swing.JCheckBox maoDeObraCheckBox;
     private javax.swing.JButton inserirPecas;

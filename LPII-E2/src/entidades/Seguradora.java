@@ -57,6 +57,7 @@ public class Seguradora {
     public String getCidade() { return cidade; }
     public double getCoberturaPercentual() { return cobertura_percentual; }
     public boolean getPossuiAtendimento24h() { return possui_atendimento_24h; }
+    public boolean isPossuiAtendimento24h() { return possui_atendimento_24h; }
     public FormaPagamentoPreferencial getFormaPagamentoPreferencial() { return forma_pagamento_preferencial; }
 
     public void setCidade(String cidade) { this.cidade = cidade; }
@@ -103,7 +104,7 @@ public class Seguradora {
     }
 
     public static Seguradora[] getVisoes() {
-        String sql = "SELECT nome, cidade, cobertura_percentual, possui_atendimento_24h, forma_pagamento_preferencial FROM Seguradoras";
+        String sql = "SELECT nome, cidade, cobertura_percentual, possui_atendimento_24h, forma_pagamento_preferencial FROM seguradoras";
         ResultSet lista_resultados = null;
         ArrayList<Seguradora> visoes = new ArrayList<>();
 
@@ -140,7 +141,7 @@ public class Seguradora {
     }
 
     public static Seguradora buscarSeguradora(String nome) {
-        String sql = "SELECT * FROM Seguradoras WHERE nome = ?";
+        String sql = "SELECT * FROM seguradoras WHERE nome = ?";
         ResultSet lista_resultados = null;
         Seguradora seguradora = null;
 
@@ -173,7 +174,7 @@ public class Seguradora {
     }
 
     public static String inserirSeguradora(Seguradora seguradora) {
-        String sql = "INSERT INTO Seguradoras (nome, cidade, cobertura_percentual, possui_atendimento_24h, forma_pagamento_preferencial) VALUES (?,?,?,?,?)";
+        String sql = "INSERT INTO seguradoras (nome, cidade, cobertura_percentual, possui_atendimento_24h, forma_pagamento_preferencial) VALUES (?,?,?,?,?)";
 
         try {
             PreparedStatement comando = BD.conexao.prepareStatement(sql);
@@ -196,7 +197,7 @@ public class Seguradora {
     }
 
     public static String alterarSeguradora(Seguradora seguradora) {
-        String sql = "UPDATE Seguradoras SET cidade = ?, cobertura_percentual = ?, possui_atendimento_24h = ?, forma_pagamento_preferencial = ?"
+        String sql = "UPDATE seguradoras SET cidade = ?, cobertura_percentual = ?, possui_atendimento_24h = ?, forma_pagamento_preferencial = ?"
                 + " WHERE nome = ?";
 
         try {
@@ -220,7 +221,7 @@ public class Seguradora {
     }
 
     public static String removerSeguradora(String nome) {
-        String sql = "DELETE FROM Seguradoras WHERE nome = ?";
+        String sql = "DELETE FROM seguradoras WHERE nome = ?";
 
         try {
             PreparedStatement comando = BD.conexao.prepareStatement(sql);

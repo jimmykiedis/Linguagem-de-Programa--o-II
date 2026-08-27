@@ -1,19 +1,7 @@
--- Entidades
--- Sinistro
--- Seguradora
--- Peca
--- PecaMecanica
--- PecaLataria
--- Orcamento
+DROP DATABASE IF EXISTS banco;
+CREATE DATABASE banco CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+USE banco;
 
--- Enumerados
--- tipo_peca_carro: farol, parachoques, capo, lanternas, portas
--- tipo_peca_moto: escapamento, pistao, biela, cabecote
--- marca_peca: original, genuina, oem
--- forma_pagamento_preferencial: boleto, debito_automatico, pix, cartao
--- grau_monta: pequena, media, grande
-
--- Tabela: seguradoras
 CREATE TABLE seguradoras (
     nome VARCHAR(50) PRIMARY KEY,
     cidade VARCHAR(50),
@@ -22,19 +10,6 @@ CREATE TABLE seguradoras (
     forma_pagamento_preferencial VARCHAR(20)
 );
 
-INSERT INTO seguradoras (nome, cidade, cobertura_percentual, possui_atendimento_24h, forma_pagamento_preferencial) VALUES
-('Porto Seguro', 'Dourados', 90, TRUE, 'boleto'),
-('Bradesco Seguros', 'Campo Grande', 80, TRUE, 'debito_automatico'),
-('SulAmérica', 'Ponta Porã', 90, FALSE, 'pix'),
-('Mapfre', 'Dourados', 85, TRUE, 'cartao'),
-('Allianz', 'Campo Grande', 75, FALSE, 'boleto'),
-('Tokio Marine', 'Ponta Porã', 90, TRUE, 'pix'),
-('Azos Seguros', 'São Paulo', 99, TRUE, 'debito_automatico'),
-('Liberty Seguros', 'Dourados', 85, FALSE, 'boleto'),
-('Sompo Seguros', 'Maracajú', 75, FALSE, 'cartao'),
-('HDI Seguros', 'Naviraí', 82, TRUE, 'pix');
-
--- Tabela: sinistros
 CREATE TABLE sinistros (
     segurado VARCHAR(80) PRIMARY KEY,
     telefone VARCHAR(20),
@@ -43,19 +18,6 @@ CREATE TABLE sinistros (
     perda_total BOOLEAN
 );
 
-INSERT INTO sinistros (segurado, telefone, cidade, grau_monta, perda_total) VALUES
-('Leon', '67 99888-1100', 'Dourados', 'grande', FALSE),
-('Scott', '67 98988-1101', 'Campo Grande', 'media', FALSE),
-('Kennedy', '67 96898-1000', 'Ponta Porã', 'grande', TRUE),
-('Chris', '67 90898-0100', 'Dourados', 'media', FALSE),
-('Redfield', '66 91681-1198', 'Naviraí', 'grande', TRUE),
-('Jill', '67 99234-8811', 'Campo Grande', 'pequena', FALSE),
-('Claire', '67 98112-2290', 'Dourados', 'media', FALSE),
-('Ada', '65 99677-4400', 'Ponta Porã', 'pequena', TRUE),
-('Rebecca', '67 99123-4455', 'Maracajú', 'pequena', FALSE),
-('Carlos', '67 98455-7712', 'Naviraí', 'media', FALSE);
-
--- Tabela: pecas
 CREATE TABLE pecas (
     codigo INT PRIMARY KEY,
     sinistro_segurado VARCHAR(80),
@@ -70,6 +32,39 @@ CREATE TABLE pecas (
     cor VARCHAR(20),
     FOREIGN KEY (sinistro_segurado) REFERENCES sinistros(segurado)
 );
+
+CREATE TABLE orcamentos (
+    data DATE,
+    sinistro_segurado VARCHAR(80),
+    seguradora_nome VARCHAR(50),
+    PRIMARY KEY (sinistro_segurado, seguradora_nome),
+    FOREIGN KEY (sinistro_segurado) REFERENCES sinistros(segurado),
+    FOREIGN KEY (seguradora_nome) REFERENCES seguradoras(nome)
+);
+
+INSERT INTO seguradoras (nome, cidade, cobertura_percentual, possui_atendimento_24h, forma_pagamento_preferencial) VALUES
+('Porto Seguro', 'Dourados', 90, TRUE, 'boleto'),
+('Bradesco Seguros', 'Campo Grande', 80, TRUE, 'debito_automatico'),
+('SulAmérica', 'Ponta Porã', 90, FALSE, 'pix'),
+('Mapfre', 'Dourados', 85, TRUE, 'cartao'),
+('Allianz', 'Campo Grande', 75, FALSE, 'boleto'),
+('Tokio Marine', 'Ponta Porã', 90, TRUE, 'pix'),
+('Azos Seguros', 'São Paulo', 99, TRUE, 'debito_automatico'),
+('Liberty Seguros', 'Dourados', 85, FALSE, 'boleto'),
+('Sompo Seguros', 'Maracajú', 75, FALSE, 'cartao'),
+('HDI Seguros', 'Naviraí', 82, TRUE, 'pix');
+
+INSERT INTO sinistros (segurado, telefone, cidade, grau_monta, perda_total) VALUES
+('Leon', '67 99888-1100', 'Dourados', 'grande', FALSE),
+('Scott', '67 98988-1101', 'Campo Grande', 'media', FALSE),
+('Kennedy', '67 96898-1000', 'Ponta Porã', 'grande', TRUE),
+('Chris', '67 90898-0100', 'Dourados', 'media', FALSE),
+('Redfield', '66 91681-1198', 'Naviraí', 'grande', TRUE),
+('Jill', '67 99234-8811', 'Campo Grande', 'pequena', FALSE),
+('Claire', '67 98112-2290', 'Dourados', 'media', FALSE),
+('Ada', '65 99677-4400', 'Ponta Porã', 'pequena', TRUE),
+('Rebecca', '67 99123-4455', 'Maracajú', 'pequena', FALSE),
+('Carlos', '67 98455-7712', 'Naviraí', 'media', FALSE);
 
 INSERT INTO pecas (
     codigo,
@@ -104,16 +99,6 @@ INSERT INTO pecas (
 (92, 'Rebecca', 'Lanterna', 'oem', 200, TRUE, 'lataria', 'lanternas', NULL, NULL, 'preto'),
 (101, 'Carlos', 'Barra estabilizadora', 'oem', 190, FALSE, 'mecanica', NULL, 'biela', 180, NULL),
 (102, 'Carlos', 'Bucha estabilizadora', 'original', 320, TRUE, 'mecanica', NULL, 'biela', 365, NULL);
-
--- Tabela: orcamentos
-CREATE TABLE orcamentos (
-    data DATE,
-    sinistro_segurado VARCHAR(80),
-    seguradora_nome VARCHAR(50),
-    PRIMARY KEY (sinistro_segurado, seguradora_nome),
-    FOREIGN KEY (sinistro_segurado) REFERENCES sinistros(segurado),
-    FOREIGN KEY (seguradora_nome) REFERENCES seguradoras(nome)
-);
 
 INSERT INTO orcamentos (data, sinistro_segurado, seguradora_nome) VALUES
 ('2026-06-22', 'Leon', 'Porto Seguro'),

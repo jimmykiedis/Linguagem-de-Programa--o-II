@@ -25,8 +25,7 @@ public class Sinistro {
                 throw new IllegalArgumentException("Grau de monta não informado");
             }
 
-            String normalizado = texto.trim().toLowerCase(Locale.ROOT);
-            normalizado = normalizado
+            String normalizado = texto.trim().toLowerCase(Locale.ROOT)
                     .replace("á", "a")
                     .replace("à", "a")
                     .replace("â", "a")
@@ -53,67 +52,152 @@ public class Sinistro {
         }
     }
 
-    private int numero;
-    private String cliente;
+    private String segurado;
     private String telefone;
+    private String cidade;
     private GrauMonta grau_monta;
     private boolean perda_total;
-
-    public int getNumero() { return numero; }
-    public String getCliente() { return cliente; }
-    public String getTelefone() { return telefone; }
-    public GrauMonta getGrauMonta() { return grau_monta; }
-    public boolean getPerdaTotal() { return perda_total; }
-    public boolean isPerdaTotal() { return perda_total; }
-
-    public void setNumero(int numero) { this.numero = numero; }
-    public void setCliente(String cliente) { this.cliente = cliente; }
-    public void setTelefone(String telefone) { this.telefone = telefone; }
-    public void setGrauMonta(GrauMonta grau_monta) {
-        this.grau_monta = grau_monta != null ? grau_monta : GrauMonta.PEQUENA;
-    }
-    public void setPerdaTotal(boolean perda_total) { this.perda_total = perda_total; }
+    private ArrayList<Pecas> pecas;
 
     public Sinistro(
-            int numero,
-            String cliente,
+            String segurado,
             String telefone,
+            String cidade,
+            GrauMonta grau_monta,
+            boolean perda_total,
+            ArrayList<Pecas> pecas
+    ) {
+        this.segurado = segurado;
+        this.telefone = telefone;
+        this.cidade = cidade;
+        this.grau_monta = grau_monta != null ? grau_monta : GrauMonta.PEQUENA;
+        this.perda_total = perda_total;
+        this.pecas = pecas != null ? pecas : new ArrayList<Pecas>();
+    }
+
+    public Sinistro(
+            String segurado,
+            String telefone,
+            String cidade,
             GrauMonta grau_monta,
             boolean perda_total
     ) {
-        this.numero = numero;
-        this.cliente = cliente;
+        this(segurado, telefone, cidade, grau_monta, perda_total, new ArrayList<Pecas>());
+    }
+
+    public Sinistro(String segurado, String telefone, String cidade) {
+        this(segurado, telefone, cidade, GrauMonta.PEQUENA, false);
+    }
+
+    public Sinistro(String segurado, String telefone) {
+        this(segurado, telefone, null, GrauMonta.PEQUENA, false);
+    }
+
+    public String getSegurado() {
+        return segurado;
+    }
+
+    public String getTelefone() {
+        return telefone;
+    }
+
+    public String getCidade() {
+        return cidade;
+    }
+
+    public GrauMonta getGrauMonta() {
+        return grau_monta;
+    }
+
+    public boolean getPerdaTotal() {
+        return perda_total;
+    }
+
+    public boolean isPerdaTotal() {
+        return perda_total;
+    }
+
+    public Pecas[] getPecas() {
+        return pecas.toArray(new Pecas[pecas.size()]);
+    }
+
+    public void setSegurado(String segurado) {
+        this.segurado = segurado;
+    }
+
+    public void setTelefone(String telefone) {
         this.telefone = telefone;
+    }
+
+    public void setCidade(String cidade) {
+        this.cidade = cidade;
+    }
+
+    public void setGrauMonta(GrauMonta grau_monta) {
         this.grau_monta = grau_monta != null ? grau_monta : GrauMonta.PEQUENA;
+    }
+
+    public void setPerdaTotal(boolean perda_total) {
         this.perda_total = perda_total;
     }
 
-    public Sinistro(int numero, String cliente, String telefone) {
-        this(numero, cliente, telefone, GrauMonta.PEQUENA, false);
+    public void setPecas(Pecas[] pecas) {
+        this.pecas = new ArrayList<Pecas>();
+        if (pecas != null) {
+            for (Pecas peca : pecas) {
+                if (peca != null) {
+                    this.pecas.add(peca);
+                }
+            }
+        }
     }
 
-    public Sinistro(String cliente, String telefone) {
-        this(0, cliente, telefone, GrauMonta.PEQUENA, false);
+    public void adicionarPeca(Pecas peca) {
+        if (peca != null) {
+            if (pecas == null) {
+                pecas = new ArrayList<Pecas>();
+            }
+            pecas.add(peca);
+        }
     }
-
-    public Sinistro(String cliente, String telefone, GrauMonta grau_monta, boolean perda_total) {
-        this(0, cliente, telefone, grau_monta, perda_total);
-    }
-
-    public int getSequencial() { return numero; }
-    public void setSequencial(int sequencial) { this.numero = sequencial; }
 
     @Override
     public String toString() {
-        return "[" + numero + "] " + cliente + " (" + grau_monta + ")";
+        String cidade_texto = cidade != null ? cidade : "";
+        return segurado + " - " + cidade_texto + " (" + grau_monta + ")";
     }
 
     public Sinistro getVisao() {
-        return new Sinistro(numero, cliente, telefone, grau_monta, perda_total);
+        return new Sinistro(
+                segurado,
+                telefone,
+                cidade,
+                grau_monta,
+                perda_total,
+                pecas
+        );
+    }
+
+    private static Sinistro criarVisao(ResultSet resultado) throws SQLException {
+        String segurado = resultado.getString("segurado");
+        String telefone = resultado.getString("telefone");
+        String cidade = resultado.getString("cidade");
+        GrauMonta grau_monta = GrauMonta.fromTexto(resultado.getString("grau_monta"));
+        boolean perda_total = resultado.getBoolean("perda_total");
+        return new Sinistro(segurado, telefone, cidade, grau_monta, perda_total);
+    }
+
+    private static Sinistro criarVisaoLegado(ResultSet resultado) throws SQLException {
+        String segurado = resultado.getString("nome");
+        String telefone = resultado.getString("telefone");
+        String cidade = null;
+        GrauMonta grau_monta = GrauMonta.fromTexto(resultado.getString("grau_monta"));
+        boolean perda_total = resultado.getBoolean("perda_total");
+        return new Sinistro(segurado, telefone, cidade, grau_monta, perda_total);
     }
 
     public static Sinistro[] getVisoes() {
-        String sql = "SELECT numero, nome, telefone, grau_monta, perda_total FROM sinistros";
+        String sql = "SELECT segurado, telefone, cidade, grau_monta, perda_total FROM sinistros";
         ResultSet lista_resultados = null;
         ArrayList<Sinistro> visoes = new ArrayList<>();
 
@@ -123,20 +207,7 @@ public class Sinistro {
 
             while (lista_resultados.next()) {
                 try {
-                    int numero = lista_resultados.getInt("numero");
-                    String cliente = lista_resultados.getString("nome");
-                    String telefone = lista_resultados.getString("telefone");
-                    GrauMonta grau_monta = GrauMonta.fromTexto(
-                            lista_resultados.getString("grau_monta")
-                    );
-                    boolean perda_total = lista_resultados.getBoolean("perda_total");
-                    visoes.add(new Sinistro(
-                            numero,
-                            cliente,
-                            telefone,
-                            grau_monta,
-                            perda_total
-                    ));
+                    visoes.add(criarVisao(lista_resultados));
                 } catch (IllegalArgumentException excecao_enum) {
                     // Ignora registros com valor fora do domínio esperado.
                 }
@@ -145,31 +216,43 @@ public class Sinistro {
             lista_resultados.close();
             comando.close();
         } catch (SQLException excecao_sql) {
-            excecao_sql.printStackTrace();
+            try {
+                String sql_legado = "SELECT numero, nome, telefone, grau_monta, perda_total FROM sinistros";
+                PreparedStatement comando_legado = BD.conexao.prepareStatement(sql_legado);
+                lista_resultados = comando_legado.executeQuery();
+
+                while (lista_resultados.next()) {
+                    try {
+                        visoes.add(criarVisaoLegado(lista_resultados));
+                    } catch (IllegalArgumentException excecao_enum) {
+                        // Ignora registros inválidos.
+                    }
+                }
+
+                lista_resultados.close();
+                comando_legado.close();
+            } catch (SQLException excecao_legado) {
+                excecao_legado.printStackTrace();
+            }
         }
 
         return visoes.toArray(new Sinistro[visoes.size()]);
     }
 
-    public static Sinistro buscarSinistro(int numero) {
-        String sql = "SELECT * FROM sinistros WHERE numero = ?";
+    public static Sinistro buscarSinistro(String segurado) {
+        String sql = "SELECT segurado, telefone, cidade, grau_monta, perda_total FROM sinistros WHERE segurado = ?";
         ResultSet lista_resultados = null;
         Sinistro sinistro = null;
 
         try {
             PreparedStatement comando = BD.conexao.prepareStatement(sql);
-            comando.setInt(1, numero);
+            comando.setString(1, segurado);
             lista_resultados = comando.executeQuery();
 
             while (lista_resultados.next()) {
                 try {
-                    sinistro = new Sinistro(
-                            numero,
-                            lista_resultados.getString("nome"),
-                            lista_resultados.getString("telefone"),
-                            GrauMonta.fromTexto(lista_resultados.getString("grau_monta")),
-                            lista_resultados.getBoolean("perda_total")
-                    );
+                    sinistro = criarVisao(lista_resultados);
+                    sinistro.setPecas(Pecas.buscarPecasPorSinistro(segurado));
                 } catch (IllegalArgumentException excecao_enum) {
                     sinistro = null;
                 }
@@ -178,67 +261,127 @@ public class Sinistro {
             lista_resultados.close();
             comando.close();
         } catch (SQLException excecao_sql) {
-            excecao_sql.printStackTrace();
-            sinistro = null;
+            try {
+                String sql_legado = "SELECT numero, nome, telefone, grau_monta, perda_total FROM sinistros WHERE nome = ?";
+                PreparedStatement comando_legado = BD.conexao.prepareStatement(sql_legado);
+                comando_legado.setString(1, segurado);
+                lista_resultados = comando_legado.executeQuery();
+
+                while (lista_resultados.next()) {
+                    try {
+                        sinistro = criarVisaoLegado(lista_resultados);
+                        sinistro.setPecas(new Pecas[0]);
+                    } catch (IllegalArgumentException excecao_enum) {
+                        sinistro = null;
+                    }
+                }
+
+                lista_resultados.close();
+                comando_legado.close();
+            } catch (SQLException excecao_legado) {
+                excecao_legado.printStackTrace();
+                sinistro = null;
+            }
         }
 
         return sinistro;
     }
 
     public static String inserirSinistro(Sinistro sinistro) {
-        String sql = "INSERT INTO sinistros (numero, nome, telefone, grau_monta, perda_total) VALUES (?,?,?,?,?)";
+        String sql = "INSERT INTO sinistros (segurado, telefone, cidade, grau_monta, perda_total) VALUES (?,?,?,?,?)";
 
         try {
             PreparedStatement comando = BD.conexao.prepareStatement(sql);
-            comando.setInt(1, sinistro.getNumero());
-            comando.setString(2, sinistro.getCliente());
-            comando.setString(3, sinistro.getTelefone());
+            comando.setString(1, sinistro.getSegurado());
+            comando.setString(2, sinistro.getTelefone());
+            comando.setString(3, sinistro.getCidade());
             comando.setString(4, sinistro.getGrauMonta().toString());
             comando.setBoolean(5, sinistro.getPerdaTotal());
             comando.executeUpdate();
             comando.close();
             return null;
         } catch (SQLException excecao_sql) {
-            excecao_sql.printStackTrace();
-            return "Erro na Inserção do Sinistro no BD";
+            return inserirSinistroLegado(sinistro);
         }
     }
 
     public static String alterarSinistro(Sinistro sinistro) {
-        String sql = "UPDATE sinistros SET nome = ?, telefone = ?, grau_monta = ?, perda_total = ? WHERE numero = ?";
+        String sql = "UPDATE sinistros SET telefone = ?, cidade = ?, grau_monta = ?, perda_total = ? WHERE segurado = ?";
 
         try {
             PreparedStatement comando = BD.conexao.prepareStatement(sql);
-            comando.setString(1, sinistro.getCliente());
-            comando.setString(2, sinistro.getTelefone());
+            comando.setString(1, sinistro.getTelefone());
+            comando.setString(2, sinistro.getCidade());
             comando.setString(3, sinistro.getGrauMonta().toString());
             comando.setBoolean(4, sinistro.getPerdaTotal());
-            comando.setInt(5, sinistro.getNumero());
+            comando.setString(5, sinistro.getSegurado());
             comando.executeUpdate();
             comando.close();
             return null;
         } catch (SQLException excecao_sql) {
-            excecao_sql.printStackTrace();
-            return "Erro na Alteração do Sinistro no BD";
+            return alterarSinistroLegado(sinistro);
         }
     }
 
-    public static String removerSinistro(int numero) {
-        String sql = "DELETE FROM sinistros WHERE numero = ?";
+    public static String removerSinistro(String segurado) {
+        String sql = "DELETE FROM sinistros WHERE segurado = ?";
 
         try {
             PreparedStatement comando = BD.conexao.prepareStatement(sql);
-            comando.setInt(1, numero);
+            comando.setString(1, segurado);
             comando.executeUpdate();
             comando.close();
             return null;
         } catch (SQLException excecao_sql) {
-            excecao_sql.printStackTrace();
-            return "Erro na Remoção do Sinistro no BD";
+            return removerSinistroLegado(segurado);
         }
     }
 
-    public static int ultimoNumero() {
+    public static boolean existeSinistroMesmosAtributos(Sinistro sinistro) {
+        String sql = "SELECT COUNT(segurado) FROM sinistros WHERE segurado = ? AND telefone = ? AND cidade = ? AND grau_monta = ? AND perda_total = ?";
+        ResultSet lista_resultados = null;
+        int n_sinistros_mesmos_atributos = 0;
+
+        try {
+            PreparedStatement comando = BD.conexao.prepareStatement(sql);
+            comando.setString(1, sinistro.getSegurado());
+            comando.setString(2, sinistro.getTelefone());
+            comando.setString(3, sinistro.getCidade());
+            comando.setString(4, sinistro.getGrauMonta().toString());
+            comando.setBoolean(5, sinistro.getPerdaTotal());
+            lista_resultados = comando.executeQuery();
+
+            while (lista_resultados.next()) {
+                n_sinistros_mesmos_atributos = lista_resultados.getInt(1);
+            }
+
+            lista_resultados.close();
+            comando.close();
+        } catch (SQLException excecao_sql) {
+            try {
+                String sql_legado = "SELECT COUNT(numero) FROM sinistros WHERE nome = ? AND telefone = ? AND grau_monta = ? AND perda_total = ?";
+                PreparedStatement comando_legado = BD.conexao.prepareStatement(sql_legado);
+                comando_legado.setString(1, sinistro.getSegurado());
+                comando_legado.setString(2, sinistro.getTelefone());
+                comando_legado.setString(3, sinistro.getGrauMonta().toString());
+                comando_legado.setBoolean(4, sinistro.getPerdaTotal());
+                lista_resultados = comando_legado.executeQuery();
+
+                while (lista_resultados.next()) {
+                    n_sinistros_mesmos_atributos = lista_resultados.getInt(1);
+                }
+
+                lista_resultados.close();
+                comando_legado.close();
+            } catch (SQLException excecao_legado) {
+                excecao_legado.printStackTrace();
+            }
+        }
+
+        return n_sinistros_mesmos_atributos > 0;
+    }
+
+    private static int ultimoNumeroLegado() {
         String sql = "SELECT MAX(numero) FROM sinistros";
         ResultSet lista_resultados = null;
         int numero = 0;
@@ -260,29 +403,55 @@ public class Sinistro {
         return numero;
     }
 
-    public static boolean existeSinistroMesmosAtributos(Sinistro sinistro) {
-        String sql = "SELECT COUNT(numero) FROM sinistros WHERE nome = ? AND telefone = ? AND grau_monta = ? AND perda_total = ?";
-        ResultSet lista_resultados = null;
-        int n_sinistros_mesmos_atributos = 0;
+    private static String inserirSinistroLegado(Sinistro sinistro) {
+        String sql = "INSERT INTO sinistros (numero, nome, telefone, grau_monta, perda_total) VALUES (?,?,?,?,?)";
 
         try {
             PreparedStatement comando = BD.conexao.prepareStatement(sql);
-            comando.setString(1, sinistro.getCliente());
-            comando.setString(2, sinistro.getTelefone());
-            comando.setString(3, sinistro.getGrauMonta().toString());
-            comando.setBoolean(4, sinistro.getPerdaTotal());
-            lista_resultados = comando.executeQuery();
-
-            while (lista_resultados.next()) {
-                n_sinistros_mesmos_atributos = lista_resultados.getInt(1);
-            }
-
-            lista_resultados.close();
+            comando.setInt(1, ultimoNumeroLegado() + 1);
+            comando.setString(2, sinistro.getSegurado());
+            comando.setString(3, sinistro.getTelefone());
+            comando.setString(4, sinistro.getGrauMonta().toString());
+            comando.setBoolean(5, sinistro.getPerdaTotal());
+            comando.executeUpdate();
             comando.close();
+            return null;
         } catch (SQLException excecao_sql) {
             excecao_sql.printStackTrace();
+            return "Erro na Inserção do Sinistro no BD";
         }
+    }
 
-        return n_sinistros_mesmos_atributos > 0;
+    private static String alterarSinistroLegado(Sinistro sinistro) {
+        String sql = "UPDATE sinistros SET telefone = ?, grau_monta = ?, perda_total = ? WHERE nome = ?";
+
+        try {
+            PreparedStatement comando = BD.conexao.prepareStatement(sql);
+            comando.setString(1, sinistro.getTelefone());
+            comando.setString(2, sinistro.getGrauMonta().toString());
+            comando.setBoolean(3, sinistro.getPerdaTotal());
+            comando.setString(4, sinistro.getSegurado());
+            comando.executeUpdate();
+            comando.close();
+            return null;
+        } catch (SQLException excecao_sql) {
+            excecao_sql.printStackTrace();
+            return "Erro na Alteração do Sinistro no BD";
+        }
+    }
+
+    private static String removerSinistroLegado(String segurado) {
+        String sql = "DELETE FROM sinistros WHERE nome = ?";
+
+        try {
+            PreparedStatement comando = BD.conexao.prepareStatement(sql);
+            comando.setString(1, segurado);
+            comando.executeUpdate();
+            comando.close();
+            return null;
+        } catch (SQLException excecao_sql) {
+            excecao_sql.printStackTrace();
+            return "Erro na Remoção do Sinistro no BD";
+        }
     }
 }
