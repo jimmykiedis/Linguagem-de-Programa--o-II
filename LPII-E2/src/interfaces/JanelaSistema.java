@@ -2,6 +2,7 @@ package interfaces;
 
 import controles.ControladorCadastroSeguradoras;
 import controles.ControladorCadastroPecas;
+import controles.ControladorCadastroSinistros;
 import javax.swing.JOptionPane;
 import persistência.BD;
 
@@ -140,7 +141,7 @@ public class JanelaSistema extends javax.swing.JFrame {
     }//GEN-LAST:event_cadastrarOrçamentos
 
     private void cadastrarSinistro(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cadastrarSinistro
-        informarServiçoIndisponível();
+        new ControladorCadastroSinistros();
     }//GEN-LAST:event_cadastrarSinistro
 
     public static void main(String args[]) {
