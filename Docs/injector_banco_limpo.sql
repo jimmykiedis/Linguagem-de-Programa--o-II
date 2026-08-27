@@ -1,6 +1,7 @@
 DROP DATABASE IF EXISTS banco;
 CREATE DATABASE banco CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 USE banco;
+SET NAMES utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 CREATE TABLE seguradoras (
     nome VARCHAR(50) PRIMARY KEY,
@@ -8,7 +9,7 @@ CREATE TABLE seguradoras (
     cobertura_percentual INT,
     possui_atendimento_24h BOOLEAN,
     forma_pagamento_preferencial VARCHAR(20)
-);
+) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 CREATE TABLE sinistros (
     segurado VARCHAR(80) PRIMARY KEY,
@@ -16,7 +17,7 @@ CREATE TABLE sinistros (
     cidade VARCHAR(50),
     grau_monta VARCHAR(20),
     perda_total BOOLEAN
-);
+) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 CREATE TABLE pecas (
     codigo INT PRIMARY KEY,
@@ -31,7 +32,7 @@ CREATE TABLE pecas (
     dias_garantia INT,
     cor VARCHAR(20),
     FOREIGN KEY (sinistro_segurado) REFERENCES sinistros(segurado)
-);
+) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 CREATE TABLE orcamentos (
     data DATE,
@@ -40,7 +41,7 @@ CREATE TABLE orcamentos (
     PRIMARY KEY (sinistro_segurado, seguradora_nome),
     FOREIGN KEY (sinistro_segurado) REFERENCES sinistros(segurado),
     FOREIGN KEY (seguradora_nome) REFERENCES seguradoras(nome)
-);
+) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 INSERT INTO seguradoras (nome, cidade, cobertura_percentual, possui_atendimento_24h, forma_pagamento_preferencial) VALUES
 ('Porto Seguro', 'Dourados', 90, TRUE, 'boleto'),

@@ -6,7 +6,7 @@ import java.sql.SQLException;
 
 public class BD {
 
-    static final String URL_BD = "jdbc:mysql://localhost/banco";
+    static final String URL_BD = "jdbc:mysql://localhost/banco?useUnicode=true&characterEncoding=utf8&connectionCollation=utf8mb4_unicode_ci&serverTimezone=UTC&useSSL=false";
     static final String USUARIO = "root";
     static final String SENHA = "admin";
     public static Connection conexao = null;

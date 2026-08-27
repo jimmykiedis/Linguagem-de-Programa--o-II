@@ -1,12 +1,12 @@
-# LPII-E2
+# Linguagem de Programação II
 
-Projeto desenvolvido para a disciplina de Linguagem de Programação II, ministrada pelo professor Joivile Batista.
+Repositório do trabalho desenvolvido para a disciplina de Linguagem de Programação II, ministrada pelo professor Joivile Batista.
 
-O trabalho foi implementado em Java 17, com MySQL 8.0.28 para persistência de dados, e tem como objetivo exercitar os conceitos de Programação Orientada a Objetos em Java, com a interface gráfica construída no Apache NetBeans.
+O material foi implementado em Java 17, com MySQL 8.0.28 para persistência de dados, e tem como objetivo exercitar os conceitos de Programação Orientada a Objetos em Java, com a interface gráfica construída no Apache NetBeans.
 
 ## Sobre o projeto
 
-Este repositório reúne a etapa 2 do trabalho, com foco em:
+Este repositório reúne a etapa 2 do trabalho. `LPII-E2` identifica apenas essa etapa dentro do repositório, com foco em:
 
 - cadastro de seguradoras;
 - cadastro de sinistros;
@@ -96,13 +96,15 @@ mysql -u root -p < Docs/injector_banco_limpo.sql
 
 Se o usuário do seu MySQL não for `root`, ajuste o comando conforme o seu ambiente.
 
-No PowerShell do VS Code, você também pode usar este comando, apontando para o caminho correto do `mysql.exe`:
+Se quiser fazer manualmente no PowerShell, prefira chamar o `cmd` para o redirecionamento não ser re-encodado:
 
 ```powershell
-Get-Content ".\Docs\injector_banco_limpo.sql" | & "C:\Program Files\MySQL\MySQL Server 8.0\bin\mysql.exe" -u root -p
+cmd /c "\"C:\Program Files\MySQL\MySQL Server 8.0\bin\mysql.exe\" --default-character-set=utf8mb4 -u root -p banco < \"C:\git\Lingagem de Programação\Linguagem-de-Programa--o-II\Docs\injector_banco_limpo.sql\""
 ```
 
 Se o MySQL estiver instalado em outro diretório, substitua o caminho do `mysql.exe` pelo caminho real da sua instalação.
+
+> Nota de diagnóstico: se `Ponta Porã`, `Naviraí` ou `Maracajú` aparecerem como `Ponta Por?`, `Navira?` ou `Maracaj?`, o problema normalmente está na importação do SQL com codificação errada, não no Java. Reimporte o banco com `utf8mb4` e recrie os dados, porque o caractere já gravado como `?` não se corrige sozinho.
 
 ## O que o injector faz
 
