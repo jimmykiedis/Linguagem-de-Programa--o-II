@@ -35,9 +35,9 @@ Checklist focado apenas no código do `LPII-E2`.
 
 ### Sinistro
 
-- [x] Possui atributo-chave `numero`.
-- [x] Possui atributo `cliente`.
+- [x] Possui atributo-chave `segurado`.
 - [x] Possui atributo `telefone`.
+- [x] Possui atributo `cidade`.
 - [x] Possui atributo enumerado `grau_monta`.
 - [x] Possui atributo booleano `perda_total`.
 - [x] Possui `getVisoes()` para ComboBox.
@@ -47,11 +47,11 @@ Checklist focado apenas no código do `LPII-E2`.
 
 - [x] Possui atributo-chave `codigo`.
 - [x] Possui atributo `nome`.
-- [x] Possui atributo enumerado `categoria`.
+- [x] Possui atributo enumerado `marca`.
 - [x] Possui atributo numérico `preco`.
+- [x] Possui atributo booleano `mao_obra_propria`.
 - [x] Possui atributo enumerado `tipo`.
 - [x] Possui atributo `cor`.
-- [x] Possui atributo booleano `mao_obra_propria`.
 - [x] Possui `getVisoes()` para ComboBox.
 - [x] Possui `buscarPecas()`, `inserirPecas()`, `alterarPecas()` e `removerPecas()`.
 
@@ -86,14 +86,14 @@ Checklist focado apenas no código do `LPII-E2`.
 
 ## 7. Funcionalidade ainda a revisar no código
 
-- [ ] Conferir se os nomes das colunas no banco batem com os nomes usados nos `SELECT` e `UPDATE`.
-- [ ] Confirmar a execução real das telas no fluxo completo.
+- [x] Conferir se os nomes das colunas no banco batem com os nomes usados nos `SELECT` e `UPDATE`.
+- [x] Confirmar a execução real das telas no fluxo completo.
 - [ ] Validar se o projeto cobre exatamente todos os prints exigidos pela etapa.
 
 ## 8. Passos posteriores
 
-- [ ] Gerar `spec.pdf`.
-- [ ] Gerar `fontes.pdf`.
+- [x] Gerar `spec.pdf`.
+- [x] Gerar `fontes.pdf`.
 - [ ] Gerar `saida.pdf`.
 - [ ] Montar o arquivo `.zip` final.
 
