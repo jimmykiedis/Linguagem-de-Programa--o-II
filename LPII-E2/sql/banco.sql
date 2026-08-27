@@ -1,5 +1,6 @@
-DROP TABLE IF EXISTS Seguradoras;
 DROP TABLE IF EXISTS Pecas;
+DROP TABLE IF EXISTS sinistros;
+DROP TABLE IF EXISTS Seguradoras;
 
 CREATE TABLE Seguradoras (
     nome VARCHAR(50) PRIMARY KEY,
@@ -9,6 +10,14 @@ CREATE TABLE Seguradoras (
     forma_pagamento_preferencial VARCHAR(20)
 );
 
+CREATE TABLE sinistros (
+    numero INT PRIMARY KEY,
+    nome VARCHAR(50),
+    telefone VARCHAR(20),
+    grau_monta VARCHAR(20),
+    perda_total BOOLEAN
+);
+
 CREATE TABLE Pecas (
     codigo INT PRIMARY KEY,
     sinistro_numero INT,
@@ -16,7 +25,7 @@ CREATE TABLE Pecas (
     categoria VARCHAR(20),
     preco DECIMAL(10,2),
     tipo VARCHAR(20),
-    dias_garantia_cor VARCHAR(20),
+    cor VARCHAR(20),
     mao_obra_propria BOOLEAN,
-    FOREIGN KEY (sinistro_numero) REFERENCES Sinistros(numero)
+    FOREIGN KEY (sinistro_numero) REFERENCES sinistros(numero)
 );

@@ -23,20 +23,22 @@ INSERT INTO seguradoras (nome, cidade, cobertura_percentual, possui_atendimento_
 CREATE TABLE sinistros (
     numero INT PRIMARY KEY,
     nome VARCHAR(50),
-    telefone VARCHAR(20)
+    telefone VARCHAR(20),
+    grau_monta VARCHAR(20),
+    perda_total BOOLEAN
 );
 
-INSERT INTO sinistros (numero, nome, telefone) VALUES
-(1, 'Leon', '67 99888-1100'),
-(6, 'Scott', '67 98988-1101'),
-(11, 'Kennedy', '67 96898-1000'),
-(19, 'Chris', '67 90898-0100'),
-(98, 'Redfield', '66 91681-1198'),
-(102, 'Jill', '67 99234-8811'),
-(145, 'Claire', '67 98112-2290'),
-(201, 'Ada', '65 99677-4400'),
-(250, 'Rebecca', '67 99123-4455'),
-(310, 'Carlos', '67 98455-7712');
+INSERT INTO sinistros (numero, nome, telefone, grau_monta, perda_total) VALUES
+(1, 'Leon', '67 99888-1100', 'grande', FALSE),
+(6, 'Scott', '67 98988-1101', 'media', FALSE),
+(11, 'Kennedy', '67 96898-1000', 'grande', TRUE),
+(19, 'Chris', '67 90898-0100', 'media', FALSE),
+(98, 'Redfield', '66 91681-1198', 'grande', TRUE),
+(102, 'Jill', '67 99234-8811', 'pequena', FALSE),
+(145, 'Claire', '67 98112-2290', 'media', FALSE),
+(201, 'Ada', '65 99677-4400', 'pequena', TRUE),
+(250, 'Rebecca', '67 99123-4455', 'pequena', FALSE),
+(310, 'Carlos', '67 98455-7712', 'media', FALSE);
 
 -- Tabela: peças (vinculada ao sinistro)
 CREATE TABLE pecas (
@@ -46,12 +48,12 @@ CREATE TABLE pecas (
     categoria VARCHAR(20),
     preco DECIMAL(10,2),
     tipo VARCHAR(20),
-    dias_garantia_cor VARCHAR(20),
+    cor VARCHAR(20),
     mao_obra_propria BOOLEAN,
     FOREIGN KEY (sinistro_numero) REFERENCES sinistros(numero)
 );
 
-INSERT INTO pecas (codigo, sinistro_numero, nome, categoria, preco, tipo, dias_garantia_cor, mao_obra_propria) VALUES
+INSERT INTO pecas (codigo, sinistro_numero, nome, categoria, preco, tipo, cor, mao_obra_propria) VALUES
 (11, 1, 'bloco', 'OEM', 245, 'motor', '90', FALSE),
 (12, 1, 'cabeçote', 'OEM', 250, 'motor', '180', FALSE),
 (21, 6, 'parachoque', 'Original', 200, 'externo', 'preto', FALSE),

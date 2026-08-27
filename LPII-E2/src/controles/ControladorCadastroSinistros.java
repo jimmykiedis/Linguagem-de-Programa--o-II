@@ -10,8 +10,9 @@ public class ControladorCadastroSinistros {
     }
 
     public String inserirSinistro(Sinistro sinistro) {
-        if (!Sinistro.existeSinistroMesmosAtributos(sinistro)) return Sinistro.inserirSinistro(sinistro);
-        else return "Já existe um Sinistro com os mesmos atributos";
+        Sinistro sinistro_buscado = Sinistro.buscarSinistro(sinistro.getSequencial());
+        if (sinistro_buscado == null) return Sinistro.inserirSinistro(sinistro);
+        else return "Numero de Sinistro já cadastrado";
     }
 
     public String alterarSinistro(Sinistro sinistro) {
