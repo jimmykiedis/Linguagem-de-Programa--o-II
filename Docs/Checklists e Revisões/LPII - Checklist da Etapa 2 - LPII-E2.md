@@ -38,6 +38,8 @@ Checklist focado apenas no código do `LPII-E2`.
 - [x] Possui atributo-chave `numero`.
 - [x] Possui atributo `cliente`.
 - [x] Possui atributo `telefone`.
+- [x] Possui atributo enumerado `grau_monta`.
+- [x] Possui atributo booleano `perda_total`.
 - [x] Possui `getVisoes()` para ComboBox.
 - [x] Possui `buscarSinistro()`, `inserirSinistro()`, `alterarSinistro()` e `removerSinistro()`.
 
@@ -93,6 +95,5 @@ Checklist focado apenas no código do `LPII-E2`.
 - [ ] Gerar `spec.pdf`.
 - [ ] Gerar `fontes.pdf`.
 - [ ] Gerar `saida.pdf`.
-- [ ] Gerar `banco.pdf`.
 - [ ] Montar o arquivo `.zip` final.
 
