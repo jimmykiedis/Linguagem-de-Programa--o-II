@@ -1,6 +1,7 @@
 package interfaces;
 
 import javax.swing.JOptionPane;
+import javax.swing.ButtonGroup;
 import controles.ControladorCadastroSeguradoras;
 import entidades.Seguradora;
 import javax.swing.DefaultComboBoxModel;
@@ -79,6 +80,23 @@ public class JanelaCadastroSeguradoras extends javax.swing.JFrame {
         );
     }
 
+    private Boolean obterPossuiAtendimento24hInformado() {
+        if (possuiAtendimento24hSimRadioButton.isSelected()) return true;
+        if (possuiAtendimento24hNaoRadioButton.isSelected()) return false;
+        return null;
+    }
+
+    private void definirPossuiAtendimento24h(Boolean valor) {
+        possuiAtendimento24hButtonGroup.clearSelection();
+        if (valor == null) return;
+
+        if (valor) {
+            possuiAtendimento24hSimRadioButton.setSelected(true);
+        } else {
+            possuiAtendimento24hNaoRadioButton.setSelected(true);
+        }
+    }
+
     private Seguradora.FormaPagamentoPreferencial obterFormaPagamentoPreferencialSelecionada() {
         Object selecionado = formaPagamentoPreferencialComboBox.getSelectedItem();
         if (selecionado == null) {
@@ -108,8 +126,9 @@ public class JanelaCadastroSeguradoras extends javax.swing.JFrame {
             return null;
         }
 
-        boolean possui_atendimento_24h =
-                possuiAtendimento24hCheckBox.isSelected();
+        Boolean possui_atendimento_24h =
+                obterPossuiAtendimento24hInformado();
+        if (possui_atendimento_24h == null) return null;
 
         return new Seguradora(
             nome,
@@ -145,7 +164,10 @@ public class JanelaCadastroSeguradoras extends javax.swing.JFrame {
         coberturaPercentualLabel = new javax.swing.JLabel();
         coberturaPercentualTextField = new javax.swing.JTextField();
         possuiAtendimento24hLabel = new javax.swing.JLabel();
-        possuiAtendimento24hCheckBox = new javax.swing.JCheckBox();
+        possuiAtendimento24hPanel = new javax.swing.JPanel(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 8, 0));
+        possuiAtendimento24hButtonGroup = new ButtonGroup();
+        possuiAtendimento24hSimRadioButton = new javax.swing.JRadioButton();
+        possuiAtendimento24hNaoRadioButton = new javax.swing.JRadioButton();
         formaPagamentoPreferencialLabel = new javax.swing.JLabel();
         formaPagamentoPreferencialComboBox = new javax.swing.JComboBox();
         seguradorasCadastradasLabel = new javax.swing.JLabel();
@@ -282,13 +304,19 @@ public class JanelaCadastroSeguradoras extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(1, 16, 10, 10);
         getContentPane().add(possuiAtendimento24hLabel, gridBagConstraints);
 
-        possuiAtendimento24hCheckBox.setText("Sim");
+        possuiAtendimento24hButtonGroup.add(possuiAtendimento24hSimRadioButton);
+        possuiAtendimento24hSimRadioButton.setText("Sim");
+        possuiAtendimento24hButtonGroup.add(possuiAtendimento24hNaoRadioButton);
+        possuiAtendimento24hNaoRadioButton.setText("Não");
+        possuiAtendimento24hPanel.add(possuiAtendimento24hSimRadioButton);
+        possuiAtendimento24hPanel.add(possuiAtendimento24hNaoRadioButton);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridwidth = 2;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.insets = new java.awt.Insets(1, 5, 10, 5);
-        getContentPane().add(possuiAtendimento24hCheckBox, gridBagConstraints);
+        getContentPane().add(possuiAtendimento24hPanel, gridBagConstraints);
 
         formaPagamentoPreferencialLabel.setText("Forma Pagamento Preferencial");
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -461,9 +489,7 @@ public class JanelaCadastroSeguradoras extends javax.swing.JFrame {
                     )
             );
 
-            possuiAtendimento24hCheckBox.setSelected(
-                    seguradora.getPossuiAtendimento24h()
-            );
+            definirPossuiAtendimento24h(seguradora.getPossuiAtendimento24h());
 
             formaPagamentoPreferencialComboBox.setSelectedItem(
                     seguradora.getFormaPagamentoPreferencial().toString()
@@ -506,7 +532,7 @@ public class JanelaCadastroSeguradoras extends javax.swing.JFrame {
         nomeTextField.setText("");
         cidadeTextField.setText("");
         coberturaPercentualTextField.setText("");
-        possuiAtendimento24hCheckBox.setSelected(false);
+        possuiAtendimento24hButtonGroup.clearSelection();
         formaPagamentoPreferencialComboBox.setSelectedItem("boleto");
     }//GEN-LAST:event_limparCampos
 
@@ -529,8 +555,11 @@ public class JanelaCadastroSeguradoras extends javax.swing.JFrame {
     private javax.swing.JButton limparCampos;
     private javax.swing.JLabel nomeLabel;
     private javax.swing.JTextField nomeTextField;
+    private javax.swing.JPanel possuiAtendimento24hPanel;
+    private javax.swing.ButtonGroup possuiAtendimento24hButtonGroup;
+    private javax.swing.JRadioButton possuiAtendimento24hNaoRadioButton;
+    private javax.swing.JRadioButton possuiAtendimento24hSimRadioButton;
     private javax.swing.JLabel possuiAtendimento24hLabel;
-    private javax.swing.JCheckBox possuiAtendimento24hCheckBox;
     private javax.swing.JButton removerSeguradora;
     private javax.swing.JLabel seguradorasCadastradasLabel;
     private javax.swing.JComboBox seguradoras_cadastradasComboBox;

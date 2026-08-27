@@ -6,6 +6,7 @@ import java.awt.Frame;
 import java.util.Objects;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
+import javax.swing.ButtonGroup;
 
 public class JanelaCadastroSinistros extends javax.swing.JFrame {
 
@@ -66,6 +67,23 @@ public class JanelaCadastroSinistros extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(this, mensagem, "Erro", JOptionPane.ERROR_MESSAGE);
     }
 
+    private Boolean obterPerdaTotalInformada() {
+        if (perdaTotalSimRadioButton.isSelected()) return true;
+        if (perdaTotalNaoRadioButton.isSelected()) return false;
+        return null;
+    }
+
+    private void definirPerdaTotal(Boolean valor) {
+        perdaTotalButtonGroup.clearSelection();
+        if (valor == null) return;
+
+        if (valor) {
+            perdaTotalSimRadioButton.setSelected(true);
+        } else {
+            perdaTotalNaoRadioButton.setSelected(true);
+        }
+    }
+
     private Sinistro obterSinistroInformado() {
         String segurado = numeroTextField.getText().trim();
         if (segurado.isEmpty()) return null;
@@ -80,7 +98,8 @@ public class JanelaCadastroSinistros extends javax.swing.JFrame {
                 (Sinistro.GrauMonta) grauMontaComboBox.getSelectedItem();
         if (grau_monta == null) return null;
 
-        boolean perda_total = perdaTotalCheckBox.isSelected();
+        Boolean perda_total = obterPerdaTotalInformada();
+        if (perda_total == null) return null;
 
         return new Sinistro(segurado, telefone, cidade, grau_monta, perda_total);
     }
@@ -114,7 +133,10 @@ public class JanelaCadastroSinistros extends javax.swing.JFrame {
         grauMontaLabel = new javax.swing.JLabel();
         grauMontaComboBox = new javax.swing.JComboBox();
         perdaTotalLabel = new javax.swing.JLabel();
-        perdaTotalCheckBox = new javax.swing.JCheckBox();
+        perdaTotalPanel = new javax.swing.JPanel(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 8, 0));
+        perdaTotalButtonGroup = new ButtonGroup();
+        perdaTotalSimRadioButton = new javax.swing.JRadioButton();
+        perdaTotalNaoRadioButton = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cadastrar Sinistros");
@@ -259,13 +281,19 @@ public class JanelaCadastroSinistros extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(1, 5, 10, 5);
         getContentPane().add(perdaTotalLabel, gridBagConstraints);
 
-        perdaTotalCheckBox.setText("Sim");
+        perdaTotalButtonGroup.add(perdaTotalSimRadioButton);
+        perdaTotalSimRadioButton.setText("Sim");
+        perdaTotalButtonGroup.add(perdaTotalNaoRadioButton);
+        perdaTotalNaoRadioButton.setText("Não");
+        perdaTotalPanel.add(perdaTotalSimRadioButton);
+        perdaTotalPanel.add(perdaTotalNaoRadioButton);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 5;
+        gridBagConstraints.gridwidth = 2;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.insets = new java.awt.Insets(1, 5, 10, 5);
-        getContentPane().add(perdaTotalCheckBox, gridBagConstraints);
+        getContentPane().add(perdaTotalPanel, gridBagConstraints);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -276,7 +304,7 @@ public class JanelaCadastroSinistros extends javax.swing.JFrame {
         clienteTextField.setText("");
         telefoneTextField.setText("");
         grauMontaComboBox.setSelectedIndex(0);
-        perdaTotalCheckBox.setSelected(false);
+        perdaTotalButtonGroup.clearSelection();
         sinistros_cadastradosComboBox.setSelectedIndex(-1);
     }//GEN-LAST:event_limparCampos
 
@@ -295,7 +323,7 @@ public class JanelaCadastroSinistros extends javax.swing.JFrame {
                 clienteTextField.setText(sinistro.getCidade());
                 telefoneTextField.setText(sinistro.getTelefone());
                 grauMontaComboBox.setSelectedItem(sinistro.getGrauMonta());
-                perdaTotalCheckBox.setSelected(sinistro.getPerdaTotal());
+                definirPerdaTotal(sinistro.getPerdaTotal());
             }
         }
 
@@ -370,8 +398,11 @@ public class JanelaCadastroSinistros extends javax.swing.JFrame {
     private javax.swing.JLabel grauMontaLabel;
     private javax.swing.JLabel numeroLabel;
     private javax.swing.JTextField numeroTextField;
-    private javax.swing.JCheckBox perdaTotalCheckBox;
     private javax.swing.JLabel perdaTotalLabel;
+    private javax.swing.JPanel perdaTotalPanel;
+    private javax.swing.ButtonGroup perdaTotalButtonGroup;
+    private javax.swing.JRadioButton perdaTotalNaoRadioButton;
+    private javax.swing.JRadioButton perdaTotalSimRadioButton;
     private javax.swing.JButton removerSinistro;
     private javax.swing.JLabel sinistrosCadastradosLabel;
     private javax.swing.JComboBox sinistros_cadastradosComboBox;

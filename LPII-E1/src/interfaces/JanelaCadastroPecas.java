@@ -5,6 +5,7 @@ import controles.ControladorCadastroPecas;
 import entidades.Pecas;
 import javax.swing.DefaultComboBoxModel;
 import java.awt.Frame;
+import javax.swing.ButtonGroup;
 
 public class JanelaCadastroPecas extends javax.swing.JFrame {
     
@@ -77,6 +78,23 @@ public class JanelaCadastroPecas extends javax.swing.JFrame {
             JOptionPane.ERROR_MESSAGE
         );
     }
+
+    private Boolean obterMaoDeObraInformada() {
+        if (maoDeObraSimRadioButton.isSelected()) return true;
+        if (maoDeObraNaoRadioButton.isSelected()) return false;
+        return null;
+    }
+
+    private void definirMaoDeObra(Boolean valor) {
+        maoDeObraButtonGroup.clearSelection();
+        if (valor == null) return;
+
+        if (valor) {
+            maoDeObraSimRadioButton.setSelected(true);
+        } else {
+            maoDeObraNaoRadioButton.setSelected(true);
+        }
+    }
     
     private Pecas obterPecasInformada() {
         String codigoStr = codigoTextField.getText();
@@ -107,27 +125,11 @@ public class JanelaCadastroPecas extends javax.swing.JFrame {
         
         String tipo = tipoTextField.getText();
         if (tipo.isEmpty()) return null;
-        
         String cor = corTextField.getText();
         if (cor.isEmpty()) return null;
         
-        String mao_de_obra_str = maoDeObraTextField.getText();
-        if (mao_de_obra_str.isEmpty()) return null;
-        
-        boolean mao_de_obra;
-        
-        if (mao_de_obra_str.equalsIgnoreCase("S")
-                || mao_de_obra_str.equalsIgnoreCase("SIM")
-                || mao_de_obra_str.equalsIgnoreCase("TRUE")) {
-            mao_de_obra = true;
-        } else if (mao_de_obra_str.equalsIgnoreCase("N")
-                || mao_de_obra_str.equalsIgnoreCase("NAO")
-                || mao_de_obra_str.equalsIgnoreCase("NÃO")
-                || mao_de_obra_str.equalsIgnoreCase("FALSE")) {
-            mao_de_obra = false;
-        } else {
-            return null;
-        }
+        Boolean mao_de_obra = obterMaoDeObraInformada();
+        if (mao_de_obra == null) return null;
         
         try {
             return new Pecas(
@@ -182,7 +184,10 @@ public class JanelaCadastroPecas extends javax.swing.JFrame {
         corTextField = new javax.swing.JTextField();
 
         maoDeObraLabel = new javax.swing.JLabel();
-        maoDeObraTextField = new javax.swing.JTextField();
+        maoDeObraPanel = new javax.swing.JPanel(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 8, 0));
+        maoDeObraButtonGroup = new ButtonGroup();
+        maoDeObraSimRadioButton = new javax.swing.JRadioButton();
+        maoDeObraNaoRadioButton = new javax.swing.JRadioButton();
 
         pecas_cadastradasComboBox = new javax.swing.JComboBox();
         pecasCadastradasLabel = new javax.swing.JLabel();
@@ -371,14 +376,19 @@ public class JanelaCadastroPecas extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(1, 5, 10, 5);
         getContentPane().add(maoDeObraLabel, gridBagConstraints);
 
-        maoDeObraTextField.setColumns(8);
-        maoDeObraTextField.setPreferredSize(new java.awt.Dimension(80, 20));
+        maoDeObraButtonGroup.add(maoDeObraSimRadioButton);
+        maoDeObraSimRadioButton.setText("Sim");
+        maoDeObraButtonGroup.add(maoDeObraNaoRadioButton);
+        maoDeObraNaoRadioButton.setText("Não");
+        maoDeObraPanel.add(maoDeObraSimRadioButton);
+        maoDeObraPanel.add(maoDeObraNaoRadioButton);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 7;
+        gridBagConstraints.gridwidth = 2;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.insets = new java.awt.Insets(1, 5, 10, 5);
-        getContentPane().add(maoDeObraTextField, gridBagConstraints);
+        getContentPane().add(maoDeObraPanel, gridBagConstraints);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -460,9 +470,7 @@ public class JanelaCadastroPecas extends javax.swing.JFrame {
             tipoTextField.setText(pecas.getTipo().toString());
             corTextField.setText(pecas.getCor());
 
-            maoDeObraTextField.setText(
-                    pecas.getMaoDeObra() ? "S" : "N"
-            );
+            definirMaoDeObra(pecas.getMaoDeObra());
 
         } else {
             informarErro(mensagem_erro);
@@ -496,7 +504,7 @@ public class JanelaCadastroPecas extends javax.swing.JFrame {
         precoTextField.setText("");
         tipoTextField.setText("");
         corTextField.setText("");
-        maoDeObraTextField.setText("");
+        maoDeObraButtonGroup.clearSelection();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -516,7 +524,11 @@ public class JanelaCadastroPecas extends javax.swing.JFrame {
     private javax.swing.JLabel corLabel;
     private javax.swing.JTextField corTextField;
     private javax.swing.JLabel maoDeObraLabel;
+    private javax.swing.JPanel maoDeObraPanel;
     private javax.swing.JTextField maoDeObraTextField;
+    private javax.swing.ButtonGroup maoDeObraButtonGroup;
+    private javax.swing.JRadioButton maoDeObraNaoRadioButton;
+    private javax.swing.JRadioButton maoDeObraSimRadioButton;
     private javax.swing.JButton inserirPecas;
     private javax.swing.JButton limparCampos;
     private javax.swing.JLabel pecasCadastradasLabel;

@@ -165,6 +165,44 @@
         </Constraint>
       </Constraints>
     </Component>
+    <Component class="javax.swing.JLabel" name="possuiAtendimento24hLabel">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Possui Atendimento 24h"/>
+      </Properties>
+      <Constraints>
+        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout" value="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout$GridBagConstraintsDescription">
+          <GridBagConstraints gridX="0" gridY="4" gridWidth="1" gridHeight="1" fill="0" ipadX="0" ipadY="0" insetsTop="1" insetsLeft="16" insetsBottom="10" insetsRight="10" anchor="13" weightX="0.0" weightY="0.0"/>
+        </Constraint>
+      </Constraints>
+    </Component>
+    <Container class="javax.swing.JPanel" name="possuiAtendimento24hPanel">
+      <Properties>
+        <Property name="layout" type="java.awt.LayoutManager" editor="org.netbeans.modules.form.layoutsupport.LayoutSupportManager">
+          <Layout class="org.netbeans.modules.form.compat2.layouts.DesignFlowLayout">
+            <Property name="alignment" type="int" value="0"/>
+            <Property name="hgap" type="int" value="8"/>
+            <Property name="vgap" type="int" value="0"/>
+          </Layout>
+        </Property>
+      </Properties>
+      <Constraints>
+        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout" value="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout$GridBagConstraintsDescription">
+          <GridBagConstraints gridX="1" gridY="4" gridWidth="2" gridHeight="1" fill="0" ipadX="0" ipadY="0" insetsTop="1" insetsLeft="5" insetsBottom="10" insetsRight="5" anchor="17" weightX="0.0" weightY="0.0"/>
+        </Constraint>
+      </Constraints>
+      <SubComponents>
+        <Component class="javax.swing.JRadioButton" name="possuiAtendimento24hSimRadioButton">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Sim"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JRadioButton" name="possuiAtendimento24hNaoRadioButton">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Não"/>
+          </Properties>
+        </Component>
+      </SubComponents>
+    </Container>
     <Component class="javax.swing.JLabel" name="seguradorasCadastradasLabel">
       <Properties>
         <Property name="text" type="java.lang.String" value="Seguradoras Cadastradas"/>

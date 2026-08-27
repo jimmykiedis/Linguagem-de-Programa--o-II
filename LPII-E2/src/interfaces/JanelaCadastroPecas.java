@@ -1,6 +1,7 @@
 package interfaces;
 
 import javax.swing.JOptionPane;
+import javax.swing.ButtonGroup;
 import controles.ControladorCadastroPecas;
 import entidades.Pecas;
 import javax.swing.DefaultComboBoxModel;
@@ -76,6 +77,23 @@ public class JanelaCadastroPecas extends javax.swing.JFrame {
             "Erro",
             JOptionPane.ERROR_MESSAGE
         );
+    }
+
+    private Boolean obterMaoDeObraInformada() {
+        if (maoDeObraSimRadioButton.isSelected()) return true;
+        if (maoDeObraNaoRadioButton.isSelected()) return false;
+        return null;
+    }
+
+    private void definirMaoDeObra(Boolean valor) {
+        maoDeObraButtonGroup.clearSelection();
+        if (valor == null) return;
+
+        if (valor) {
+            maoDeObraSimRadioButton.setSelected(true);
+        } else {
+            maoDeObraNaoRadioButton.setSelected(true);
+        }
     }
     
     private Pecas obterPecasInformada() {
@@ -157,7 +175,10 @@ public class JanelaCadastroPecas extends javax.swing.JFrame {
             }
         }
         
-        boolean mao_de_obra = maoDeObraCheckBox.isSelected();
+        Boolean mao_de_obra = obterMaoDeObraInformada();
+        if (mao_de_obra == null) {
+            throw new IllegalArgumentException("Selecione se a peÃ§a possui mÃ£o de obra.");
+        }
 
         return new Pecas(
                 codigo,
@@ -212,7 +233,10 @@ public class JanelaCadastroPecas extends javax.swing.JFrame {
         prazoGarantiaTextField = new javax.swing.JTextField();
 
         maoDeObraLabel = new javax.swing.JLabel();
-        maoDeObraCheckBox = new javax.swing.JCheckBox();
+        maoDeObraPanel = new javax.swing.JPanel(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 8, 0));
+        maoDeObraButtonGroup = new ButtonGroup();
+        maoDeObraSimRadioButton = new javax.swing.JRadioButton();
+        maoDeObraNaoRadioButton = new javax.swing.JRadioButton();
 
         pecas_cadastradasComboBox = new javax.swing.JComboBox();
         pecasCadastradasLabel = new javax.swing.JLabel();
@@ -419,13 +443,19 @@ public class JanelaCadastroPecas extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(1, 5, 10, 5);
         getContentPane().add(maoDeObraLabel, gridBagConstraints);
 
-        maoDeObraCheckBox.setText("Sim");
+        maoDeObraButtonGroup.add(maoDeObraSimRadioButton);
+        maoDeObraSimRadioButton.setText("Sim");
+        maoDeObraButtonGroup.add(maoDeObraNaoRadioButton);
+        maoDeObraNaoRadioButton.setText("Não");
+        maoDeObraPanel.add(maoDeObraSimRadioButton);
+        maoDeObraPanel.add(maoDeObraNaoRadioButton);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 8;
+        gridBagConstraints.gridwidth = 2;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.insets = new java.awt.Insets(1, 5, 10, 5);
-        getContentPane().add(maoDeObraCheckBox, gridBagConstraints);
+        getContentPane().add(maoDeObraPanel, gridBagConstraints);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -520,7 +550,7 @@ public class JanelaCadastroPecas extends javax.swing.JFrame {
                             : ""
             );
 
-            maoDeObraCheckBox.setSelected(pecas.getMaoDeObra());
+            definirMaoDeObra(pecas.getMaoDeObra());
 
         } else {
             informarErro(mensagem_erro);
@@ -554,7 +584,7 @@ public class JanelaCadastroPecas extends javax.swing.JFrame {
         tipoTextField.setText("");
         corTextField.setText("");
         prazoGarantiaTextField.setText("");
-        maoDeObraCheckBox.setSelected(false);
+        maoDeObraButtonGroup.clearSelection();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -576,7 +606,10 @@ public class JanelaCadastroPecas extends javax.swing.JFrame {
     private javax.swing.JLabel prazoGarantiaLabel;
     private javax.swing.JTextField prazoGarantiaTextField;
     private javax.swing.JLabel maoDeObraLabel;
-    private javax.swing.JCheckBox maoDeObraCheckBox;
+    private javax.swing.JPanel maoDeObraPanel;
+    private javax.swing.ButtonGroup maoDeObraButtonGroup;
+    private javax.swing.JRadioButton maoDeObraNaoRadioButton;
+    private javax.swing.JRadioButton maoDeObraSimRadioButton;
     private javax.swing.JButton inserirPecas;
     private javax.swing.JButton limparCampos;
     private javax.swing.JLabel pecasCadastradasLabel;
