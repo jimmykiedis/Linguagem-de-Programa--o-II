@@ -1,12 +1,6 @@
-CREATE DATABASE IF NOT EXISTS banco
-    CHARACTER SET utf8mb4
-    COLLATE utf8mb4_unicode_ci;
-
+DROP DATABASE IF EXISTS banco;
+CREATE DATABASE banco CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 USE banco;
-
-DROP TABLE IF EXISTS pecas;
-DROP TABLE IF EXISTS sinistros;
-DROP TABLE IF EXISTS seguradoras;
 
 CREATE TABLE seguradoras (
     nome VARCHAR(50) PRIMARY KEY,
@@ -26,15 +20,20 @@ CREATE TABLE sinistros (
 
 CREATE TABLE pecas (
     codigo INT PRIMARY KEY,
-    sinistro_segurado VARCHAR(80),
     nome VARCHAR(50),
     marca VARCHAR(20),
     preco DECIMAL(10,2),
     mao_obra_propria BOOLEAN,
-    tipo_registro VARCHAR(20),
-    tipo_peca_carro VARCHAR(20),
-    tipo_peca_moto VARCHAR(20),
+    tipo_peca_mecanica VARCHAR(20),
+    tipo_peca_lataria VARCHAR(20),
     dias_garantia INT,
-    cor VARCHAR(20),
-    FOREIGN KEY (sinistro_segurado) REFERENCES sinistros(segurado)
+    cor VARCHAR(20)
+);
+
+CREATE TABLE pecas_sinistros (
+    peca_codigo INT NOT NULL,
+    sinistro_segurado VARCHAR(80) NOT NULL,
+    PRIMARY KEY (peca_codigo, sinistro_segurado),
+    FOREIGN KEY (peca_codigo) REFERENCES pecas(codigo) ON DELETE CASCADE,
+    FOREIGN KEY (sinistro_segurado) REFERENCES sinistros(segurado) ON DELETE CASCADE
 );
