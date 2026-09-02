@@ -39,7 +39,7 @@ public class JanelaSistema extends javax.swing.JFrame {
         pesquisar_orçamentoMenuItem = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Cadastro de Seguradoras e Peças");
+        setTitle("Cadastro de Sinistros, Seguradoras e Pecas");
         setAlwaysOnTop(true);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosed(java.awt.event.WindowEvent evt) {

@@ -301,7 +301,8 @@ public class Sinistro {
             comando.close();
             return null;
         } catch (SQLException excecao_sql) {
-            return inserirSinistroLegado(sinistro);
+            excecao_sql.printStackTrace();
+            return "Erro na Insercao do Sinistro no BD";
         }
     }
 
@@ -319,7 +320,8 @@ public class Sinistro {
             comando.close();
             return null;
         } catch (SQLException excecao_sql) {
-            return alterarSinistroLegado(sinistro);
+            excecao_sql.printStackTrace();
+            return "Erro na Alteracao do Sinistro no BD";
         }
     }
 
@@ -333,7 +335,8 @@ public class Sinistro {
             comando.close();
             return null;
         } catch (SQLException excecao_sql) {
-            return removerSinistroLegado(segurado);
+            excecao_sql.printStackTrace();
+            return "Erro na Remocao do Sinistro no BD";
         }
     }
 

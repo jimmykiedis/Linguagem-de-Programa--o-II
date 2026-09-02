@@ -115,7 +115,7 @@ public class JanelaCadastroPecas extends javax.swing.JFrame {
         }
         
         Pecas.MarcaPeca marca =
-                (Pecas.MarcaPeca) categoriaComboBox.getSelectedItem();
+                (Pecas.MarcaPeca) marcaComboBox.getSelectedItem();
         if (marca == null) {
             throw new IllegalArgumentException("Informe a marca da peça.");
         }
@@ -144,26 +144,17 @@ public class JanelaCadastroPecas extends javax.swing.JFrame {
             throw new IllegalArgumentException(e.getMessage());
         }
 
-        Pecas.TipoRegistro tipoRegistro =
-                tipoPeca == null
-                        ? Pecas.TipoRegistro.GERAL
-                        : (tipoPeca == Pecas.TipoPeca.FAROL
-                                || tipoPeca == Pecas.TipoPeca.PARACHOQUES
-                                || tipoPeca == Pecas.TipoPeca.CAPO
-                                || tipoPeca == Pecas.TipoPeca.LANTERNAS
-                                || tipoPeca == Pecas.TipoPeca.PORTAS
-                                ? Pecas.TipoRegistro.LATARIA
-                                : Pecas.TipoRegistro.MECANICA);
+        boolean tipoPecaLataria = tipoPeca == Pecas.TipoPeca.LATARIA;
         
         String cor = corTextField.getText();
         String prazoGarantiaStr = prazoGarantiaTextField.getText();
 
-        if (tipoRegistro == Pecas.TipoRegistro.LATARIA && cor.isEmpty()) {
+        if (tipoPecaLataria && cor.isEmpty()) {
             throw new IllegalArgumentException("Informe a cor da peça de lataria.");
         }
 
         Integer prazoGarantia = null;
-        if (tipoRegistro == Pecas.TipoRegistro.MECANICA) {
+        if (!tipoPecaLataria) {
             if (prazoGarantiaStr.isEmpty()) {
                 throw new IllegalArgumentException("Informe o prazo de garantia da peça mecânica.");
             }
@@ -180,15 +171,16 @@ public class JanelaCadastroPecas extends javax.swing.JFrame {
             throw new IllegalArgumentException("Selecione se a peÃ§a possui mÃ£o de obra.");
         }
 
-        return new Pecas(
-                codigo,
-                nome,
-                marca,
-                preco,
-                tipoPeca,
-                cor.isEmpty() ? null : cor,
-                prazoGarantia,
-                mao_de_obra
+        if (tipoPecaLataria) {
+            return new entidades.PecaLataria(
+                    codigo, nome, marca, preco, mao_de_obra,
+                    cor
+            );
+        }
+
+        return new entidades.PecaMecanica(
+                codigo, nome, marca, preco, mao_de_obra,
+                prazoGarantia
         );
     }
     
@@ -217,8 +209,8 @@ public class JanelaCadastroPecas extends javax.swing.JFrame {
         nomeLabel = new javax.swing.JLabel();
         nomeTextField = new javax.swing.JTextField();
 
-        categoriaLabel = new javax.swing.JLabel();
-        categoriaComboBox = new javax.swing.JComboBox();
+        marcaLabel = new javax.swing.JLabel();
+        marcaComboBox = new javax.swing.JComboBox();
 
         precoLabel = new javax.swing.JLabel();
         precoTextField = new javax.swing.JTextField();
@@ -349,15 +341,15 @@ public class JanelaCadastroPecas extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(1, 5, 10, 5);
         getContentPane().add(nomeTextField, gridBagConstraints);
 
-        categoriaLabel.setText("Marca");
+        marcaLabel.setText("Marca");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 3;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
         gridBagConstraints.insets = new java.awt.Insets(1, 5, 10, 5);
-        getContentPane().add(categoriaLabel, gridBagConstraints);
+        getContentPane().add(marcaLabel, gridBagConstraints);
 
-        categoriaComboBox.setModel(
+        marcaComboBox.setModel(
             new DefaultComboBoxModel(Pecas.MarcaPeca.values())
         );
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -365,7 +357,7 @@ public class JanelaCadastroPecas extends javax.swing.JFrame {
         gridBagConstraints.gridy = 3;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.insets = new java.awt.Insets(1, 5, 10, 5);
-        getContentPane().add(categoriaComboBox, gridBagConstraints);
+        getContentPane().add(marcaComboBox, gridBagConstraints);
 
         precoLabel.setText("Preço");
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -384,7 +376,7 @@ public class JanelaCadastroPecas extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(1, 5, 10, 5);
         getContentPane().add(precoTextField, gridBagConstraints);
 
-        tipoLabel.setText("Tipo");
+        tipoLabel.setText("Tipo da Peca");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 5;
@@ -536,7 +528,7 @@ public class JanelaCadastroPecas extends javax.swing.JFrame {
             );
 
             nomeTextField.setText(pecas.getNome());
-            categoriaComboBox.setSelectedItem(pecas.getMarca());
+            marcaComboBox.setSelectedItem(pecas.getMarca());
 
             precoTextField.setText(
                     String.valueOf(pecas.getPreco())
@@ -579,7 +571,7 @@ public class JanelaCadastroPecas extends javax.swing.JFrame {
     private void limparCampos(java.awt.event.ActionEvent evt) {
         codigoTextField.setText("");
         nomeTextField.setText("");
-        categoriaComboBox.setSelectedIndex(0);
+        marcaComboBox.setSelectedIndex(0);
         precoTextField.setText("");
         tipoTextField.setText("");
         corTextField.setText("");
@@ -595,8 +587,8 @@ public class JanelaCadastroPecas extends javax.swing.JFrame {
     private javax.swing.JTextField codigoTextField;
     private javax.swing.JLabel nomeLabel;
     private javax.swing.JTextField nomeTextField;
-    private javax.swing.JLabel categoriaLabel;
-    private javax.swing.JComboBox categoriaComboBox;
+    private javax.swing.JLabel marcaLabel;
+    private javax.swing.JComboBox marcaComboBox;
     private javax.swing.JLabel precoLabel;
     private javax.swing.JTextField precoTextField;
     private javax.swing.JLabel tipoLabel;
