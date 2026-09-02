@@ -53,27 +53,30 @@ public class Pecas {
     protected String nome;
     protected MarcaPeca marca;
     protected double preco;
+    protected TipoPeca tipo;
     protected boolean mao_obra_propria;
     protected Integer dias_garantia;
     protected String cor;
 
     protected Pecas(int codigo, String nome, MarcaPeca marca, double preco,
-            boolean mao_obra_propria, Integer dias_garantia, String cor) {
+            TipoPeca tipo, boolean mao_obra_propria, Integer dias_garantia,
+            String cor) {
         this.codigo = codigo;
         this.nome = nome;
         this.marca = marca;
         this.preco = preco;
+        this.tipo = tipo;
         this.mao_obra_propria = mao_obra_propria;
         this.dias_garantia = dias_garantia;
         this.cor = cor;
     }
 
-    public Pecas() { this(0, null, null, 0.0, false, null, null); }
+    public Pecas() { this(0, null, null, 0.0, null, false, null, null); }
 
     public Pecas(int codigo, String nome, MarcaPeca marca, double preco,
             TipoPeca tipo, String cor, Integer dias_garantia,
             boolean mao_obra_propria) {
-        this(codigo, nome, marca, preco, mao_obra_propria, dias_garantia, cor);
+        this(codigo, nome, marca, preco, tipo, mao_obra_propria, dias_garantia, cor);
     }
 
     public int getCodigo() { return codigo; }
@@ -81,10 +84,10 @@ public class Pecas {
     public MarcaPeca getMarca() { return marca; }
     public MarcaPeca getCategoria() { return marca; }
     public double getPreco() { return preco; }
+    public TipoPeca getTipo() { return tipo; }
     public boolean getMaoObraPropria() { return mao_obra_propria; }
     public boolean isMaoObraPropria() { return mao_obra_propria; }
     public boolean getMaoDeObra() { return mao_obra_propria; }
-    public TipoPeca getTipo() { return null; }
     public Integer getDiasGarantia() { return dias_garantia; }
     public String getCor() { return cor; }
 
@@ -93,9 +96,9 @@ public class Pecas {
     public void setMarca(MarcaPeca marca) { this.marca = marca; }
     public void setCategoria(MarcaPeca marca) { this.marca = marca; }
     public void setPreco(double preco) { this.preco = preco; }
+    public void setTipo(TipoPeca tipo) { this.tipo = tipo; }
     public void setMaoObraPropria(boolean valor) { this.mao_obra_propria = valor; }
     public void setMaoDeObra(boolean valor) { this.mao_obra_propria = valor; }
-    public void setTipo(TipoPeca tipo) { }
     public void setDiasGarantia(Integer valor) { this.dias_garantia = valor; }
     public void setCor(String cor) { this.cor = cor; }
 
@@ -116,15 +119,14 @@ public class Pecas {
                 ? null : resultado.getInt("dias_garantia");
         String cor = resultado.getString("cor");
 
+        TipoPeca tipo = null;
         if (tipo_peca_mecanica != null && !tipo_peca_mecanica.trim().isEmpty()) {
-            return new PecaMecanica(codigo, nome, marca, preco, mao_obra_propria,
-                    dias_garantia);
+            tipo = TipoPeca.MECANICA;
+        } else if (tipo_peca_lataria != null && !tipo_peca_lataria.trim().isEmpty()) {
+            tipo = TipoPeca.LATARIA;
         }
-        if (tipo_peca_lataria != null && !tipo_peca_lataria.trim().isEmpty()) {
-            return new PecaLataria(codigo, nome, marca, preco, mao_obra_propria,
-                    cor);
-        }
-        return new Pecas(codigo, nome, marca, preco, null, cor, dias_garantia,
+
+        return new Pecas(codigo, nome, marca, preco, tipo, cor, dias_garantia,
                 mao_obra_propria);
     }
 
@@ -192,8 +194,8 @@ public class Pecas {
         comando.setString(3, peca.marca.toString());
         comando.setDouble(4, peca.preco);
         comando.setBoolean(5, peca.mao_obra_propria);
-        comando.setString(6, peca instanceof PecaMecanica ? TipoPeca.MECANICA.toString() : null);
-        comando.setString(7, peca instanceof PecaLataria ? TipoPeca.LATARIA.toString() : null);
+        comando.setString(6, peca.tipo == TipoPeca.MECANICA ? TipoPeca.MECANICA.toString() : null);
+        comando.setString(7, peca.tipo == TipoPeca.LATARIA ? TipoPeca.LATARIA.toString() : null);
         if (peca.dias_garantia == null) comando.setNull(8, java.sql.Types.INTEGER);
         else comando.setInt(8, peca.dias_garantia);
         comando.setString(9, peca.cor);
@@ -220,8 +222,8 @@ public class Pecas {
             comando.setString(2, peca.marca.toString());
             comando.setDouble(3, peca.preco);
             comando.setBoolean(4, peca.mao_obra_propria);
-            comando.setString(5, peca instanceof PecaMecanica ? TipoPeca.MECANICA.toString() : null);
-            comando.setString(6, peca instanceof PecaLataria ? TipoPeca.LATARIA.toString() : null);
+            comando.setString(5, peca.tipo == TipoPeca.MECANICA ? TipoPeca.MECANICA.toString() : null);
+            comando.setString(6, peca.tipo == TipoPeca.LATARIA ? TipoPeca.LATARIA.toString() : null);
             if (peca.dias_garantia == null) comando.setNull(7, java.sql.Types.INTEGER);
             else comando.setInt(7, peca.dias_garantia);
             comando.setString(8, peca.cor);

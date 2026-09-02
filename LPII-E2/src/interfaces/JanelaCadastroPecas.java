@@ -144,17 +144,17 @@ public class JanelaCadastroPecas extends javax.swing.JFrame {
             throw new IllegalArgumentException(e.getMessage());
         }
 
-        boolean tipoPecaLataria = tipoPeca == Pecas.TipoPeca.LATARIA;
+        boolean ehLataria = tipoPeca == Pecas.TipoPeca.LATARIA;
         
         String cor = corTextField.getText();
         String prazoGarantiaStr = prazoGarantiaTextField.getText();
 
-        if (tipoPecaLataria && cor.isEmpty()) {
+        if (ehLataria && cor.isEmpty()) {
             throw new IllegalArgumentException("Informe a cor da peça de lataria.");
         }
 
         Integer prazoGarantia = null;
-        if (!tipoPecaLataria) {
+        if (!ehLataria) {
             if (prazoGarantiaStr.isEmpty()) {
                 throw new IllegalArgumentException("Informe o prazo de garantia da peça mecânica.");
             }
@@ -171,16 +171,16 @@ public class JanelaCadastroPecas extends javax.swing.JFrame {
             throw new IllegalArgumentException("Selecione se a peÃ§a possui mÃ£o de obra.");
         }
 
-        if (tipoPecaLataria) {
-            return new entidades.PecaLataria(
-                    codigo, nome, marca, preco, mao_de_obra,
-                    cor
+        if (ehLataria) {
+            return new Pecas(
+                    codigo, nome, marca, preco, Pecas.TipoPeca.LATARIA,
+                    cor, null, mao_de_obra
             );
         }
 
-        return new entidades.PecaMecanica(
-                codigo, nome, marca, preco, mao_de_obra,
-                prazoGarantia
+        return new Pecas(
+                codigo, nome, marca, preco, Pecas.TipoPeca.MECANICA,
+                null, prazoGarantia, mao_de_obra
         );
     }
     

@@ -2,8 +2,6 @@
 -- Sinistro
 -- Seguradora
 -- Peca
--- PecaMecanica
--- PecaLataria
 -- Orcamento
 
 -- Enumerados
