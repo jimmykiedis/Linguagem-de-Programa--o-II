@@ -252,7 +252,7 @@ public class Sinistro {
             while (lista_resultados.next()) {
                 try {
                     sinistro = criarVisao(lista_resultados);
-                    sinistro.setPecas(Pecas.buscarPecasPorSinistro(segurado));
+                    sinistro.setPecas(PecasSinistros.buscarPecasPorSinistro(segurado));
                 } catch (IllegalArgumentException excecao_enum) {
                     sinistro = null;
                 }

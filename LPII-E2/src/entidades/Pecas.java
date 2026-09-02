@@ -173,19 +173,7 @@ public class Pecas {
     }
 
     public static Pecas[] buscarPecasPorSinistro(String segurado) {
-        ArrayList<Pecas> visoes = new ArrayList<>();
-        String sql = "SELECT p." + COLUNAS.replace(", ", ", p.")
-                + " FROM pecas p JOIN pecas_sinistros ps ON ps.peca_codigo = p.codigo"
-                + " WHERE ps.sinistro_segurado = ?";
-        try (PreparedStatement comando = BD.conexao.prepareStatement(sql)) {
-            comando.setString(1, segurado);
-            try (ResultSet resultados = comando.executeQuery()) {
-                while (resultados.next()) visoes.add(criarVisao(resultados));
-            }
-        } catch (SQLException | IllegalArgumentException excecao) {
-            excecao.printStackTrace();
-        }
-        return visoes.toArray(new Pecas[0]);
+        return PecasSinistros.buscarPecasPorSinistro(segurado);
     }
 
     private static void preencher(PreparedStatement comando, Pecas peca) throws SQLException {
