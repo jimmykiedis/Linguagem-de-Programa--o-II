@@ -31,7 +31,7 @@ public class JanelaCadastroPecasSinistros extends javax.swing.JFrame {
                 @Override
                 public void windowClosed(java.awt.event.WindowEvent evt) {
                     if (sinistro != null) {
-                        janelaMae.atualizarListaPecasSinistro(sinistro.getSegurado());
+                        janelaMae.atualizarListaPecasSinistro(sinistro.getId());
                     }
                 }
             });
@@ -90,7 +90,7 @@ public class JanelaCadastroPecasSinistros extends javax.swing.JFrame {
             return;
         }
 
-        Pecas[] pecas = Pecas.buscarPecasPorSinistro(sinistro.getSegurado());
+        Pecas[] pecas = Pecas.buscarPecasPorSinistro(sinistro.getId());
         sinistro.setPecas(pecas);
 
         for (Pecas peca : pecas) {

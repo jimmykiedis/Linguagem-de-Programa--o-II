@@ -172,8 +172,8 @@ public class Pecas {
         }
     }
 
-    public static Pecas[] buscarPecasPorSinistro(String segurado) {
-        return PecasSinistros.buscarPecasPorSinistro(segurado);
+    public static Pecas[] buscarPecasPorSinistro(int sinistroId) {
+        return PecasSinistros.buscarPecasPorSinistro(sinistroId);
     }
 
     private static void preencher(PreparedStatement comando, Pecas peca) throws SQLException {

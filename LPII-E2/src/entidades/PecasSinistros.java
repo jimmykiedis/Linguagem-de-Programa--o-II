@@ -9,28 +9,28 @@ import persistência.BD;
 public class PecasSinistros {
 
     private final int peca_codigo;
-    private final String sinistro_segurado;
+    private final int sinistro_id;
 
-    public PecasSinistros(int peca_codigo, String sinistro_segurado) {
+    public PecasSinistros(int peca_codigo, int sinistro_id) {
         this.peca_codigo = peca_codigo;
-        this.sinistro_segurado = sinistro_segurado;
+        this.sinistro_id = sinistro_id;
     }
 
     public PecasSinistros(Pecas peca, Sinistro sinistro) {
         this(peca != null ? peca.getCodigo() : 0,
-                sinistro != null ? sinistro.getSegurado() : null);
+                sinistro != null ? sinistro.getId() : 0);
     }
 
     public int getPecaCodigo() {
         return peca_codigo;
     }
 
-    public String getSinistroSegurado() {
-        return sinistro_segurado;
+    public int getSinistroId() {
+        return sinistro_id;
     }
 
     public String toString() {
-        return peca_codigo + " / " + sinistro_segurado;
+        return peca_codigo + " / " + sinistro_id;
     }
 
     private static Pecas criarPeca(ResultSet resultado) throws SQLException {
@@ -56,16 +56,16 @@ public class PecasSinistros {
                 mao_obra_propria);
     }
 
-    public static Pecas[] buscarPecasPorSinistro(String segurado) {
+    public static Pecas[] buscarPecasPorSinistro(int sinistroId) {
         ArrayList<Pecas> visoes = new ArrayList<>();
         String sql = "SELECT p.codigo, p.nome, p.marca, p.preco, p.mao_obra_propria, "
                 + "p.tipo_peca_mecanica, p.tipo_peca_lataria, p.dias_garantia, p.cor "
                 + "FROM pecas_sinistros ps "
                 + "JOIN pecas p ON p.codigo = ps.peca_codigo "
-                + "WHERE ps.sinistro_segurado = ?";
+                + "WHERE ps.sinistro_id = ?";
 
         try (PreparedStatement comando = BD.conexao.prepareStatement(sql)) {
-            comando.setString(1, segurado);
+            comando.setInt(1, sinistroId);
             try (ResultSet resultados = comando.executeQuery()) {
                 while (resultados.next()) {
                     try {
@@ -82,12 +82,12 @@ public class PecasSinistros {
         return visoes.toArray(new Pecas[0]);
     }
 
-    public static boolean existePecasSinistros(int peca_codigo, String sinistro_segurado) {
-        String sql = "SELECT COUNT(*) FROM pecas_sinistros WHERE peca_codigo = ? AND sinistro_segurado = ?";
+    public static boolean existePecasSinistros(int peca_codigo, int sinistro_id) {
+        String sql = "SELECT COUNT(*) FROM pecas_sinistros WHERE peca_codigo = ? AND sinistro_id = ?";
 
         try (PreparedStatement comando = BD.conexao.prepareStatement(sql)) {
             comando.setInt(1, peca_codigo);
-            comando.setString(2, sinistro_segurado);
+            comando.setInt(2, sinistro_id);
             try (ResultSet resultados = comando.executeQuery()) {
                 return resultados.next() && resultados.getInt(1) > 0;
             }
@@ -102,11 +102,11 @@ public class PecasSinistros {
             return "Peca ou sinistro nao informado";
         }
 
-        String sql = "INSERT INTO pecas_sinistros (peca_codigo, sinistro_segurado) VALUES (?, ?)";
+        String sql = "INSERT INTO pecas_sinistros (peca_codigo, sinistro_id) VALUES (?, ?)";
 
         try (PreparedStatement comando = BD.conexao.prepareStatement(sql)) {
             comando.setInt(1, peca.getCodigo());
-            comando.setString(2, sinistro.getSegurado());
+            comando.setInt(2, sinistro.getId());
             comando.executeUpdate();
             return null;
         } catch (SQLException excecao_sql) {
@@ -120,11 +120,11 @@ public class PecasSinistros {
             return "Peca ou sinistro nao informado";
         }
 
-        String sql = "DELETE FROM pecas_sinistros WHERE peca_codigo = ? AND sinistro_segurado = ?";
+        String sql = "DELETE FROM pecas_sinistros WHERE peca_codigo = ? AND sinistro_id = ?";
 
         try (PreparedStatement comando = BD.conexao.prepareStatement(sql)) {
             comando.setInt(1, peca.getCodigo());
-            comando.setString(2, sinistro.getSegurado());
+            comando.setInt(2, sinistro.getId());
             comando.executeUpdate();
             return null;
         } catch (SQLException excecao_sql) {

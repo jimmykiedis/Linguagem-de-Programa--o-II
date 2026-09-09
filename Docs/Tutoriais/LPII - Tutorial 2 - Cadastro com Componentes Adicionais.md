@@ -1234,6 +1234,27 @@ Alimentação.values()[lista_resultados.getInt("Alimentação")] ));
 
 ---
 
+## Complemento — chave sequencial gerada pelo banco
+
+Quando a entidade precisa de uma identificação única que não deve ser reutilizada após uma exclusão, a chave deve ser criada pelo banco de dados, e não calculada pela aplicação com `MAX(id) + 1`. Em MySQL, use uma coluna `INT AUTO_INCREMENT PRIMARY KEY`:
+
+```sql
+CREATE TABLE sinistros (
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    segurado VARCHAR(80) NOT NULL,
+    telefone VARCHAR(20),
+    cidade VARCHAR(50),
+    grau_monta VARCHAR(20),
+    perda_total BOOLEAN
+);
+```
+
+No `INSERT`, a aplicação não informa o `id`. Ela deve solicitar a chave gerada com `Statement.RETURN_GENERATED_KEYS`, salvar o valor no objeto e usá-lo nas operações de consulta, alteração, remoção e nas chaves estrangeiras. Para a relação entre peças e sinistros, a tabela associativa deve referenciar `sinistro_id INT` com `FOREIGN KEY (sinistro_id) REFERENCES sinistros(id)`.
+
+Na interface, o campo de ID deve ser somente leitura: ele fica vazio antes da inserção e é exibido depois que o banco cria o registro.
+
+---
+
 ## Considerações finais sobre este material de estudo
 
 > **Observação do Claude:**

@@ -11,7 +11,8 @@ CREATE TABLE seguradoras (
 );
 
 CREATE TABLE sinistros (
-    segurado VARCHAR(80) PRIMARY KEY,
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    segurado VARCHAR(80) NOT NULL,
     telefone VARCHAR(20),
     cidade VARCHAR(50),
     grau_monta VARCHAR(20),
@@ -32,8 +33,8 @@ CREATE TABLE pecas (
 
 CREATE TABLE pecas_sinistros (
     peca_codigo INT NOT NULL,
-    sinistro_segurado VARCHAR(80) NOT NULL,
-    PRIMARY KEY (peca_codigo, sinistro_segurado),
+    sinistro_id INT NOT NULL,
+    PRIMARY KEY (peca_codigo, sinistro_id),
     FOREIGN KEY (peca_codigo) REFERENCES pecas(codigo) ON DELETE CASCADE,
-    FOREIGN KEY (sinistro_segurado) REFERENCES sinistros(segurado) ON DELETE CASCADE
+    FOREIGN KEY (sinistro_id) REFERENCES sinistros(id) ON DELETE CASCADE
 );
