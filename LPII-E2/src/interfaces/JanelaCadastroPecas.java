@@ -132,33 +132,10 @@ public class JanelaCadastroPecas extends javax.swing.JFrame {
             throw new IllegalArgumentException("Preço da peça inválido.");
         }
         
-        String tipo = tipoTextField.getText();
-        if (tipo.isEmpty()) {
-            throw new IllegalArgumentException("Informe o tipo da peça.");
-        }
-        
-        Pecas.TipoPeca tipoPeca;
-        try {
-            tipoPeca = Pecas.TipoPeca.fromTexto(tipo);
-        } catch (IllegalArgumentException e) {
-            throw new IllegalArgumentException(e.getMessage());
-        }
-
-        boolean ehLataria = tipoPeca == Pecas.TipoPeca.LATARIA;
-        
         String cor = corTextField.getText();
         String prazoGarantiaStr = prazoGarantiaTextField.getText();
-
-        if (ehLataria && cor.isEmpty()) {
-            throw new IllegalArgumentException("Informe a cor da peça de lataria.");
-        }
-
         Integer prazoGarantia = null;
-        if (!ehLataria) {
-            if (prazoGarantiaStr.isEmpty()) {
-                throw new IllegalArgumentException("Informe o prazo de garantia da peça mecânica.");
-            }
-
+        if (!prazoGarantiaStr.isEmpty()) {
             try {
                 prazoGarantia = Integer.parseInt(prazoGarantiaStr);
             } catch (NumberFormatException e) {
@@ -171,16 +148,9 @@ public class JanelaCadastroPecas extends javax.swing.JFrame {
             throw new IllegalArgumentException("Selecione se a peÃ§a possui mÃ£o de obra.");
         }
 
-        if (ehLataria) {
-            return new Pecas(
-                    codigo, nome, marca, preco, Pecas.TipoPeca.LATARIA,
-                    cor, null, mao_de_obra
-            );
-        }
-
         return new Pecas(
-                codigo, nome, marca, preco, Pecas.TipoPeca.MECANICA,
-                null, prazoGarantia, mao_de_obra
+                codigo, nome, marca, preco, mao_de_obra, prazoGarantia,
+                cor.isEmpty() ? null : cor
         );
     }
     
@@ -214,9 +184,6 @@ public class JanelaCadastroPecas extends javax.swing.JFrame {
 
         precoLabel = new javax.swing.JLabel();
         precoTextField = new javax.swing.JTextField();
-
-        tipoLabel = new javax.swing.JLabel();
-        tipoTextField = new javax.swing.JTextField();
 
         corLabel = new javax.swing.JLabel();
         corTextField = new javax.swing.JTextField();
@@ -284,7 +251,7 @@ public class JanelaCadastroPecas extends javax.swing.JFrame {
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 9;
+        gridBagConstraints.gridy = 8;
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
         getContentPane().add(comandosPanel, gridBagConstraints);
 
@@ -376,27 +343,10 @@ public class JanelaCadastroPecas extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(1, 5, 10, 5);
         getContentPane().add(precoTextField, gridBagConstraints);
 
-        tipoLabel.setText("Tipo da Peca");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 5;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
-        gridBagConstraints.insets = new java.awt.Insets(1, 5, 10, 5);
-        getContentPane().add(tipoLabel, gridBagConstraints);
-
-        tipoTextField.setColumns(14);
-        tipoTextField.setPreferredSize(new java.awt.Dimension(140, 20));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 5;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.insets = new java.awt.Insets(1, 5, 10, 5);
-        getContentPane().add(tipoTextField, gridBagConstraints);
-
         corLabel.setText("Cor");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 6;
+        gridBagConstraints.gridy = 5;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
         gridBagConstraints.insets = new java.awt.Insets(1, 5, 10, 5);
         getContentPane().add(corLabel, gridBagConstraints);
@@ -405,7 +355,7 @@ public class JanelaCadastroPecas extends javax.swing.JFrame {
         corTextField.setPreferredSize(new java.awt.Dimension(100, 20));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 6;
+        gridBagConstraints.gridy = 5;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.insets = new java.awt.Insets(1, 5, 10, 5);
         getContentPane().add(corTextField, gridBagConstraints);
@@ -413,7 +363,7 @@ public class JanelaCadastroPecas extends javax.swing.JFrame {
         prazoGarantiaLabel.setText("Prazo de Garantia");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 7;
+        gridBagConstraints.gridy = 6;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
         gridBagConstraints.insets = new java.awt.Insets(1, 5, 10, 5);
         getContentPane().add(prazoGarantiaLabel, gridBagConstraints);
@@ -422,7 +372,7 @@ public class JanelaCadastroPecas extends javax.swing.JFrame {
         prazoGarantiaTextField.setPreferredSize(new java.awt.Dimension(100, 20));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 7;
+        gridBagConstraints.gridy = 6;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.insets = new java.awt.Insets(1, 5, 10, 5);
         getContentPane().add(prazoGarantiaTextField, gridBagConstraints);
@@ -430,7 +380,7 @@ public class JanelaCadastroPecas extends javax.swing.JFrame {
         maoDeObraLabel.setText("Mão de Obra");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 8;
+        gridBagConstraints.gridy = 7;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
         gridBagConstraints.insets = new java.awt.Insets(1, 5, 10, 5);
         getContentPane().add(maoDeObraLabel, gridBagConstraints);
@@ -443,7 +393,7 @@ public class JanelaCadastroPecas extends javax.swing.JFrame {
         maoDeObraPanel.add(maoDeObraNaoRadioButton);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 8;
+        gridBagConstraints.gridy = 7;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.insets = new java.awt.Insets(1, 5, 10, 5);
@@ -493,7 +443,6 @@ public class JanelaCadastroPecas extends javax.swing.JFrame {
                 visao.setCodigo(pecas.getCodigo());
                 visao.setMarca(pecas.getMarca());
                 visao.setPreco(pecas.getPreco());
-                visao.setTipo(pecas.getTipo());
                 visao.setCor(pecas.getCor());
                 visao.setMaoDeObra(pecas.getMaoDeObra());
 
@@ -534,7 +483,6 @@ public class JanelaCadastroPecas extends javax.swing.JFrame {
                     String.valueOf(pecas.getPreco())
             );
 
-            tipoTextField.setText(pecas.getTipo() != null ? pecas.getTipo().toString() : "");
             corTextField.setText(pecas.getCor() != null ? pecas.getCor() : "");
             prazoGarantiaTextField.setText(
                     pecas.getDiasGarantia() != null
@@ -573,7 +521,6 @@ public class JanelaCadastroPecas extends javax.swing.JFrame {
         nomeTextField.setText("");
         marcaComboBox.setSelectedIndex(-1);
         precoTextField.setText("");
-        tipoTextField.setText("");
         corTextField.setText("");
         prazoGarantiaTextField.setText("");
         maoDeObraButtonGroup.clearSelection();
@@ -591,8 +538,6 @@ public class JanelaCadastroPecas extends javax.swing.JFrame {
     private javax.swing.JComboBox marcaComboBox;
     private javax.swing.JLabel precoLabel;
     private javax.swing.JTextField precoTextField;
-    private javax.swing.JLabel tipoLabel;
-    private javax.swing.JTextField tipoTextField;
     private javax.swing.JLabel corLabel;
     private javax.swing.JTextField corTextField;
     private javax.swing.JLabel prazoGarantiaLabel;

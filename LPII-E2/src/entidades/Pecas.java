@@ -29,62 +29,32 @@ public class Pecas {
         public String toString() { return texto; }
     }
 
-    public enum TipoPeca {
-        MECANICA("mecanica"), LATARIA("lataria");
-
-        private final String texto;
-
-        TipoPeca(String texto) { this.texto = texto; }
-
-        public static TipoPeca fromTexto(String texto) {
-            if (texto == null) throw new IllegalArgumentException("Tipo da peca nao informado");
-            String valor = texto.trim().toLowerCase(Locale.ROOT);
-            for (TipoPeca tipo : values()) {
-                if (tipo.texto.equals(valor)) return tipo;
-            }
-            throw new IllegalArgumentException("Tipo da peca invalido: " + texto);
-        }
-
-        @Override
-        public String toString() { return texto; }
-    }
-
     protected int codigo;
     protected String nome;
     protected MarcaPeca marca;
     protected double preco;
-    protected TipoPeca tipo;
     protected boolean mao_obra_propria;
     protected Integer dias_garantia;
     protected String cor;
 
-    protected Pecas(int codigo, String nome, MarcaPeca marca, double preco,
-            TipoPeca tipo, boolean mao_obra_propria, Integer dias_garantia,
-            String cor) {
+    public Pecas(int codigo, String nome, MarcaPeca marca, double preco,
+            boolean mao_obra_propria, Integer dias_garantia, String cor) {
         this.codigo = codigo;
         this.nome = nome;
         this.marca = marca;
         this.preco = preco;
-        this.tipo = tipo;
         this.mao_obra_propria = mao_obra_propria;
         this.dias_garantia = dias_garantia;
         this.cor = cor;
     }
 
-    public Pecas() { this(0, null, null, 0.0, null, false, null, null); }
-
-    public Pecas(int codigo, String nome, MarcaPeca marca, double preco,
-            TipoPeca tipo, String cor, Integer dias_garantia,
-            boolean mao_obra_propria) {
-        this(codigo, nome, marca, preco, tipo, mao_obra_propria, dias_garantia, cor);
-    }
+    public Pecas() { this(0, null, null, 0.0, false, null, null); }
 
     public int getCodigo() { return codigo; }
     public String getNome() { return nome; }
     public MarcaPeca getMarca() { return marca; }
     public MarcaPeca getCategoria() { return marca; }
     public double getPreco() { return preco; }
-    public TipoPeca getTipo() { return tipo; }
     public boolean getMaoObraPropria() { return mao_obra_propria; }
     public boolean isMaoObraPropria() { return mao_obra_propria; }
     public boolean getMaoDeObra() { return mao_obra_propria; }
@@ -96,7 +66,6 @@ public class Pecas {
     public void setMarca(MarcaPeca marca) { this.marca = marca; }
     public void setCategoria(MarcaPeca marca) { this.marca = marca; }
     public void setPreco(double preco) { this.preco = preco; }
-    public void setTipo(TipoPeca tipo) { this.tipo = tipo; }
     public void setMaoObraPropria(boolean valor) { this.mao_obra_propria = valor; }
     public void setMaoDeObra(boolean valor) { this.mao_obra_propria = valor; }
     public void setDiasGarantia(Integer valor) { this.dias_garantia = valor; }
@@ -113,26 +82,16 @@ public class Pecas {
         MarcaPeca marca = MarcaPeca.fromTexto(resultado.getString("marca"));
         double preco = resultado.getDouble("preco");
         boolean mao_obra_propria = resultado.getBoolean("mao_obra_propria");
-        String tipo_peca_mecanica = resultado.getString("tipo_peca_mecanica");
-        String tipo_peca_lataria = resultado.getString("tipo_peca_lataria");
         Integer dias_garantia = resultado.getObject("dias_garantia") == null
                 ? null : resultado.getInt("dias_garantia");
         String cor = resultado.getString("cor");
 
-        TipoPeca tipo = null;
-        if (tipo_peca_mecanica != null && !tipo_peca_mecanica.trim().isEmpty()) {
-            tipo = TipoPeca.MECANICA;
-        } else if (tipo_peca_lataria != null && !tipo_peca_lataria.trim().isEmpty()) {
-            tipo = TipoPeca.LATARIA;
-        }
-
-        return new Pecas(codigo, nome, marca, preco, tipo, cor, dias_garantia,
-                mao_obra_propria);
+        return new Pecas(codigo, nome, marca, preco, mao_obra_propria,
+                dias_garantia, cor);
     }
 
     private static final String COLUNAS =
-            "codigo, nome, marca, preco, mao_obra_propria, "
-            + "tipo_peca_mecanica, tipo_peca_lataria, dias_garantia, cor";
+            "codigo, nome, marca, preco, mao_obra_propria, dias_garantia, cor";
 
     public static Pecas[] getVisoes() {
         ArrayList<Pecas> visoes = new ArrayList<>();
@@ -182,15 +141,13 @@ public class Pecas {
         comando.setString(3, peca.marca.toString());
         comando.setDouble(4, peca.preco);
         comando.setBoolean(5, peca.mao_obra_propria);
-        comando.setString(6, peca.tipo == TipoPeca.MECANICA ? TipoPeca.MECANICA.toString() : null);
-        comando.setString(7, peca.tipo == TipoPeca.LATARIA ? TipoPeca.LATARIA.toString() : null);
-        if (peca.dias_garantia == null) comando.setNull(8, java.sql.Types.INTEGER);
-        else comando.setInt(8, peca.dias_garantia);
-        comando.setString(9, peca.cor);
+        if (peca.dias_garantia == null) comando.setNull(6, java.sql.Types.INTEGER);
+        else comando.setInt(6, peca.dias_garantia);
+        comando.setString(7, peca.cor);
     }
 
     public static String inserirPecas(Pecas peca) {
-        String sql = "INSERT INTO pecas (" + COLUNAS + ") VALUES (?,?,?,?,?,?,?,?,?)";
+        String sql = "INSERT INTO pecas (" + COLUNAS + ") VALUES (?,?,?,?,?,?,?)";
         try (PreparedStatement comando = BD.conexao.prepareStatement(sql)) {
             preencher(comando, peca);
             comando.executeUpdate();
@@ -203,19 +160,17 @@ public class Pecas {
 
     public static String alterarPecas(Pecas peca) {
         String sql = "UPDATE pecas SET nome=?, marca=?, preco=?, mao_obra_propria=?,"
-                + " tipo_peca_mecanica=?, tipo_peca_lataria=?, dias_garantia=?, cor=?"
+                + " dias_garantia=?, cor=?"
                 + " WHERE codigo=?";
         try (PreparedStatement comando = BD.conexao.prepareStatement(sql)) {
             comando.setString(1, peca.nome);
             comando.setString(2, peca.marca.toString());
             comando.setDouble(3, peca.preco);
             comando.setBoolean(4, peca.mao_obra_propria);
-            comando.setString(5, peca.tipo == TipoPeca.MECANICA ? TipoPeca.MECANICA.toString() : null);
-            comando.setString(6, peca.tipo == TipoPeca.LATARIA ? TipoPeca.LATARIA.toString() : null);
-            if (peca.dias_garantia == null) comando.setNull(7, java.sql.Types.INTEGER);
-            else comando.setInt(7, peca.dias_garantia);
-            comando.setString(8, peca.cor);
-            comando.setInt(9, peca.codigo);
+            if (peca.dias_garantia == null) comando.setNull(5, java.sql.Types.INTEGER);
+            else comando.setInt(5, peca.dias_garantia);
+            comando.setString(6, peca.cor);
+            comando.setInt(7, peca.codigo);
             comando.executeUpdate();
             return null;
         } catch (SQLException | NullPointerException excecao) {

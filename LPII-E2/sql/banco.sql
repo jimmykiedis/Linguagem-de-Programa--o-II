@@ -25,8 +25,6 @@ CREATE TABLE pecas (
     marca VARCHAR(20),
     preco DECIMAL(10,2),
     mao_obra_propria BOOLEAN,
-    tipo_peca_mecanica VARCHAR(20),
-    tipo_peca_lataria VARCHAR(20),
     dias_garantia INT,
     cor VARCHAR(20)
 );

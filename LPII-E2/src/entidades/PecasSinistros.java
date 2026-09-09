@@ -39,27 +39,18 @@ public class PecasSinistros {
         Pecas.MarcaPeca marca = Pecas.MarcaPeca.fromTexto(resultado.getString("marca"));
         double preco = resultado.getDouble("preco");
         boolean mao_obra_propria = resultado.getBoolean("mao_obra_propria");
-        String tipo_peca_mecanica = resultado.getString("tipo_peca_mecanica");
-        String tipo_peca_lataria = resultado.getString("tipo_peca_lataria");
         Integer dias_garantia = resultado.getObject("dias_garantia") == null
                 ? null : resultado.getInt("dias_garantia");
         String cor = resultado.getString("cor");
 
-        Pecas.TipoPeca tipo = null;
-        if (tipo_peca_mecanica != null && !tipo_peca_mecanica.trim().isEmpty()) {
-            tipo = Pecas.TipoPeca.MECANICA;
-        } else if (tipo_peca_lataria != null && !tipo_peca_lataria.trim().isEmpty()) {
-            tipo = Pecas.TipoPeca.LATARIA;
-        }
-
-        return new Pecas(codigo, nome, marca, preco, tipo, cor, dias_garantia,
-                mao_obra_propria);
+        return new Pecas(codigo, nome, marca, preco, mao_obra_propria,
+                dias_garantia, cor);
     }
 
     public static Pecas[] buscarPecasPorSinistro(int sinistroId) {
         ArrayList<Pecas> visoes = new ArrayList<>();
         String sql = "SELECT p.codigo, p.nome, p.marca, p.preco, p.mao_obra_propria, "
-                + "p.tipo_peca_mecanica, p.tipo_peca_lataria, p.dias_garantia, p.cor "
+                + "p.dias_garantia, p.cor "
                 + "FROM pecas_sinistros ps "
                 + "JOIN pecas p ON p.codigo = ps.peca_codigo "
                 + "WHERE ps.sinistro_id = ?";
