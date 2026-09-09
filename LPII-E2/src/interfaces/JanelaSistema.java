@@ -28,24 +28,36 @@ public class JanelaSistema extends javax.swing.JFrame {
     private void initComponents() {
 
         seguradoras_orçamentoMenuBar = new javax.swing.JMenuBar();
+        peçaMenu = new javax.swing.JMenu();
+        cadastrar_peçaMenuItem = new javax.swing.JMenuItem();
         sinistroMenu = new javax.swing.JMenu();
         cadastrar_sinistroMenuItem = new javax.swing.JMenuItem();
         seguradoraMenu = new javax.swing.JMenu();
         cadastrar_seguradoraItemMenu = new javax.swing.JMenuItem();
-        peçaMenu = new javax.swing.JMenu();
-        cadastrar_peçaMenuItem = new javax.swing.JMenuItem();
         orçamentoMenu = new javax.swing.JMenu();
         cadastrar_orçamentoMenuItem = new javax.swing.JMenuItem();
         pesquisar_orçamentoMenuItem = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Cadastro de Sinistros, Seguradoras e Pecas");
+        setTitle("Orçamentos da Seguradora");
         setAlwaysOnTop(true);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosed(java.awt.event.WindowEvent evt) {
                 terminarSistema(evt);
             }
         });
+
+        peçaMenu.setText("Peça");
+
+        cadastrar_peçaMenuItem.setText("Cadastrar");
+        cadastrar_peçaMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cadastrarPeça(evt);
+            }
+        });
+        peçaMenu.add(cadastrar_peçaMenuItem);
+
+        seguradoras_orçamentoMenuBar.add(peçaMenu);
 
         sinistroMenu.setText("Sinistro");
 
@@ -70,18 +82,6 @@ public class JanelaSistema extends javax.swing.JFrame {
         seguradoraMenu.add(cadastrar_seguradoraItemMenu);
 
         seguradoras_orçamentoMenuBar.add(seguradoraMenu);
-
-        peçaMenu.setText("Peça");
-
-        cadastrar_peçaMenuItem.setText("Cadastrar");
-        cadastrar_peçaMenuItem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cadastrarPeça(evt);
-            }
-        });
-        peçaMenu.add(cadastrar_peçaMenuItem);
-
-        seguradoras_orçamentoMenuBar.add(peçaMenu);
 
         orçamentoMenu.setText("Orçamento");
 
@@ -113,7 +113,7 @@ public class JanelaSistema extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 278, Short.MAX_VALUE)
+            .addGap(0, 279, Short.MAX_VALUE)
         );
 
         pack();

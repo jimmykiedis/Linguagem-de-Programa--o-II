@@ -4,6 +4,21 @@
   <NonVisualComponents>
     <Menu class="javax.swing.JMenuBar" name="seguradoras_or&#xe7;amentoMenuBar">
       <SubComponents>
+        <Menu class="javax.swing.JMenu" name="pe&#xe7;aMenu">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Pe&#xe7;a"/>
+          </Properties>
+          <SubComponents>
+            <MenuItem class="javax.swing.JMenuItem" name="cadastrar_pe&#xe7;aMenuItem">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Cadastrar"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cadastrarPe&#xe7;a"/>
+              </Events>
+            </MenuItem>
+          </SubComponents>
+        </Menu>
         <Menu class="javax.swing.JMenu" name="sinistroMenu">
           <Properties>
             <Property name="text" type="java.lang.String" value="Sinistro"/>
@@ -30,21 +45,6 @@
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cadastrarSeguradora"/>
-              </Events>
-            </MenuItem>
-          </SubComponents>
-        </Menu>
-        <Menu class="javax.swing.JMenu" name="pe&#xe7;aMenu">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Pe&#xe7;a"/>
-          </Properties>
-          <SubComponents>
-            <MenuItem class="javax.swing.JMenuItem" name="cadastrar_pe&#xe7;aMenuItem">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Cadastrar"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cadastrarPe&#xe7;a"/>
               </Events>
             </MenuItem>
           </SubComponents>
@@ -108,7 +108,7 @@
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <EmptySpace min="0" pref="278" max="32767" attributes="0"/>
+          <EmptySpace min="0" pref="279" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
   </Layout>

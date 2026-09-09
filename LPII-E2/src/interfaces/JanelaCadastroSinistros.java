@@ -374,7 +374,6 @@ public class JanelaCadastroSinistros extends javax.swing.JFrame {
         telefoneTextField.setText("");
         grauMontaComboBox.setSelectedIndex(-1);
         perdaTotalCheckBox.setSelected(false);
-        sinistros_cadastradosComboBox.setSelectedIndex(-1);
         atualizarListaPecasSinistro(0);
     }//GEN-LAST:event_limparCampos
 
