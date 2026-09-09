@@ -211,8 +211,7 @@ public class JanelaCadastroSinistros extends javax.swing.JFrame {
         sinistros_cadastradosComboBox.setModel(new DefaultComboBoxModel(sinistros_cadastrados));
         sinistros_cadastradosComboBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Sinistro visao = (Sinistro) sinistros_cadastradosComboBox.getSelectedItem();
-                atualizarListaPecasSinistro(visao != null ? visao.getSegurado() : null);
+                sinistros_cadastradosComboBoxActionPerformed(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -230,11 +229,14 @@ public class JanelaCadastroSinistros extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(1, 5, 10, 5);
         getContentPane().add(numeroLabel, gridBagConstraints);
 
-        numeroTextField.setColumns(10);
-        numeroTextField.setPreferredSize(new java.awt.Dimension(100, 20));
+        numeroTextField.setColumns(24);
+        numeroTextField.setMinimumSize(new java.awt.Dimension(240, 20));
+        numeroTextField.setPreferredSize(new java.awt.Dimension(240, 20));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 1.0;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.insets = new java.awt.Insets(1, 5, 10, 5);
         getContentPane().add(numeroTextField, gridBagConstraints);
@@ -248,10 +250,13 @@ public class JanelaCadastroSinistros extends javax.swing.JFrame {
         getContentPane().add(clienteLabel, gridBagConstraints);
 
         clienteTextField.setColumns(24);
+        clienteTextField.setMinimumSize(new java.awt.Dimension(240, 20));
         clienteTextField.setPreferredSize(new java.awt.Dimension(240, 20));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 1.0;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.insets = new java.awt.Insets(1, 5, 10, 5);
         getContentPane().add(clienteTextField, gridBagConstraints);
@@ -264,11 +269,14 @@ public class JanelaCadastroSinistros extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(1, 5, 10, 5);
         getContentPane().add(telefoneLabel, gridBagConstraints);
 
-        telefoneTextField.setColumns(16);
-        telefoneTextField.setPreferredSize(new java.awt.Dimension(160, 20));
+        telefoneTextField.setColumns(24);
+        telefoneTextField.setMinimumSize(new java.awt.Dimension(240, 20));
+        telefoneTextField.setPreferredSize(new java.awt.Dimension(240, 20));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 1.0;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.insets = new java.awt.Insets(1, 5, 10, 5);
         getContentPane().add(telefoneTextField, gridBagConstraints);
@@ -338,12 +346,17 @@ public class JanelaCadastroSinistros extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void sinistros_cadastradosComboBoxActionPerformed(java.awt.event.ActionEvent evt) {
+        Sinistro visao = (Sinistro) sinistros_cadastradosComboBox.getSelectedItem();
+        atualizarListaPecasSinistro(visao != null ? visao.getSegurado() : null);
+    }
+
     private void limparCampos(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_limparCampos
         numeroTextField.setText("");
         numeroTextField.setEditable(true);
         clienteTextField.setText("");
         telefoneTextField.setText("");
-        grauMontaComboBox.setSelectedIndex(0);
+        grauMontaComboBox.setSelectedIndex(-1);
         perdaTotalCheckBox.setSelected(false);
         sinistros_cadastradosComboBox.setSelectedIndex(-1);
         atualizarListaPecasSinistro(null);

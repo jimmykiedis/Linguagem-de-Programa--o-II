@@ -100,7 +100,7 @@ public class JanelaCadastroSeguradoras extends javax.swing.JFrame {
     private Seguradora.FormaPagamentoPreferencial obterFormaPagamentoPreferencialSelecionada() {
         Object selecionado = formaPagamentoPreferencialComboBox.getSelectedItem();
         if (selecionado == null) {
-            return Seguradora.FormaPagamentoPreferencial.BOLETO;
+            return null;
         }
 
         return Seguradora.FormaPagamentoPreferencial.fromTexto(selecionado.toString());
@@ -130,12 +130,16 @@ public class JanelaCadastroSeguradoras extends javax.swing.JFrame {
                 obterPossuiAtendimento24hInformado();
         if (possui_atendimento_24h == null) return null;
 
+        Seguradora.FormaPagamentoPreferencial forma_pagamento_preferencial =
+                obterFormaPagamentoPreferencialSelecionada();
+        if (forma_pagamento_preferencial == null) return null;
+
         return new Seguradora(
             nome,
             cidade,
             cobertura_percentual,
             possui_atendimento_24h,
-            obterFormaPagamentoPreferencialSelecionada()
+            forma_pagamento_preferencial
         );
     }
 
@@ -533,7 +537,7 @@ public class JanelaCadastroSeguradoras extends javax.swing.JFrame {
         cidadeTextField.setText("");
         coberturaPercentualTextField.setText("");
         possuiAtendimento24hButtonGroup.clearSelection();
-        formaPagamentoPreferencialComboBox.setSelectedItem("boleto");
+        formaPagamentoPreferencialComboBox.setSelectedIndex(-1);
     }//GEN-LAST:event_limparCampos
 
     private void seguradoras_cadastradasComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_seguradoras_cadastradasComboBoxActionPerformed

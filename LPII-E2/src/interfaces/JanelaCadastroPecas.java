@@ -571,7 +571,7 @@ public class JanelaCadastroPecas extends javax.swing.JFrame {
     private void limparCampos(java.awt.event.ActionEvent evt) {
         codigoTextField.setText("");
         nomeTextField.setText("");
-        marcaComboBox.setSelectedIndex(0);
+        marcaComboBox.setSelectedIndex(-1);
         precoTextField.setText("");
         tipoTextField.setText("");
         corTextField.setText("");
