@@ -30,10 +30,10 @@ public class JanelaSistema extends javax.swing.JFrame {
         seguradoras_orçamentoMenuBar = new javax.swing.JMenuBar();
         peçaMenu = new javax.swing.JMenu();
         cadastrar_peçaMenuItem = new javax.swing.JMenuItem();
-        sinistroMenu = new javax.swing.JMenu();
-        cadastrar_sinistroMenuItem = new javax.swing.JMenuItem();
         seguradoraMenu = new javax.swing.JMenu();
         cadastrar_seguradoraItemMenu = new javax.swing.JMenuItem();
+        sinistroMenu = new javax.swing.JMenu();
+        cadastrar_sinistroMenuItem = new javax.swing.JMenuItem();
         orçamentoMenu = new javax.swing.JMenu();
         cadastrar_orçamentoMenuItem = new javax.swing.JMenuItem();
         pesquisar_orçamentoMenuItem = new javax.swing.JMenuItem();
@@ -59,18 +59,6 @@ public class JanelaSistema extends javax.swing.JFrame {
 
         seguradoras_orçamentoMenuBar.add(peçaMenu);
 
-        sinistroMenu.setText("Sinistro");
-
-        cadastrar_sinistroMenuItem.setText("Cadastrar");
-        cadastrar_sinistroMenuItem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cadastrarSinistro(evt);
-            }
-        });
-        sinistroMenu.add(cadastrar_sinistroMenuItem);
-
-        seguradoras_orçamentoMenuBar.add(sinistroMenu);
-
         seguradoraMenu.setText("Seguradora");
 
         cadastrar_seguradoraItemMenu.setText("Cadastrar");
@@ -82,6 +70,18 @@ public class JanelaSistema extends javax.swing.JFrame {
         seguradoraMenu.add(cadastrar_seguradoraItemMenu);
 
         seguradoras_orçamentoMenuBar.add(seguradoraMenu);
+
+        sinistroMenu.setText("Sinistro");
+
+        cadastrar_sinistroMenuItem.setText("Cadastrar");
+        cadastrar_sinistroMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cadastrarSinistro(evt);
+            }
+        });
+        sinistroMenu.add(cadastrar_sinistroMenuItem);
+
+        seguradoras_orçamentoMenuBar.add(sinistroMenu);
 
         orçamentoMenu.setText("Orçamento");
 

@@ -143,7 +143,7 @@ public class JanelaCadastroSinistros extends javax.swing.JFrame {
         grauMontaLabel = new javax.swing.JLabel();
         grauMontaComboBox = new javax.swing.JComboBox();
         perdaTotalLabel = new javax.swing.JLabel();
-        perdaTotalPanel = new javax.swing.JPanel(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 8, 0));
+        perdaTotalPanel = new javax.swing.JPanel();
         perdaTotalCheckBox = new javax.swing.JCheckBox();
         pecasSinistroLabel = new javax.swing.JLabel();
         pecasSinistroScrollPane = new javax.swing.JScrollPane();
@@ -232,8 +232,8 @@ public class JanelaCadastroSinistros extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(1, 5, 10, 5);
         getContentPane().add(numeroLabel, gridBagConstraints);
 
-        numeroTextField.setColumns(8);
         numeroTextField.setEditable(false);
+        numeroTextField.setColumns(8);
         numeroTextField.setMinimumSize(new java.awt.Dimension(80, 20));
         numeroTextField.setPreferredSize(new java.awt.Dimension(80, 20));
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -251,9 +251,9 @@ public class JanelaCadastroSinistros extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(1, 5, 10, 5);
         getContentPane().add(seguradoLabel, gridBagConstraints);
 
-        seguradoTextField.setColumns(20);
-        seguradoTextField.setMinimumSize(new java.awt.Dimension(200, 20));
-        seguradoTextField.setPreferredSize(new java.awt.Dimension(200, 20));
+        seguradoTextField.setColumns(24);
+        seguradoTextField.setMinimumSize(new java.awt.Dimension(240, 20));
+        seguradoTextField.setPreferredSize(new java.awt.Dimension(240, 20));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 2;
@@ -321,6 +321,8 @@ public class JanelaCadastroSinistros extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(1, 5, 10, 5);
         getContentPane().add(perdaTotalLabel, gridBagConstraints);
 
+        perdaTotalPanel.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 8, 0));
+
         perdaTotalCheckBox.setText("Sim");
         perdaTotalPanel.add(perdaTotalCheckBox);
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -362,10 +364,10 @@ public class JanelaCadastroSinistros extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void sinistros_cadastradosComboBoxActionPerformed(java.awt.event.ActionEvent evt) {
+    private void sinistros_cadastradosComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sinistros_cadastradosComboBoxActionPerformed
         Sinistro visao = (Sinistro) sinistros_cadastradosComboBox.getSelectedItem();
         atualizarListaPecasSinistro(visao != null ? visao.getId() : 0);
-    }
+    }//GEN-LAST:event_sinistros_cadastradosComboBoxActionPerformed
 
     private void limparCampos(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_limparCampos
         numeroTextField.setText("");

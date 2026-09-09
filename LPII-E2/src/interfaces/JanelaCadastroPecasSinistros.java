@@ -121,14 +121,14 @@ public class JanelaCadastroPecasSinistros extends javax.swing.JFrame {
         return null;
     }
 
-    private void limparCampos(java.awt.event.ActionEvent evt) {
+    private void limparCampos(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_limparCampos
         if (pecas_cadastradasComboBox.getItemCount() > 0) {
             pecas_cadastradasComboBox.setSelectedIndex(0);
         } else {
             pecas_cadastradasComboBox.setSelectedItem(null);
         }
         pecasSinistroList.clearSelection();
-    }
+    }//GEN-LAST:event_limparCampos
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -233,9 +233,9 @@ public class JanelaCadastroPecasSinistros extends javax.swing.JFrame {
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 1.0;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.insets = new java.awt.Insets(1, 5, 10, 5);
         getContentPane().add(pecasSinistroScrollPane, gridBagConstraints);
 
@@ -287,10 +287,10 @@ public class JanelaCadastroPecasSinistros extends javax.swing.JFrame {
     private javax.swing.JButton inserirPeca;
     private javax.swing.JButton limparCampos;
     private javax.swing.JLabel pecasCadastradasLabel;
-    private javax.swing.JComboBox pecas_cadastradasComboBox;
-    private javax.swing.JList pecasSinistroList;
     private javax.swing.JLabel pecasSinistroLabel;
+    private javax.swing.JList pecasSinistroList;
     private javax.swing.JScrollPane pecasSinistroScrollPane;
+    private javax.swing.JComboBox pecas_cadastradasComboBox;
     private javax.swing.JButton removerPeca;
     private javax.swing.JLabel sinistroLabel;
     private javax.swing.JTextField sinistroTextField;
