@@ -441,13 +441,14 @@ public class JanelaCadastroPecas extends javax.swing.JFrame {
 
             if (visao != null) {
                 visao.setCodigo(pecas.getCodigo());
+                visao.setNome(pecas.getNome());
                 visao.setMarca(pecas.getMarca());
                 visao.setPreco(pecas.getPreco());
                 visao.setCor(pecas.getCor());
                 visao.setMaoDeObra(pecas.getMaoDeObra());
+                visao.setDiasGarantia(pecas.getDiasGarantia());
 
                 pecas_cadastradasComboBox.updateUI();
-                atualizarPecasCadastradas(pecas.getCodigo());
             }
         } else {
             informarErro(mensagem_erro);

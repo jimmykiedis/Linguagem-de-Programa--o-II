@@ -241,11 +241,6 @@ public class JanelaCadastroSeguradoras extends javax.swing.JFrame {
 
         nomeTextField.setColumns(24);
         nomeTextField.setPreferredSize(new java.awt.Dimension(240, 20));
-        nomeTextField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                nomeTextFieldActionPerformed(evt);
-            }
-        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 1;
@@ -264,11 +259,6 @@ public class JanelaCadastroSeguradoras extends javax.swing.JFrame {
 
         cidadeTextField.setColumns(18);
         cidadeTextField.setPreferredSize(new java.awt.Dimension(180, 20));
-        cidadeTextField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cidadeTextFieldActionPerformed(evt);
-            }
-        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 2;
@@ -287,11 +277,6 @@ public class JanelaCadastroSeguradoras extends javax.swing.JFrame {
 
         coberturaPercentualTextField.setColumns(10);
         coberturaPercentualTextField.setPreferredSize(new java.awt.Dimension(100, 20));
-        coberturaPercentualTextField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                coberturaPercentualTextFieldActionPerformed(evt);
-            }
-        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 3;
@@ -363,18 +348,6 @@ public class JanelaCadastroSeguradoras extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void nomeTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nomeTextFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_nomeTextFieldActionPerformed
-
-    private void cidadeTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cidadeTextFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cidadeTextFieldActionPerformed
-
-    private void coberturaPercentualTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_coberturaPercentualTextFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_coberturaPercentualTextFieldActionPerformed
 
     private void alterarSeguradora(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_alterarSeguradora
         Seguradora seguradora =

@@ -2,11 +2,19 @@ package controles;
 
 import entidades.Sinistro;
 import interfaces.JanelaCadastroSinistros;
+import java.awt.Frame;
 
 public class ControladorCadastroSinistros {
 
     public ControladorCadastroSinistros() {
-        new JanelaCadastroSinistros(this).setVisible(true);
+        this(null);
+    }
+
+    public ControladorCadastroSinistros(Frame owner) {
+        JanelaCadastroSinistros janela = new JanelaCadastroSinistros(this, owner);
+        janela.setVisible(true);
+        janela.toFront();
+        janela.requestFocus();
     }
 
     public String inserirSinistro(Sinistro sinistro) {
