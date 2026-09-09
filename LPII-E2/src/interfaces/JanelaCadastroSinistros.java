@@ -24,7 +24,7 @@ public class JanelaCadastroSinistros extends javax.swing.JFrame {
         sinistros_cadastrados = Sinistro.getVisoes();
         initComponents();
         atualizarSinistrosCadastrados();
-        setSize(new java.awt.Dimension(720, 560));
+        setSize(new java.awt.Dimension(820, 560));
         configurarJanelaDependente(owner);
         limparCampos(null);
     }
@@ -149,7 +149,7 @@ public class JanelaCadastroSinistros extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cadastrar Sinistros");
         setMinimumSize(new java.awt.Dimension(680, 420));
-        setPreferredSize(new java.awt.Dimension(720, 560));
+        setPreferredSize(new java.awt.Dimension(820, 560));
         getContentPane().setLayout(new java.awt.GridBagLayout());
 
         inserirSinistro.setText("Inserir");
