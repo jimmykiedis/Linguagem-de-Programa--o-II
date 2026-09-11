@@ -1,4 +1,4 @@
-# Linguagem de Programação II
+# LinguagemDeProgramacaoII
 
 Repositório do trabalho desenvolvido para a disciplina de Linguagem de Programação II, ministrada pelo professor Joivile Batista.
 
@@ -80,7 +80,7 @@ Depois disso, o NetBeans deve reconhecer o conector MySQL e permitir o acesso ao
 Para executar a entrega `LPII-E2` pelo terminal integrado do VS Code, use:
 
 ```bash
-cd "/Users/jimmykiedis/Library/Mobile Documents/com~apple~CloudDocs/Acadêmicos/Sistemas de informação - Facet/Linguagem-de-Programa--o-II/LPII-E2"
+cd "/Users/jimmykiedis/Library/Mobile Documents/com~apple~CloudDocs/Acadêmicos/Sistemas de informação - Facet/LinguagemDeProgramacaoII/LPII-E2"
 mvn compile exec:java -Dexec.mainClass=interfaces.JanelaSistema
 ```
 
@@ -110,7 +110,7 @@ Se o usuário do seu MySQL não for `root`, ajuste o comando conforme o seu ambi
 Se quiser fazer manualmente no PowerShell, prefira chamar o `cmd` para o redirecionamento não ser re-encodado:
 
 ```powershell
-cmd /c "\"C:\Program Files\MySQL\MySQL Server 8.0\bin\mysql.exe\" --default-character-set=utf8mb4 -u root -p banco < \"C:\git\Lingagem de Programação\Linguagem-de-Programa--o-II\Docs\injector_banco_limpo.sql\""
+cmd /c "\"C:\Program Files\MySQL\MySQL Server 8.0\bin\mysql.exe\" --default-character-set=utf8mb4 -u root -p banco < \"C:\git\Lingagem de Programação\LinguagemDeProgramacaoII\Docs\injector_banco_limpo.sql\""
 ```
 
 Se o MySQL estiver instalado em outro diretório, substitua o caminho do `mysql.exe` pelo caminho real da sua instalação.
