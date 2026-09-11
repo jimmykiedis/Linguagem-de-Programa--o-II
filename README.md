@@ -75,6 +75,17 @@ Depois disso, o NetBeans deve reconhecer o conector MySQL e permitir o acesso ao
 4. Confirme as credenciais de acesso ao banco na classe `LPII-E2/src/persistência/BD.java`.
 5. Execute a classe principal `interfaces.JanelaSistema`.
 
+### Executar no VS Code
+
+Para executar a entrega `LPII-E2` pelo terminal integrado do VS Code, use:
+
+```bash
+cd "/Users/jimmykiedis/Library/Mobile Documents/com~apple~CloudDocs/Acadêmicos/Sistemas de informação - Facet/Linguagem-de-Programa--o-II/LPII-E2"
+mvn compile exec:java -Dexec.mainClass=interfaces.JanelaSistema
+```
+
+Para executar outra entrega, troque apenas o número no nome da pasta no comando `cd`: `LPII-E1`, `LPII-E2`, `LPII-E3` ou `LPII-E4`. O comando Maven permanece igual.
+
 ## Como preparar o banco de dados
 
 O arquivo `Docs/injector_banco_limpo.sql` pode ser usado para recriar o banco `banco` do zero e inserir os registros iniciais.
